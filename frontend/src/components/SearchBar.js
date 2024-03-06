@@ -13,8 +13,8 @@ function createInput(id, classes, placeholder) {
 
 function SearchBar() {
   return (
-    <div className="flex justify-center w-1/4 mx-auto" >
-      {createInput('', 'w-full border rounded p-2 mx-2 ', 'Search for a recipe')}
+    <div className="flex justify-center w-full mx-auto" >
+      {createInput('', 'w-full md:w-1/2 lg:w-1/3 xl:w-1/4 border rounded p-2 mx-2 ', 'Search for a recipe')}
       <button className="p-2 bg-green-500 text-white rounded-md">
         <svg
           xmlns="http://www.w3.org/2000/svg"
