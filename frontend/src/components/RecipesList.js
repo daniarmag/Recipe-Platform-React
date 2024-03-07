@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import RecipeCard from './RecipeCard';
-import { getRecipesFromDB } from '../api/recipesApi';
+import RecipeApi from '../api/RecipeApi.js';
 
-const RecipeList = () => {
+function RecipeList() {
   const [recipes, setRecipes] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const recipesPerPage = 8;
@@ -10,7 +10,7 @@ const RecipeList = () => {
   useEffect(() => {
     const fetchRecipes = async () => {
       try {
-        const fetchedRecipes = await getRecipesFromDB();
+        const fetchedRecipes = await RecipeApi.getRecipes();
         setRecipes(fetchedRecipes);
       } catch (error) {
         console.error('Error fetching recipes: ', error);
@@ -34,7 +34,7 @@ const RecipeList = () => {
         {currentRecipes.map((recipe) => (
           <RecipeCard
             key={recipe.id}
-            title={recipe.title}
+            title={recipe.name}
             imageSrc={recipe.image}
             description={recipe.description}
             ingredients={recipe.ingredients}

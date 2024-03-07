@@ -2,7 +2,7 @@
 import MealPlanner from '../components/MealPlannerTable';
 
 // Your MealPlanner page component
-const MealPlannerPage = () => {
+function MealPlannerPage() {
   return (
     <div>
       {/* Include the MealPlanner component */}

@@ -1,7 +1,7 @@
 import React from 'react';
 import CreateNewRecipe from '../components/NewRecipeForm'; // Replace with the correct path
 
-const AddRecipePage = () => {
+function AddRecipePage() {
   return (
     <div>
       {/* Other content of your AddRecipePage if any */}

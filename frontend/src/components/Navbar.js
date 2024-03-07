@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+
 function Navbar() {
     const navItems = [
-        { text: 'Home', href: '/home-page', id: 'home-page' },
+        { text: 'Home', href: '/home', id: 'home-page' },
         { text: 'Add New Recipe', href: '/new-recipe', id: 'newRecipe-page' },
         { text: 'Meal Planner', href: '/meal-planner', id: 'mealPlanner-page' },
     ];
 
     const popUpLinks = [
-        { text: 'Home', href: '/home-page' },
+        { text: 'Home', href: '/home' },
         { text: 'New Recipe', href: '/new-recipe' },
         { text: 'Meal Planner', href: '/meal-planner' }
     ];

@@ -7,11 +7,11 @@ import SearchBar from '../components/SearchBar';
 function Home() {
     return (
         <>
-        <div class="flex flex-col items-center">
-          <h1 class="text-4xl font-bold mt-2 mb-2 bigTitle">
+        <div className="flex flex-col items-center">
+          <h1 className="text-4xl font-bold mt-2 mb-2 bigTitle">
             Welcome To Our Recipe Sharing & Meal Planning Platform
           </h1>
-          <p class="text-lg">
+          <p className="text-lg">
             Browse through delicious recipes shared by our community.
           </p>
       </div>

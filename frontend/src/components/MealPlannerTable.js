@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const MealPlanner = () => {
+function MealPlanner ()  {
   const [mealData, setMealData] = useState([]);
 
   const calculateTotals = () => {

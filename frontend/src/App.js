@@ -24,7 +24,7 @@ function App() {
     <Navbar/>
     <Routes>
       <Route path="/" element={<LoginPage />} />
-      <Route path="/home-page" element={<Home />} />
+      <Route path="/home" element={<Home />} />
       <Route path="/meal-planner" element={<MealPlannerPage />} />
       <Route path="/new-recipe" element={<AddRecipePage/>} />
 
