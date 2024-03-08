@@ -13,7 +13,7 @@ function MealPlanner() {
     };
 
     Object.keys(meals).forEach((mealCategory) => {
-      meals[mealCategory].forEach((recipe) => {
+      Object.values(meals[mealCategory]).forEach((recipe) => {
         totals.calories += recipe.nutritionalValues.calories || 0;
         totals.proteins += recipe.nutritionalValues.proteins || 0;
         totals.fats += recipe.nutritionalValues.fat || 0;
@@ -25,11 +25,9 @@ function MealPlanner() {
 
   const handleDelete = async (mealCategory, recipe) => {
     try {
-      // Adjust the following line based on your actual implementation
-      // e.g., await deleteMeal(meals[index].id)
       await removeRecipe(mealCategory, recipe.id);
     } catch (error) {
-      console.error('Error deleting meal:', error);
+      console.error('Error deleting recipe:', error);
       // Handle errors as needed
     }
   };
@@ -55,7 +53,7 @@ function MealPlanner() {
           </thead>
           <tbody>
             {Object.keys(meals).map((mealCategory) => (
-              meals[mealCategory].map((recipe, index) => (
+              Object.values(meals[mealCategory]).map((recipe, index) => (
                 <tr key={index} className="border-t border-gray-300">
                   <td className="py-2 px-4" data-label="Meal">
                     {mealCategory}

@@ -3,9 +3,9 @@ import React, { createContext, useContext, useReducer, useEffect } from 'react';
 // Define the initial state
 const initialState = {
   meals: {
-    breakfast: [],
-    lunch: [],
-    dinner: [],
+    breakfast: {},
+    lunch: {},
+    dinner: {},
   },
 };
 
@@ -25,19 +25,20 @@ const plannerReducer = (state, action) => {
         ...state,
         meals: {
           ...state.meals,
-          [mealCategory]: [...state.meals[mealCategory], recipe],
+          [mealCategory]: {
+            ...state.meals[mealCategory],
+            [recipe.id]: recipe,
+          },
         },
       };
-    case actionTypes.REMOVE_RECIPE:
+    case actionTypes.REMOVE_RECIPE: {
+      const updatedMeals = { ...state.meals };
+      delete updatedMeals[mealCategory][recipeId];
       return {
         ...state,
-        meals: {
-          ...state.meals,
-          [mealCategory]: state.meals[mealCategory].filter(
-            (recipe) => recipe.id !== recipeId
-          ),
-        },
+        meals: updatedMeals,
       };
+    }
     default:
       return state;
   }
@@ -61,8 +62,6 @@ export const PlannerProvider = ({ children }) => {
   const removeRecipe = (mealCategory, recipeId) => {
     dispatch({ type: actionTypes.REMOVE_RECIPE, payload: { mealCategory, recipeId } });
   };
-
-  
 
   const getMeals = () => {
     return state.meals;
