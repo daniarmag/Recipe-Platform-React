@@ -19,16 +19,18 @@ class RecipesApi {
     }
   }
 
-  async getRecipes() {
+  async getRecipes(searchQuery) {
     try {
-      const response = await this.api.get('/recipes');
+      const response = await this.api.get('/recipes', {
+        params: { searchQuery } 
+      });
       return response.data;
     } catch (error) {
       console.error('Error getting recipes:', error);
       throw error;
     }
   }
-
+  
   async getRecipe(id) {
     try {
       const response = await this.api.get(`/recipes/${id}`);

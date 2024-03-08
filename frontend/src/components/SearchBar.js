@@ -1,21 +1,29 @@
-import React from 'react';
-
-function createInput(id, classes, placeholder) {
-  return (
-    <input
-      type="text"
-      id={id}
-      className={`text-sm text-left ${classes}`}
-      placeholder={placeholder}
-    />
-  );
-}
+import React, { useState } from 'react';
+import { useRecipes } from '../context/RecipesContext.js';
 
 function SearchBar() {
+  const { searchQuery, updateSearchQuery } = useRecipes();
+  const [inputValue, setInputValue] = useState(searchQuery);
+
+  const handleInputChange = (e) => {
+    setInputValue(e.target.value);
+    updateSearchQuery(e.target.value);
+  };
+
+  const handleSearch = () => {
+    updateSearchQuery(inputValue);
+  };
+
   return (
-    <div className="flex justify-center w-full mx-auto" >
-      {createInput('', 'w-full md:w-1/2 lg:w-1/3 xl:w-1/4 border rounded p-2 mx-2 ', 'Search for a recipe')}
-      <button className="p-2 bg-green-500 text-white rounded-md">
+    <div className="flex justify-center w-full mx-auto">
+      <input
+        type="text"
+        className="text-sm text-left w-full md:w-1/2 lg:w-1/3 xl:w-1/4 border rounded p-2 mx-2"
+        placeholder="Search for a recipe"
+        value={inputValue}
+        onChange={handleInputChange}
+      />
+      <button className="p-2 bg-green-500 text-white rounded-md" onClick={handleSearch}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
