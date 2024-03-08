@@ -1,16 +1,23 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import RecipeCard from './RecipeCard';
-import RecipeApi from '../api/RecipeApi.js';
+import Modal from './Modal.js';
+import { usePlanner } from '../context/PlannerContext';
+import RecipesApi from '../api/RecipesApi.js';
 
 function RecipeList() {
   const [recipes, setRecipes] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const [modalOpen, setModalOpen] = useState(false);
   const recipesPerPage = 8;
+  const [selectedRecipe, setSelectedRecipe] = useState(null); // New state to store the selected recipe
+
+  const { state, addRecipe } = usePlanner();
 
   useEffect(() => {
+    // Assuming RecipeApi.getRecipes returns an array of recipes
     const fetchRecipes = async () => {
       try {
-        const fetchedRecipes = await RecipeApi.getRecipes();
+        const fetchedRecipes = await RecipesApi.getRecipes();
         setRecipes(fetchedRecipes);
       } catch (error) {
         console.error('Error fetching recipes: ', error);
@@ -28,6 +35,23 @@ function RecipeList() {
     setCurrentPage(pageNumber);
   };
 
+  const openModal = () => {
+    setModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalOpen(false);
+  };
+
+  const handleAddToPlanner = (recipe) => {
+    setModalOpen(true);
+    setSelectedRecipe(recipe); // Store the selected recipe in the state
+  };
+
+  const addToPlanner = (meal, recipe) => {
+    addRecipe(meal,recipe);
+  };
+
   return (
     <div>
       <div className="grid grid-cols-1 p-6 md:grid-cols-4 md:gap-8">
@@ -40,9 +64,7 @@ function RecipeList() {
             ingredients={recipe.ingredients}
             nutritionalValues={recipe.nutritionalValues}
             preparation={recipe.preparation}
-            openModal={(title, ingredients, nutritionalValues) => {
-              console.log('Recipe added to planner:', title, ingredients, nutritionalValues);
-            }}
+            onAddToPlanner={() => handleAddToPlanner(recipe)}
           />
         ))}
       </div>
@@ -64,8 +86,19 @@ function RecipeList() {
           </button>
         )}
       </div>
+
+      {modalOpen && (
+        <Modal
+        recipe={selectedRecipe}
+        addToPlanner={addToPlanner} // Pass the addToPlanner function directly
+        closeModal={() => {
+          setModalOpen(false);
+          setSelectedRecipe(null);
+        }}
+      />
+      )}
     </div>
   );
-};
+}
 
 export default RecipeList;

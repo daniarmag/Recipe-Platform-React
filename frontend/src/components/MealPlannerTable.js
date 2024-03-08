@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { usePlanner } from '../context/PlannerContext.js';
 
-function MealPlanner ()  {
-  const [mealData, setMealData] = useState([]);
+function MealPlanner() {
+  const { getMeals, removeRecipe } = usePlanner();
+  const meals = getMeals();
 
   const calculateTotals = () => {
     const totals = {
@@ -10,32 +12,26 @@ function MealPlanner ()  {
       fats: 0,
     };
 
-    mealData.forEach((meal) => {
-      totals.calories += meal.calories || 0;
-      totals.proteins += meal.proteins || 0;
-      totals.fats += meal.fats || 0;
+    Object.keys(meals).forEach((mealCategory) => {
+      meals[mealCategory].forEach((recipe) => {
+        totals.calories += recipe.nutritionalValues.calories || 0;
+        totals.proteins += recipe.nutritionalValues.proteins || 0;
+        totals.fats += recipe.nutritionalValues.fat || 0;
+      });
     });
 
     return totals;
   };
 
-  const handleDelete = (index) => {
-    const updatedMealData = [...mealData];
-    updatedMealData.splice(index, 1);
-    setMealData(updatedMealData);
-  };
-
-  const handleAddSample = () => {
-    const sampleMeal = {
-      mealName: 'Sample Meal',
-      recipe: 'Sample Recipe',
-      ingredients: 'Sample Ingredients',
-      calories: 300,
-      proteins: 20,
-      fats: 10,
-    };
-
-    setMealData([...mealData, sampleMeal]);
+  const handleDelete = async (mealCategory, recipe) => {
+    try {
+      // Adjust the following line based on your actual implementation
+      // e.g., await deleteMeal(meals[index].id)
+      await removeRecipe(mealCategory, recipe.id);
+    } catch (error) {
+      console.error('Error deleting meal:', error);
+      // Handle errors as needed
+    }
   };
 
   const totals = calculateTotals();
@@ -46,49 +42,49 @@ function MealPlanner ()  {
         <div className="text-2xl font-bold text-center py-3 bigTitle sm:text-3xl">
           Plan your meals for the day
         </div>
-        <button className="bg-blue-500 text-white px-2 py-1 mb-2 rounded" onClick={handleAddSample}>
-          Add Sample
-        </button>
         <div className="overflow-x-auto">
           <table className="w-full border border-gray-300 rounded shadow-md">
-            <thead className="hidden sm:table-header-group">
-              <tr>
-                {['Meal', 'Recipe', 'Ingredients', 'Calories', 'Proteins', 'Fats', 'Actions'].map((columnText, index) => (
-                  <th key={index} className="py-2 px-4 text-left bg-gray-100">
-                    {columnText}
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {mealData.map((meal, index) => (
+          <thead className="hidden sm:table-header-group">
+            <tr>
+              {['Meal', 'Recipe', 'Ingredients', 'Calories', 'Proteins', 'Fats', 'Actions'].map((columnText, index) => (
+                <th key={index} className="py-2 px-4 text-left bg-gray-100">
+                  {columnText}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {Object.keys(meals).map((mealCategory) => (
+              meals[mealCategory].map((recipe, index) => (
                 <tr key={index} className="border-t border-gray-300">
                   <td className="py-2 px-4" data-label="Meal">
-                    {meal.mealName}
+                    {mealCategory}
                   </td>
-                  <td className="py-2 px-4" data-label="Recipe">
-                    {meal.recipe}
+                  <td className="py-2 px-4" data-label="Recipe Name">
+                    {recipe.name}
                   </td>
                   <td className="py-2 px-4" data-label="Ingredients">
-                    {meal.ingredients}
+                    {recipe.ingredients.join(',')}
                   </td>
                   <td className="py-2 px-4" data-label="Calories">
-                    {meal.calories}
+                    {recipe.nutritionalValues.calories}
                   </td>
                   <td className="py-2 px-4" data-label="Proteins">
-                    {meal.proteins}
+                    {recipe.nutritionalValues.proteins}
                   </td>
                   <td className="py-2 px-4" data-label="Fats">
-                    {meal.fats}
+                    {recipe.nutritionalValues.fat}
                   </td>
                   <td className="py-2 px-4" data-label="Actions">
-                    <button className="bg-green-500 text-white px-2 py-1 rounded" onClick={() => handleDelete(index)}>
+                    <button className="bg-green-500 text-white px-2 py-1 rounded" onClick={() => handleDelete(mealCategory, recipe)}>
                       Delete
                     </button>
                   </td>
                 </tr>
-              ))}
-            </tbody>
+              ))
+            ))}
+          </tbody>
+
             <tfoot className="hidden sm:table-footer-group">
               <tr>
                 <td className="py-2 px-4 text-left bg-gray-100" colSpan={3}>
@@ -111,6 +107,6 @@ function MealPlanner ()  {
       </div>
     </div>
   );
-};
+}
 
 export default MealPlanner;

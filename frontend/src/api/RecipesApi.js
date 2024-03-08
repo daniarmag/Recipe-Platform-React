@@ -22,7 +22,6 @@ class RecipesApi {
   async getRecipes() {
     try {
       const response = await this.api.get('/recipes');
-      console.log(response.data)
       return response.data;
     } catch (error) {
       console.error('Error getting recipes:', error);

@@ -1,7 +1,9 @@
 
 import React, { useState } from 'react';
 
-const RecipeCard = ({ title, imageSrc, description, ingredients, nutritionalValues, preparation, openModal }) => {
+
+
+const RecipeCard = ({ title, imageSrc, description, ingredients, nutritionalValues, preparation, onAddToPlanner }) => {
   const [currentPopupImg, setCurrentPopupImg] = useState(null);
 
 
@@ -13,7 +15,7 @@ const RecipeCard = ({ title, imageSrc, description, ingredients, nutritionalValu
         <p className="text-gray-600 text-s description flex-grow">{description}</p>
         <button
         className="add-to-planner-btn text-green-500 py-1 px-2 mt-4 text-xs border border-green-500 rounded-full w-full self-end"
-        >
+        onClick={onAddToPlanner}>
         + Add to Planner
         </button>
     </div>

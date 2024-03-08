@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-
+import {Link} from 'react-router-dom';
 function Navbar() {
     const navItems = [
         { text: 'Home', href: '/home', id: 'home-page' },
@@ -37,9 +37,9 @@ function Navbar() {
             <ul className={`sm:flex space-x-8 sm:relative hidden`}>
                 {navItems.map((item) => (
                     <li key={item.id}>
-                        <a href={item.href} id={item.id} className="text-white text-xl hover:text-blue-950 duration-200">
+                        <Link to={item.href} id={item.id} className="text-white text-xl hover:text-blue-950 duration-200">
                             {item.text}
-                        </a>
+                        </Link>
                     </li>
                 ))}
                 <li>

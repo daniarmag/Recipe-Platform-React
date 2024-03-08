@@ -26,7 +26,6 @@ class RecipeController {
   }
 
   async getRecipes(req, res) {
-    console.log("getRecipes")
     try {
       const recipesSnapshot = await getDocs(collection(db, 'recipe'));
       const recipeArray = [];
