@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import {Link} from 'react-router-dom';
+import {useTheme} from '../context/ThemeContext';
+
 function Navbar() {
     const navItems = [
         { text: 'Home', href: '/home', id: 'home-page' },
@@ -14,63 +16,58 @@ function Navbar() {
     ];
 
     const [showMenu, setShowMenu] = useState(false);
-    const [isDarkMode, setIsDarkMode] = useState(false);
-
+    const {theme, toggleDarkMode} = useTheme();
 
     const toggleMenu = () => {
         setShowMenu(!showMenu);
     };
 
-    const toggleDarkMode = () => {
-        setIsDarkMode(!isDarkMode);
-    };
+    
 
     return (
-        <div className="mx-auto flex flex-col sm:flex-row justify-between items-center py-3 bg-green-400 shadow-md w-full top-0 z-50">
-            <div className="text-white text-2xl">
-                {/* Your logo or site name goes here */}
-            </div>
-
-            {/* Responsive menu button */}
-            <button
-                onClick={toggleMenu}
-                className="text-white text-2xl sm:hidden focus:outline-none self-end mx-2"
-            >
-                &#9776; {/* Hamburger icon */}
-            </button>
-
-            {/* Navigation links */}
-            <ul className={`sm:flex space-x-8 sm:relative hidden`}>
-                {navItems.map((item) => (
-                    <li key={item.id}>
-                        <Link to={item.href} id={item.id} className="text-white text-xl hover:text-blue-950 duration-200">
-                            {item.text}
-                        </Link>
-                    </li>
-                ))}
-                <li>
-                    <button className="text-white text-xl hover:text-blue-950 duration-200 border border-white rounded-lg mx-2 px-3">
-                        Dark
-                    </button>
-                </li>
-            </ul>
-
-            {/* Responsive popup menu */}
-            {showMenu && (
-                <div className="sm:hidden absolute top-14 right-0 bg-green-400 p-4 px-2 shadow-lg">
-                    {popUpLinks.map((link) => (
-                        <div key={link.text} className="mb-2">
-                            <Link to={link.href} className="text-white text-xl hover:text-blue-950 duration-200">
-                                {link.text}
-                            </Link>
-                        </div>
-                    ))}
-                    {/* Dark mode button can also be added here */}
+        <div className={`mx-auto flex flex-col sm:flex-row justify-between items-center py-3 shadow-md w-full top-0 z-50 bg-${theme[theme.darkMode].primary}`}>
+          <div className="text-white text-2xl" >{/* Your logo or site name goes here */}</div>
+    
+          <button onClick={toggleMenu} className={`text-white text-2xl sm:hidden focus:outline-none self-end mx-2`}>
+            &#9776; {/* Hamburger icon */}
+          </button>
+    
+          <ul className={`sm:flex space-x-8 sm:relative hidden`}>
+            {navItems.map((item) => (
+              <li key={item.id}>
+                <Link to={item.href} id={item.id} className={`text-white text-xl ${
+                theme.isDarkMode ? 'hover:text-blue-300' : 'hover:text-blue-950'
+              } duration-200`} >
+                  {item.text}
+                </Link>
+              </li>
+            ))}
+            <li>
+              <button
+                onClick={toggleDarkMode}
+                className={`text-white text-xl duration-200 border border-white rounded-lg mx-2 px-3 focus:outline-none 
+                bg-${theme[theme.darkMode].primary}
+                }`}
+              >
+                {theme.isDarkMode ? 'Dark' : 'Light'} Mode
+              </button>
+            </li>
+          </ul>
+    
+          {showMenu && (
+            <div className="sm:hidden absolute top-14 right-0 p-4 px-2 shadow-lg bg-green-400">
+              {popUpLinks.map((link) => (
+                <div key={link.text} className="mb-2">
+                  <Link to={link.href} className={`"text-white text-xl duration-200 ${theme.isDarkMode ? 'hover:text-blue-300' : 'hover:text-blue-950'}`}>
+                    {link.text}
+                  </Link>
                 </div>
-            )}
+              ))}
+              {/* Dark mode button can also be added here */}
+            </div>
+          )}
         </div>
-    );
-}
-//fix
-export default Navbar;
-///
+      );
+    }
+    
+    export default Navbar;
