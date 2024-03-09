@@ -40,9 +40,6 @@ const CreateNewRecipe = () => {
         <form className="max-w-md mx-auto" onSubmit={handleSubmit}>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="mb-2 mx-4"> {/* Added mx-4 for spacing */}
-            {/* <label htmlFor="nameUser" className="block text-sm font-semibold text-gray-700">
-              Enter your name:
-            </label> */}
             <textarea
               id="nameUser"
               className="border rounded text-sm text-left w-full"

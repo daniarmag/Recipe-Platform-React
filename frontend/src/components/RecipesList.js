@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import RecipeCard from './RecipeCard';
 import Modal from './Modal.js';
+import RecipePopup from './RecipePopup.js'
 import { useRecipes } from '../context/RecipesContext'; // Update the import
 import { usePlanner } from '../context/PlannerContext';
 
@@ -40,6 +41,10 @@ function RecipeList() {
   };
 
   const addToPlanner = (meal, recipe) => {
+    window.alert(`Recipe ${recipe.name} added to ${meal}`);
+
+
+    
     addRecipe(meal, recipe);
   };
 

@@ -27,14 +27,17 @@ class RecipeController {
 
   async getRecipes(req, res) {
     try {
+      const { searchQuery } = req.query;
       const recipesSnapshot = await getDocs(collection(db, 'recipe'));
-      const recipeArray = [];
-
+      let recipeArray = [];
+      let recipe;
+      console.log(req.query)
       if (recipesSnapshot.empty) {
+        console.error('No Recipes found');
         res.status(400).send('No Recipes found');
       } else {
         recipesSnapshot.forEach((doc) => {
-          const recipe = new Recipe(
+          recipe = new Recipe(
             doc.id,
             doc.data().author,
             doc.data().name,
@@ -49,10 +52,17 @@ class RecipeController {
           );
           recipeArray.push(recipe);
         });
-
+        if (searchQuery) {
+          console.log(searchQuery)
+          recipeArray = recipeArray.filter((recipe) => 
+            recipe.name.toLowerCase().includes(searchQuery.toLowerCase())
+          );
+          
+        }
         res.status(200).send(recipeArray);
       }
     } catch (error) {
+      console.error(error.message);
       res.status(400).send(error.message);
     }
   }
@@ -113,6 +123,24 @@ class RecipeController {
       await deleteDoc(recipeRef);
 
       res.status(200).send({ id, message: 'Recipe deleted successfully' });
+    } catch (error) {
+      console.error(error);
+      res.status(500).send('Internal Server Error');
+    }
+  }
+
+
+  async searchRecipes(req, res) {
+    try {
+      const { searchQuery } = req.params;
+
+      // Implement your search logic here using the query parameter
+      // You can search for recipes based on name, ingredients, etc.
+      // Example: const searchResults = await performSearch(query);
+      // Modify this based on your actual database structure and search criteria
+  
+      // Send back the search results
+      res.status(200).send(searchResults);
     } catch (error) {
       console.error(error);
       res.status(500).send('Internal Server Error');

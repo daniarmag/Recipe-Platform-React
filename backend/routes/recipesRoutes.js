@@ -6,7 +6,9 @@ import RecipeController from '../controllers/recipesController.js';
 router.post('/recipes', RecipeController.createRecipe);
 router.get('/recipes', RecipeController.getRecipes);
 router.get('/recipes/:id', RecipeController.getRecipe);
+router.get('/recipes/:id', RecipeController.searchRecipes); //check..
 router.put('/recipes/:id', RecipeController.updateRecipe);
 router.delete('/recipes/:id', RecipeController.deleteRecipe);
+
 
 export default router;

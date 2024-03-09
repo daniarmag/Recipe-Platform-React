@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useRecipes } from '../context/RecipesContext.js';
 
 function SearchBar() {
-  const { searchQuery, updateSearchQuery } = useRecipes();
+  const { searchQuery, updateSearchQuery, searchRecipes  } = useRecipes();
   const [inputValue, setInputValue] = useState(searchQuery);
 
   const handleInputChange = (e) => {

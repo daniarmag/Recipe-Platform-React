@@ -14,9 +14,15 @@ function Navbar() {
     ];
 
     const [showMenu, setShowMenu] = useState(false);
+    const [isDarkMode, setIsDarkMode] = useState(false);
+
 
     const toggleMenu = () => {
         setShowMenu(!showMenu);
+    };
+
+    const toggleDarkMode = () => {
+        setIsDarkMode(!isDarkMode);
     };
 
     return (
@@ -54,9 +60,9 @@ function Navbar() {
                 <div className="sm:hidden absolute top-14 right-0 bg-green-400 p-4 px-2 shadow-lg">
                     {popUpLinks.map((link) => (
                         <div key={link.text} className="mb-2">
-                            <a href={link.href} className="text-white text-xl hover:text-blue-950 duration-200">
+                            <Link to={link.href} className="text-white text-xl hover:text-blue-950 duration-200">
                                 {link.text}
-                            </a>
+                            </Link>
                         </div>
                     ))}
                     {/* Dark mode button can also be added here */}
