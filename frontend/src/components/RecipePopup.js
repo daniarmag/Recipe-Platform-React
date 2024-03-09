@@ -6,7 +6,7 @@ const RecipePopup = ({ title, imageSrc, description, ingredients, nutritionalVal
   const unitMap = {
     fat: 'g',
     proteins: 'g',
-    calories: ''
+    calories: 'kcal'
   };
 
   const sortedKeys = Object.keys(nutritionalValues).sort(

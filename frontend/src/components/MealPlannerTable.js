@@ -4,7 +4,7 @@ import { usePlanner } from '../context/PlannerContext.js';
 function MealPlanner() {
   const { getMeals, removeRecipe } = usePlanner();
   const meals = getMeals();
-
+console.log(meals);
   const calculateTotals = () => {
     const totals = {
       calories: 0,
@@ -14,12 +14,13 @@ function MealPlanner() {
 
     Object.keys(meals).forEach((mealCategory) => {
       Object.values(meals[mealCategory]).forEach((recipe) => {
-        totals.calories += recipe.nutritionalValues.calories || 0;
-        totals.proteins += recipe.nutritionalValues.proteins || 0;
-        totals.fats += recipe.nutritionalValues.fat || 0;
+        console.log(recipe);
+
+        totals.calories += +recipe.nutritionalValues.calories || 0;
+        totals.proteins += +recipe.nutritionalValues.proteins || 0;
+        totals.fats += +recipe.nutritionalValues.fat || 0;
       });
     });
-
     return totals;
   };
 

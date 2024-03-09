@@ -1,24 +1,63 @@
-import firebase from '../fireBase.js';
+import {firebase, db, storage} from '../fireBase.js';
 import Recipe from '../models/Recipe.js';
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 import {
   getFirestore,
   collection,
   doc,
   addDoc,
+  setDoc,
   getDoc,
   getDocs,
   updateDoc,
   deleteDoc,
 } from 'firebase/firestore';
 
-const db = getFirestore(firebase);
 
 class RecipeController {
   async createRecipe(req, res) {
     try {
-      const data = req.body;
-      await addDoc(collection(db, 'recipe'), data);
+      const { name, description, ingredients, image, calories, fat, proteins,  ...rest } = req.body;
+
+      let imageUrl = '';
+
+      // Check if there's an image file
+      if (image) {
+        // Extract content type and base64 data from the image string
+        const matches = image.match(/^data:(.+);base64,(.*)$/);
+        if (!matches || matches.length !== 3) {
+            return res.status(400).send('Invalid base64 image data');
+        }
+
+        const mimeType = matches[1];
+        const base64Data = matches[2];
+        const buffer = Buffer.from(base64Data, 'base64');
+
+        const filename = `${name}-${Date.now()}`;
+        const storageRef = ref(storage, `recipeImages/${filename}`);
+        
+        // Upload the image buffer to Firebase Storage
+        const snapshot = await uploadBytes(storageRef, buffer, { contentType: mimeType });
+        imageUrl = await getDownloadURL(snapshot.ref);
+      }
+
+      // Split ingredients by newline and trim each ingredient
+      const ingredientsArray = ingredients.split('\n').map(ingredient => ingredient.trim());
+  
+      const nutritionalValues = { calories, fat, proteins };
+
+      // Prepare the new recipe data with the image URL
+      const newData = {
+        name,
+        description,
+        ingredients: ingredientsArray,
+        nutritionalValues,
+        image: imageUrl,
+        ...rest
+      };
+  
+      await setDoc(doc(collection(db, 'recipe'), name), newData);
       res.status(200).send('Recipe created successfully');
     } catch (error) {
       res.status(400).send(error.message);
@@ -31,7 +70,6 @@ class RecipeController {
       const recipesSnapshot = await getDocs(collection(db, 'recipe'));
       let recipeArray = [];
       let recipe;
-      console.log(req.query)
       if (recipesSnapshot.empty) {
         console.error('No Recipes found');
         res.status(400).send('No Recipes found');
@@ -53,7 +91,6 @@ class RecipeController {
           recipeArray.push(recipe);
         });
         if (searchQuery) {
-          console.log(searchQuery)
           recipeArray = recipeArray.filter((recipe) => 
             recipe.name.toLowerCase().includes(searchQuery.toLowerCase())
           );
@@ -129,23 +166,6 @@ class RecipeController {
     }
   }
 
-
-  async searchRecipes(req, res) {
-    try {
-      const { searchQuery } = req.params;
-
-      // Implement your search logic here using the query parameter
-      // You can search for recipes based on name, ingredients, etc.
-      // Example: const searchResults = await performSearch(query);
-      // Modify this based on your actual database structure and search criteria
-  
-      // Send back the search results
-      res.status(200).send(searchResults);
-    } catch (error) {
-      console.error(error);
-      res.status(500).send('Internal Server Error');
-    }
-  }
 }
 
 export default new RecipeController();

@@ -2,14 +2,38 @@ import axios from 'axios';
 
 const apiBaseUrl = 'http://localhost:5000/api';
 
+async function fileToBase64(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = error => reject(error);
+    reader.readAsDataURL(file);
+  });
+}
+
 class RecipesApi {
   constructor() {
     this.api = axios.create({
       baseURL: apiBaseUrl,
     });
   }
+  
 
-  async createRecipe(data) {
+  async createRecipe(formData) {
+    let data={};    
+    
+    const entries = Array.from(formData.entries());
+    const asyncTasks = entries.map(async ([key, value]) => {
+      if (value instanceof File) {
+        data[key] = await fileToBase64(value); // Convert file to base64
+      } else {
+        data[key] = value; // Regular form values
+      }
+      // data[key] = value;
+    });
+
+    await Promise.all(asyncTasks);  
+    console.log(data);
     try {
       const response = await this.api.post('/recipes', data);
       return response.data;

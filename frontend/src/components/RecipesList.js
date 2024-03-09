@@ -8,6 +8,7 @@ import { usePlanner } from '../context/PlannerContext';
 function RecipeList() {
   const [currentPage, setCurrentPage] = useState(1);
   const [modalOpen, setModalOpen] = useState(false);
+  const [selectedRecipeForPopup, setSelectedRecipeForPopup] = useState(null);
   const recipesPerPage = 8;
   const [selectedRecipe, setSelectedRecipe] = useState(null);
 
@@ -33,6 +34,14 @@ function RecipeList() {
 
   const closeModal = () => {
     setModalOpen(false);
+  };
+
+  const openPopup = (recipe) => {
+    setSelectedRecipeForPopup(recipe);
+  };
+
+  const closePopup = () => {
+    setSelectedRecipeForPopup(null);
   };
 
   const handleAddToPlanner = (recipe) => {
@@ -61,6 +70,7 @@ function RecipeList() {
             nutritionalValues={recipe.nutritionalValues}
             preparation={recipe.preparation}
             onAddToPlanner={() => handleAddToPlanner(recipe)}
+            onOpenPopup={() => openPopup(recipe)}
           />
         ))}
       </div>
@@ -91,6 +101,17 @@ function RecipeList() {
             setModalOpen(false);
             setSelectedRecipe(null);
           }}
+        />
+      )}
+      {selectedRecipeForPopup && (
+        <RecipePopup
+          title={selectedRecipeForPopup.name}
+          imageSrc={selectedRecipeForPopup.image}
+          description={selectedRecipeForPopup.description}
+          ingredients={selectedRecipeForPopup.ingredients}
+          nutritionalValues={selectedRecipeForPopup.nutritionalValues}
+          preparation={selectedRecipeForPopup.preparation}
+          onClose={closePopup}
         />
       )}
     </div>
