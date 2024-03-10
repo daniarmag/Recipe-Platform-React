@@ -14,9 +14,6 @@ import Footer from './components/Footer';
 import CreateNewRecipe from './components/NewRecipeForm';
 
 
-
-
-
 function App() {
   return (
     <>

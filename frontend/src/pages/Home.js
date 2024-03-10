@@ -7,10 +7,10 @@ import { useTheme } from '../context/ThemeContext';
 function Home() {
   const {theme} = useTheme();
 
-    return (
-      <div className={`bg-${theme[theme.darkMode].secondary}`}>
-        <div className="flex flex-col items-center">
-          <h1 className="text-4xl font-bold mt-2 mb-2 bigTitle">
+    return (  
+      <div style={{ backgroundColor: theme[theme.darkMode].secondary }}>
+        <div className="flex flex-col items-center ">
+          <h1 className="text-4xl font-bold mt-2 mb-2">
             Welcome To Our Recipe Sharing & Meal Planning Platform
           </h1>
           <p className="text-lg">
@@ -21,7 +21,7 @@ function Home() {
         <SearchBar/>
         <RecipeList/>
         <Banner/>
-      </div>
+    </div>
     )
 
 }

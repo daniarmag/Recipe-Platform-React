@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import RecipesApi from '../api/RecipesApi';
-
+import { useTheme } from '../context/ThemeContext';
 
 const CreateNewRecipe = () => {
     const [recipeData, setRecipeData] = useState({
@@ -68,44 +68,20 @@ const CreateNewRecipe = () => {
         alert('Failed to add the recipe');
       }
     };
-  
-    // return (
-    //   <div className="container mx-auto my-8">
-    //     <div className="text-3xl text-gray-600 font-bold text-center py-3">Add your Recipe here.</div>
-    //     <form className="max-w-md mx-auto " onSubmit={handleSubmit}>
-    //       {/* Author and Recipe Name */}
-    //       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-    //         <textarea id="author" name="author" className="border rounded text-sm text-left w-full p-2" placeholder="Enter your name" onChange={handleInputChange} />
-    //         <textarea id="name" name="name" className="border rounded text-sm text-left w-full p-2" placeholder="Enter Recipe Name" onChange={handleInputChange} />
-    //       </div>
-    //       {/* Description, Ingredients, and Preparation */}
-    //       <textarea id="description" name="description" className="border rounded text-sm text-left w-full p-2 mb-4" placeholder="Enter Description" onChange={handleInputChange} />
-    //       <textarea id="ingredients" name="ingredients" className="border rounded text-sm text-left w-full p-2 mb-4" placeholder="Enter Ingredients. Each ingredient on a separate line." onChange={handleInputChange} />
-    //       <textarea id="preparation" name="preparation" className="border rounded text-sm text-left w-full p-2 mb-4" placeholder="Enter Preparation. Each step on a separate line." onChange={handleInputChange} />
-    //       {/* Nutritional Values */}
-    //       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
-    //         <input type="text" id="nutritionalValues.calories" name="nutritionalValues.calories" className="border rounded text-sm w-full p-2" placeholder="Calories" onChange={handleInputChange} />
-    //         <input type="text" id="nutritionalValues.fat" name="nutritionalValues.fat" className="border rounded text-sm w-full p-2" placeholder="Fat (g)" onChange={handleInputChange} />
-    //         <input type="text" id="nutritionalValues.protein" name="nutritionalValues.protein" className="border rounded text-sm w-full p-2" placeholder="Protein (g)" onChange={handleInputChange} />
-    //       </div>
-    //       {/* Image Upload */}
-    //       <div className="mb-4">
-    //         <label htmlFor="recipeImage" className="block text-sm font-semibold text-gray-700">Upload Image</label>
-    //         <input type="file" id="recipeImage" name="image" accept="image/*" className="hidden" onChange={handleImageChange} />
-    //         <button type="button" onClick={() => document.getElementById('recipeImage').click()} className="cursor-pointer bg-gray-200 text-gray-700 px-4 py-2 rounded-md">Choose File</button>
-    //         {recipeData.image && <p className="text-gray-700 px-4 font-semibold">Image selected</p>}
-    //       </div>
-    //       {/* Submit Button */}
-    //       <button type="submit" className="text-lg font-bold p-3  bg-green-500 text-white rounded-md shadow-md block w-full">Submit Recipe</button>
-    //     </form>
-    //   </div>
-    // );
+
+
+    const { theme } = useTheme();
+    const { darkMode } = theme;
+
+    const submitBtnStyle = darkMode === 'dark' ? 'bg-slate-600' : 'bg-green-500'
+
+
   return (
-    <div className="container mx-auto">
+    <div className="container mx-auto" >
         <div className="text-3xl text-gray-600 font-bold text-center py-3 bigTitle sm:text-3xl">
           Add your Recipe here.
         </div>
-        <form className="max-w-md mx-auto" onSubmit={handleSubmit}>
+        <form className="max-w-md mx-auto pb-4" onSubmit={handleSubmit}>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="mb-2 mx-4"> {/* Added mx-4 for spacing */}
             <textarea
@@ -226,7 +202,8 @@ const CreateNewRecipe = () => {
               {/* Submit button */}
               <button
                 type="submit"
-                className="text-lg font-bold p-3 bg-green-500 text-white rounded-md shadow-md mb-4 mx-auto block w-full"
+                // style={submitBtnStyle}
+                className={`text-lg font-bold p-3 ${submitBtnStyle} rounded-md shadow-md  mx-auto block w-full`}
               >
                 Submit Recipe
               </button>

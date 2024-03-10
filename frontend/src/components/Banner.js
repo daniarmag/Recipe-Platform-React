@@ -1,8 +1,15 @@
 import React, { useEffect, useState } from 'react';
+import { useTheme } from '../context/ThemeContext';
 
 const Banner = () => {
     const [randomTip, setRandomTip] = useState('');
+    const { theme } = useTheme();
+    const { darkMode } = theme;
 
+    const bannerStyle = {
+        background: darkMode ==='dark'? 'linear-gradient(to bottom right, #1A202C, #2D3748)' : 'linear-gradient(to bottom right, #48BB78, #38A169)',
+      };
+      
     useEffect(() => {
         // Tips array
         const tips = [
@@ -23,7 +30,7 @@ const Banner = () => {
     }, []);
 
     return (
-        <div id="banner" className="bg-gradient-to-br from-green-400 to-green-500 mt-6 text-center p-4 banner-section">
+        <div id="banner" className="mt-6 text-center p-4 banner-section" style={bannerStyle}>
             <div className="container mx-auto">
                 <div className="text-2xl font-bold mb-4 text-white">
                     {randomTip}

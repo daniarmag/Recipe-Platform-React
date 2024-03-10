@@ -4,6 +4,8 @@ import Modal from './Modal.js';
 import RecipePopup from './RecipePopup.js'
 import { useRecipes } from '../context/RecipesContext'; // Update the import
 import { usePlanner } from '../context/PlannerContext';
+import { useTheme } from '../context/ThemeContext';
+
 
 function RecipeList() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -51,10 +53,14 @@ function RecipeList() {
 
   const addToPlanner = (meal, recipe) => {
     window.alert(`Recipe ${recipe.name} added to ${meal}`);
-
-
-    
     addRecipe(meal, recipe);
+  };
+
+  const { theme } = useTheme();
+  const { darkMode } = theme;
+
+  const nextPrevSyles = {
+    backgroundColor:darkMode === 'dark' ?'#1A202C' : '#48BB78',
   };
 
   return (
@@ -78,7 +84,7 @@ function RecipeList() {
         {currentPage > 1 && (
           <button
             onClick={() => paginate(currentPage - 1)}
-            className="mr-2 px-4 py-2 bg-green-400 text-white rounded shadow-md hover:bg-green-500"
+            className="mr-2 px-4 py-2 text-white rounded shadow-md hover:bg-green-500"  style={nextPrevSyles}
           >
             Prev
           </button>
@@ -86,7 +92,7 @@ function RecipeList() {
         {indexOfLastRecipe < recipes.length && (
           <button
             onClick={() => paginate(currentPage + 1)}
-            className="px-4 py-2 bg-green-400 text-white rounded shadow-md hover:bg-green-500"
+            className="px-4 py-2 text-white rounded shadow-md hover:bg-green-500" style={nextPrevSyles}
           >
             Next
           </button>

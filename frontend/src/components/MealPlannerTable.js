@@ -1,6 +1,9 @@
 import React from 'react';
 import { usePlanner } from '../context/PlannerContext.js';
 
+import { useTheme } from '../context/ThemeContext';
+
+
 function MealPlanner() {
   const { getMeals, removeRecipe } = usePlanner();
   const meals = getMeals();
@@ -49,76 +52,76 @@ console.log(meals);
   };
   
   return (
-    <div className="text-xl font-bold px-2 mb-10">
-    <div className="text-xl font-bold px-2">
-      <div className="text-2xl font-bold text-center py-3 bigTitle sm:text-3xl">
-        Plan your meals for the day
-      </div>
-      <div className="overflow-x-auto">
-        <table className="w-full border border-gray-300 rounded shadow-md">
-          <thead className="hidden sm:table-header-group">
-            <tr>
-              {['Meal', 'Recipe', 'Ingredients', 'Calories', 'Proteins', 'Fats', 'Actions'].map((columnText, index) => (
-                <th key={index} className="py-2 px-4 text-left bg-gray-100">
-                  {columnText}
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {Object.keys(meals).map((mealCategory) => (
-              Object.values(meals[mealCategory]).map((recipe, index) => (
-                <tr key={index} className={`border-t border-gray-300 ${getCategoryColor(mealCategory)}`}>
-                  {index === 0 ? (
-                    <td className="py-2 px-4" rowSpan={Object.values(meals[mealCategory]).length} data-label="Meal">
-                      {mealCategory}
+    <div className="text-xl font-bold px-2 min-h-screen">
+      <div className="text-xl font-bold px-2">
+        <div className="text-2xl font-bold text-center py-3 bigTitle sm:text-3xl">
+          Plan your meals for the day
+        </div>
+        <div className="overflow-x-auto">
+          <table className="w-full border border-gray-300 rounded shadow-md">
+            <thead className="hidden sm:table-header-group">
+              <tr>
+                {['Meal', 'Recipe', 'Ingredients', 'Calories', 'Proteins', 'Fats', 'Actions'].map((columnText, index) => (
+                  <th key={index} className="py-2 px-4 text-left bg-gray-100">
+                    {columnText}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {Object.keys(meals).map((mealCategory) => (
+                Object.values(meals[mealCategory]).map((recipe, index) => (
+                  <tr key={index} className={`border-t border-gray-300 ${getCategoryColor(mealCategory)}`}>
+                    {index === 0 ? (
+                      <td className="py-2 px-4" rowSpan={Object.values(meals[mealCategory]).length} data-label="Meal">
+                        {mealCategory}
+                      </td>
+                    ) : null}
+                    <td className="py-2 px-4" data-label="Recipe Name">
+                      {recipe.name}
                     </td>
-                  ) : null}
-                  <td className="py-2 px-4" data-label="Recipe Name">
-                    {recipe.name}
-                  </td>
-                  <td className="py-2 px-4" data-label="Ingredients">
-                    {recipe.ingredients.join(',')}
-                  </td>
-                  <td className="py-2 px-4" data-label="Calories">
-                    {recipe.nutritionalValues.calories}
-                  </td>
-                  <td className="py-2 px-4" data-label="Proteins">
-                    {recipe.nutritionalValues.proteins}
-                  </td>
-                  <td className="py-2 px-4" data-label="Fats">
-                    {recipe.nutritionalValues.fat}
-                  </td>
-                  <td className="py-2 px-4" data-label="Actions">
-                    <button className="bg-green-500 text-white px-2 py-1 rounded" onClick={() => handleDelete(mealCategory, recipe)}>
-                      Delete
-                    </button>
-                  </td>
-                </tr>
-              ))
-            ))}
-          </tbody>
+                    <td className="py-2 px-4" data-label="Ingredients">
+                      {recipe.ingredients.join(',')}
+                    </td>
+                    <td className="py-2 px-4" data-label="Calories">
+                      {recipe.nutritionalValues.calories}
+                    </td>
+                    <td className="py-2 px-4" data-label="Proteins">
+                      {recipe.nutritionalValues.proteins}
+                    </td>
+                    <td className="py-2 px-4" data-label="Fats">
+                      {recipe.nutritionalValues.fat}
+                    </td>
+                    <td className="py-2 px-4" data-label="Actions">
+                      <button className="bg-green-500 text-white px-2 py-1 rounded" onClick={() => handleDelete(mealCategory, recipe)}>
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                ))
+              ))}
+            </tbody>
 
-          <tfoot className="hidden sm:table-footer-group">
-            <tr>
-              <td className="py-2 px-4 text-left bg-gray-100" colSpan={3}>
-                Totals
-              </td>
-              <td className="py-2 px-4 text-left bg-gray-100" data-label="Calories">
-                {totals.calories}
-              </td>
-              <td className="py-2 px-4 text-left bg-gray-100" data-label="Proteins">
-                {totals.proteins}
-              </td>
-              <td className="py-2 px-4 text-left bg-gray-100" data-label="Fats">
-                {totals.fats}
-              </td>
-              <td className="py-2 px-4 text-left bg-gray-100"></td>
-            </tr>
-          </tfoot>
-        </table>
+            <tfoot className="hidden sm:table-footer-group">
+              <tr>
+                <td className="py-2 px-4 text-left bg-gray-100" colSpan={3}>
+                  Totals
+                </td>
+                <td className="py-2 px-4 text-left bg-gray-100" data-label="Calories">
+                  {totals.calories}
+                </td>
+                <td className="py-2 px-4 text-left bg-gray-100" data-label="Proteins">
+                  {totals.proteins}
+                </td>
+                <td className="py-2 px-4 text-left bg-gray-100" data-label="Fats">
+                  {totals.fats}
+                </td>
+                <td className="py-2 px-4 text-left bg-gray-100"></td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
       </div>
-    </div>
   </div>
   );
 }
