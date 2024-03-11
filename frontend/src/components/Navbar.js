@@ -60,11 +60,19 @@ function Navbar() {
             <div className={`sm:hidden absolute top-14 right-0 p-4 px-2 shadow-lg ${theme[theme.darkMode].primary} `}>
               {popUpLinks.map((link) => (
                 <div key={link.text} className="mb-2">
-                  <Link to={link.href} className={`"text-white text-xl duration-200 ${theme.isDarkMode ? 'hover:text-blue-300' : 'hover:text-blue-950'} `}>
+                  <Link to={link.href} className={`text-white text-xl duration-200 ${theme.isDarkMode ? 'hover:text-blue-300' : 'hover:text-blue-950'} `}>
                     {link.text}
                   </Link>
                 </div>
               ))}
+              <button
+              onClick={toggleDarkMode}
+              className={`text-white text-xl duration-200 rounded-lg focus:outline-none ${theme.isDarkMode ? 'hover:text-blue-300' : 'hover:text-blue-950'}
+                bg-${theme[theme.darkMode].secondary}
+              }`}
+                >   
+              {theme.isDarkMode ? 'light' : 'dark'} Mode
+              </button>
             </div>
           )}
         </div>

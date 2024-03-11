@@ -3,25 +3,32 @@ import React, { useState } from 'react';
 const LoginForm = () => {
   const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
+  const [isRegisterMode, setRegisterMode] = useState(false);
 
-  const handleLogin = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    // Add your authentication logic here
+
+    if (isRegisterMode) {
+      // Add your registration logic here
+      console.log('Registration logic goes here');
+    } else {
+      // Add your authentication logic here
+      console.log('Login logic goes here');
+    }
+
     console.log('Username:', userName);
     console.log('Password:', password);
-    // You can replace the console logs with your authentication logic
   };
 
-  const handleCreateAccount = () => {
-    // Add logic to navigate to the registration page or show a registration form
-    console.log('Navigate to registration page or show registration form');
+  const handleToggleMode = () => {
+    setRegisterMode((prevMode) => !prevMode);
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50">
       <div className="bg-white p-8 rounded shadow-md w-full sm:w-96">
-        <h2 className="text-2xl font-bold mb-4">Login</h2>
-        <form onSubmit={handleLogin}>
+        <h2 className="text-2xl font-bold mb-4">{isRegisterMode ? 'Register' : 'Login'}</h2>
+        <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label htmlFor="userName" className="block text-sm font-medium text-gray-600">
               Username
@@ -52,20 +59,22 @@ const LoginForm = () => {
           </div>
           <button
             type="submit"
-            className="bg-green-500 text-white p-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-300" 
-          > 
-            Login
+            className={`bg-green-500 text-white p-2 rounded-md hover:bg-green-600 focus:outline-none focus:ring focus:border-green-300`}
+          >
+            {isRegisterMode ? 'Register' : 'Login'}
           </button>
         </form>
         <div className="mt-4 text-sm text-gray-600">
           <p>
-            Don't have an account?{' '}
+            {isRegisterMode
+              ? "Already have an account? "
+              : "Don't have an account? "}
             <button
               type="button"
-              className="text-blue-500 underline"
-              onClick={handleCreateAccount}
+              className={`text-blue-500 underline`}
+              onClick={handleToggleMode}
             >
-              Create one here.
+              {isRegisterMode ? 'Login' : 'Create one here.'}
             </button>
           </p>
         </div>
