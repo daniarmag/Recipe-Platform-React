@@ -47,11 +47,11 @@ function Navbar() {
             <li>
               <button
                 onClick={toggleDarkMode}
-                className={`text-white text-xl duration-200 border border-white rounded-lg mx-2 px-3 focus:outline-none 
+                className={`text-white text-xl duration-200 border border-white rpp rounded-full mx-2 px-1 focus:outline-none 
                 bg-${theme[theme.darkMode].secondary}
                 }`}
               >
-                {theme.isDarkMode ? 'light' : 'dark'} Mode
+                {theme.isDarkMode ? '☀️' : '🌑'} 
               </button>
             </li>
           </ul>
@@ -65,14 +65,14 @@ function Navbar() {
                   </Link>
                 </div>
               ))}
-              <button
-              onClick={toggleDarkMode}
-              className={`text-white text-xl duration-200 rounded-lg focus:outline-none ${theme.isDarkMode ? 'hover:text-blue-300' : 'hover:text-blue-950'}
-                bg-${theme[theme.darkMode].secondary}
-              }`}
-                >   
-              {theme.isDarkMode ? 'light' : 'dark'} Mode
-              </button>
+                <button
+                onClick={toggleDarkMode}
+                className={`text-white text-xl duration-200 rounded-lg focus:outline-none ${theme.isDarkMode ? 'hover:text-blue-300' : 'hover:text-blue-950'}
+                  bg-${theme[theme.darkMode].secondary}
+                }`}
+                  >   
+                {theme.isDarkMode ? 'LightMode' : 'DarkMode'} 
+                </button>
             </div>
           )}
         </div>

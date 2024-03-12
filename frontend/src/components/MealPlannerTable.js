@@ -1,13 +1,32 @@
-import React from 'react';
-import { usePlanner } from '../context/PlannerContext.js';
+import React, { useState } from 'react';
+import { usePlanner } from '../context/PlannerContext.js'; 
 
 import { useTheme } from '../context/ThemeContext';
 
+//
+// import ShoppingCart from './ShoppingCart'; 
 
 function MealPlanner() {
   const { getMeals, removeRecipe } = usePlanner();
   const meals = getMeals();
 console.log(meals);
+
+//
+  // const [selectedRecipes, setSelectedRecipes] = useState(null);
+  // const [showShoppingCart, setShowShoppingCart] = useState(false);
+
+
+  // const handleOpenShoppingCart = () => {
+  //   setSelectedRecipes(meals); // Set the selected recipes based on your logic
+  //   setShowShoppingCart(true);
+  // };
+
+  // // Function to close the shopping cart
+  // const handleCloseShoppingCart = () => {
+  //   setShowShoppingCart(false);
+  // };
+
+
   const calculateTotals = () => {
     const totals = {
       calories: 0,
@@ -50,6 +69,8 @@ console.log(meals);
     // Return the color based on the category or a default color
     return categoryColorMap[category] || 'bg-gray-200';
   };
+
+  const imageUrl = 'https://firebasestorage.googleapis.com/v0/b/webproject-58141.appspot.com/o/recipeImages%2Fadd-to-cart.png?alt=media&token=1b4dd764-7ad4-45d1-9f76-3d8c5c94d061';
   
   return (
     <div className="text-xl font-bold px-2 min-h-screen">
@@ -59,7 +80,7 @@ console.log(meals);
         </div>
         <div className="overflow-x-auto">
           <table className="w-full border border-gray-300 rounded shadow-md">
-            <thead className="hidden sm:table-header-group">
+            <thead className="sm:table-header-group">
               <tr>
                 {['Meal', 'Recipe', 'Ingredients', 'Calories', 'Proteins', 'Fats', 'Actions'].map((columnText, index) => (
                   <th key={index} className="py-2 px-4 text-left bg-gray-100">
@@ -102,7 +123,7 @@ console.log(meals);
               ))}
             </tbody>
 
-            <tfoot className="hidden sm:table-footer-group">
+            <tfoot className="border-t-2 sm:table-footer-group">
               <tr>
                 <td className="py-2 px-4 text-left bg-gray-100" colSpan={3}>
                   Totals
@@ -116,7 +137,12 @@ console.log(meals);
                 <td className="py-2 px-4 text-left bg-gray-100" data-label="Fats">
                   {totals.fats}
                 </td>
-                <td className="py-2 px-4 text-left bg-gray-100"></td>
+                <td className="py-2 pl-8 bg-gray-100">
+                  <button>
+                    
+                    <img src={imageUrl} alt="Shopping Cart" style={{ width: '24px', height: '24px' }} />
+                  </button>
+                </td>
               </tr>
             </tfoot>
           </table>

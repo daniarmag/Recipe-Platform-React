@@ -14,7 +14,7 @@ const RecipePopup = ({ title, imageSrc, description, ingredients, nutritionalVal
   );
 
   return (
-<div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-4 rounded-md shadow-lg z-50 text-center w-10/12 max-w-md mx-auto sm:w-4/5 md:w-2/3 lg:w-1/2 xl:w-1/3 max-h-[28]  popup">
+<div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-4 rounded-md shadow-lg z-50 text-center w-10/12 max-w-md mx-auto sm:w-3/5 md:w-3/5 lg:w-1/2 xl:w-1/3 max-h-[22]  popup">
       <button onClick={onClose} className="absolute top-2 left-2">
         <span className="text-stone-900 font-extrabold text-2xl bg-slate-200 rounded cursor-pointer">&times;</span>
       </button>
