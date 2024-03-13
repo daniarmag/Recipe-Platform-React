@@ -6,19 +6,22 @@ import { PlannerProvider } from './context/PlannerContext';
 import { RecipesProvider } from './context/RecipesContext';
 import { BrowserRouter } from 'react-router-dom';
 import { ThemeProvider } from './context/ThemeContext';
+import { AuthProvider } from './context/AuthContext';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-      <RecipesProvider>
-        <PlannerProvider>
-        <ThemeProvider> 
-          <App />
-        </ThemeProvider>
-        </PlannerProvider>
-      </RecipesProvider>
+      <AuthProvider>
+        <RecipesProvider>
+          <PlannerProvider>
+          <ThemeProvider> 
+            <App />
+          </ThemeProvider>
+          </PlannerProvider>
+        </RecipesProvider>
+      </AuthProvider>
     </BrowserRouter>
   </React.StrictMode>
 );

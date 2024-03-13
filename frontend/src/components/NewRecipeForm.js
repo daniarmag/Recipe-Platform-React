@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import RecipesApi from '../api/RecipesApi';
 import { useTheme } from '../context/ThemeContext';
+import { useAuth } from '../context/AuthContext';
 
 const CreateNewRecipe = () => {
+    const { user } = useAuth();
     const [recipeData, setRecipeData] = useState({
-      author: '',
+      author: user?.email || '',
       name: '',
       description: '',
       ingredients: '',
@@ -42,7 +44,7 @@ const CreateNewRecipe = () => {
       e.preventDefault();
       const formData = new FormData();
       console.log(recipeData)
-      formData.append("author", recipeData.author); // Example of adding a text field
+      formData.append("author", recipeData.author); 
       formData.append("name", recipeData.name);
       formData.append("description", recipeData.description);
       formData.append("ingredients", recipeData.ingredients);
@@ -82,25 +84,19 @@ const CreateNewRecipe = () => {
           Add your Recipe here.
         </div>
         <form className="max-w-md mx-auto pb-4" onSubmit={handleSubmit}>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="mb-2 mx-4"> {/* Added mx-4 for spacing */}
-            <textarea
-              id="author"
-              className="border rounded text-sm text-left w-full"
-              placeholder="Enter your name"
-              onChange={handleInputChange}
-            />
-          </div>
-
-          <div className="mb-2 mx-4"> {/* Added mx-4 for spacing */}
-            <textarea
-              id="name"
-              className="border rounded text-sm text-left w-full"
-              placeholder="Enter Recipe Name"
-              onChange={handleInputChange}
-            />
-          </div>
+  
+        <div className="mb-4 mx-4"> {/* Added mx-4 for spacing */}
+          <label htmlFor="name" className="block text-sm font-semibold text-gray-700">
+            Recipe Name:
+          </label>
+          <textarea
+            id="name"
+            className="border rounded p-2 text-sm text-left w-full"
+            placeholder="Enter Recipe Name"
+            onChange={handleInputChange}
+          />
         </div>
+        
 
       <div className="mb-4 mx-4"> {/* Added mx-4 for spacing */}
         <label htmlFor="description" className="block text-sm font-semibold text-gray-700">

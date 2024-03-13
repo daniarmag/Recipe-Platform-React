@@ -8,26 +8,26 @@ import { useTheme } from '../context/ThemeContext';
 
 
 function RecipeList() {
-  const [currentPage, setCurrentPage] = useState(1);
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedRecipeForPopup, setSelectedRecipeForPopup] = useState(null);
-  const recipesPerPage = 8;
+  
   const [selectedRecipe, setSelectedRecipe] = useState(null);
 
   const { state, addRecipe } = usePlanner();
-  const { recipes, fetchRecipes } = useRecipes(); // Use the useRecipes hook
+  const { recipes, page, totalPages, loading, error, fetchRecipes, updatePage } = useRecipes();
 
   useEffect(() => {
     // Fetch recipes from the context
     fetchRecipes();
   }, [fetchRecipes]);
 
-  const indexOfLastRecipe = currentPage * recipesPerPage;
-  const indexOfFirstRecipe = indexOfLastRecipe - recipesPerPage;
-  const currentRecipes = recipes.slice(indexOfFirstRecipe, indexOfLastRecipe);
+  // const indexOfLastRecipe = currentPage * recipesPerPage;
+  // const indexOfFirstRecipe = indexOfLastRecipe - recipesPerPage;
+  // const currentRecipes = recipes.slice(indexOfFirstRecipe, indexOfLastRecipe);
 
   const paginate = (pageNumber) => {
-    setCurrentPage(pageNumber);
+    // Update the page in the context
+    updatePage(pageNumber);
   };
 
   const openModal = () => {
@@ -59,14 +59,14 @@ function RecipeList() {
   const { theme } = useTheme();
   const { darkMode } = theme;
 
-  const nextPrevSyles = {
+  const nextPrevStyles = {
     backgroundColor:darkMode === 'dark' ?'#1A202C' : '#48BB78',
   };
-
+ 
   return (
     <div>
       <div className="grid grid-cols-1 p-6 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 gap-4 sm:grid-cols-2">
-        {currentRecipes.map((recipe) => (
+        {recipes?.map((recipe) => (
           <RecipeCard
             key={recipe.id}
             title={recipe.name}
@@ -81,7 +81,26 @@ function RecipeList() {
         ))}
       </div>
       <div className="flex justify-center mt-4">
-        {currentPage > 1 && (
+        {page > 1 && (
+          <button
+            onClick={() => paginate(page - 1)}
+            className="mr-2 px-4 py-2 text-white rounded shadow-md hover:bg-green-500"
+            style={nextPrevStyles}
+          >
+            Prev
+          </button>
+        )}
+        {page < totalPages && (
+          <button
+            onClick={() => paginate(page + 1)}
+            className="px-4 py-2 text-white rounded shadow-md hover:bg-green-500"
+            style={nextPrevStyles}
+          >
+            Next
+          </button>
+        )}
+      
+        {/* {currentPage > 1 && (
           <button
             onClick={() => paginate(currentPage - 1)}
             className="mr-2 px-4 py-2 text-white rounded shadow-md hover:bg-green-500"  style={nextPrevSyles}
@@ -96,7 +115,7 @@ function RecipeList() {
           >
             Next
           </button>
-        )}
+        )} */}
       </div>
 
       {modalOpen && (

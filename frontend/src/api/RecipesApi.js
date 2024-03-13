@@ -1,6 +1,6 @@
 import axios from 'axios';
-
-const apiBaseUrl = 'http://localhost:5000/api';
+import config from '../config.js'; 
+const {apiBaseUrl } = config;
 
 async function fileToBase64(file) {
   return new Promise((resolve, reject) => {
@@ -43,11 +43,14 @@ class RecipesApi {
     }
   }
 
-  async getRecipes(searchQuery) {
+  async getRecipes({page, pageSize, searchQuery}) {
     try {
       const response = await this.api.get('/recipes', {
-        params: { searchQuery } 
+        params: { page, pageSize, searchQuery },
       });
+    //   const url = `/recipes?page=${page}&pageSize=${pageSize}&searchQuery=${searchQuery}`;
+    // const response = await this.api.get(url);
+
       return response.data;
     } catch (error) {
       console.error('Error getting recipes:', error);
