@@ -1,31 +1,55 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { usePlanner } from '../context/PlannerContext.js'; 
 
 import { useTheme } from '../context/ThemeContext';
 
-//
-// import ShoppingCart from './ShoppingCart'; 
+import ShoppingList from './ShoppingList.js';
 
 function MealPlanner() {
   const { getMeals, removeRecipe } = usePlanner();
+
+
+
+  // -
+  const [ShoppingListOpen, setShoppingListOpen] = useState(false);
+  const [selectedRecipes, setSelectedRecipes] = useState(null);
+
   const meals = getMeals();
-console.log(meals);
 
-//
-  // const [selectedRecipes, setSelectedRecipes] = useState(null);
-  // const [showShoppingCart, setShowShoppingCart] = useState(false);
+  const toggleShoppingList = () => {
+    setShoppingListOpen(!ShoppingListOpen);
+  };
+  
+  useEffect(() => {
+    // Function to fetch and format selected recipes
+    const fetchSelectedRecipes = async () => {
+      try {
+        const formattedRecipes = {};
+    
+        Object.keys(meals).forEach((mealCategory) => {
+          if (Array.isArray(meals[mealCategory])) {
+            formattedRecipes[mealCategory] = meals[mealCategory].map((recipe) => ({
+              name: recipe.id,
+              ingredients: recipe.ingredients,
+            }));
+          } else {
+            console.error('Error: meals[mealCategory] is not an array');
+          }
+        });
+    
+        setSelectedRecipes(formattedRecipes);
+      } catch (error) {
+        console.error('Error fetching selected recipes:', error);
+      }
+    };
+
+    fetchSelectedRecipes();
+  }, []);
 
 
-  // const handleOpenShoppingCart = () => {
-  //   setSelectedRecipes(meals); // Set the selected recipes based on your logic
-  //   setShowShoppingCart(true);
-  // };
 
-  // // Function to close the shopping cart
-  // const handleCloseShoppingCart = () => {
-  //   setShowShoppingCart(false);
-  // };
 
+  //  -
 
   const calculateTotals = () => {
     const totals = {
@@ -36,7 +60,7 @@ console.log(meals);
 
     Object.keys(meals).forEach((mealCategory) => {
       Object.values(meals[mealCategory]).forEach((recipe) => {
-        console.log(recipe);
+
 
         totals.calories += +recipe.nutritionalValues.calories || 0;
         totals.proteins += +recipe.nutritionalValues.proteins || 0;
@@ -138,9 +162,11 @@ console.log(meals);
                   {totals.fats}
                 </td>
                 <td className="py-2 pl-8 bg-gray-100">
-                  <button>
-                    
-                    <img src={imageUrl} alt="Shopping Cart" style={{ width: '24px', height: '24px' }} />
+                {ShoppingListOpen && selectedRecipes && (
+                  <ShoppingList selectedRecipes={selectedRecipes} onClose={toggleShoppingList} />
+                )}
+                  <button onClick={toggleShoppingList}>
+                    <img src={imageUrl} alt="Shopping List" style={{ width: '24px', height: '24px' }} />
                   </button>
                 </td>
               </tr>

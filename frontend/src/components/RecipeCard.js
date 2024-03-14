@@ -20,14 +20,14 @@ const RecipeCard = ({ title, imageSrc, description, ingredients, nutritionalValu
   
 
   return (
-      <div className="bg-white rounded-lg shadow-md border-2 my-2 hover:scale-110 transition duration-500 recipe-card" style={cardStyle}>
+      <div className="bg-white rounded-lg shadow-md border-2 my-2 hover:scale-105 transition duration-200 recipe-card" style={cardStyle}>
         <div className="p-4 flex flex-col h-full"> {/* Set height to full for the flex container */}
         
-          <img src={imageSrc} alt={title} className="w-full h-64 object-cover rounded-md mb-4" 
+          <img src={imageSrc} alt={title} className="w-full h-64 object-cover rounded-md mb-2" 
               onClick={() => onOpenPopup({ title, imageSrc, description, ingredients, nutritionalValues, preparation })}
           />
-          <div className="text-center text-lg font-semibold title mb-4">{title}</div>
-          <p className="text-s description flex-grow mb-4">{description}</p>
+          <div className="text-center text-lg font-semibold title mb-2">{title}</div>
+          <p className="text-s description flex-grow mb-2">{description}</p>
           
           <button
             className={`add-to-planner-btn text-${addToPlannerBtnStyle.text} py-1 px-2 text-xs border border-${addToPlannerBtnStyle.border} rounded-full`}

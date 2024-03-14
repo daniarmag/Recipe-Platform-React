@@ -100,22 +100,6 @@ function RecipeList() {
           </button>
         )}
       
-        {/* {currentPage > 1 && (
-          <button
-            onClick={() => paginate(currentPage - 1)}
-            className="mr-2 px-4 py-2 text-white rounded shadow-md hover:bg-green-500"  style={nextPrevSyles}
-          >
-            Prev
-          </button>
-        )}
-        {indexOfLastRecipe < recipes.length && (
-          <button
-            onClick={() => paginate(currentPage + 1)}
-            className="px-4 py-2 text-white rounded shadow-md hover:bg-green-500" style={nextPrevSyles}
-          >
-            Next
-          </button>
-        )} */}
       </div>
 
       {modalOpen && (
