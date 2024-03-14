@@ -25,8 +25,8 @@ const LoginForm = ({ handleToggleMode }) => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50">
-      <div className="bg-white p-8 rounded shadow-md w-full sm:w-96">
+    <div className="min-h-screen flex items-center justify-center">
+      <div className="p-8 rounded shadow-md w-full sm:w-96 bg-zinc-400">
         <h2 className="text-2xl font-bold mb-4">Login</h2>
         {error && (
           <div className="bg-red-100 border-l-4 border-red-500 text-red-700 p-2 mb-4">

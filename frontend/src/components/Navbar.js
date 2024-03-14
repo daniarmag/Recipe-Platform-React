@@ -29,17 +29,20 @@ function Navbar() {
   };
 
   return (
-    <div className={`mx-auto flex flex-col sm:flex-row justify-between items-center py-3 shadow-md w-full top-0 z-50 ${theme[theme.darkMode].primary}`}>
+    <div className={`mx-auto flex flex-col sm:flex-row justify-between items-center py-2 shadow-md w-full top-0 z-50 ${theme[theme.darkMode].primary}`}>
       <div className="flex items-center w-full flex-1">
         {user && (
           <>
-            <p className="text-white text-xl px-2">{`Hello ${user.displayName || user.email}`}</p>
+           <p className="text-white text-xl px-2">
+        <strong style={{ fontWeight: 'bold' }}>Hello {user.displayName || user.email}</strong>
+           </p>
+
             {/* Hide the LogoutButton in mobile view */}
             <div className="sm:flex hidden "><LogoutButton /></div>
             
           </>
         )}
-        <button onClick={toggleMenu} className={`text-white text-2xl sm:hidden focus:outline-none self-end mx-2 right-0`}>
+       <button onClick={toggleMenu} className={`text-white  text-2xl sm:hidden sm:self-end mx-2 right-0 absolute`}>
         &#9776;
       </button>
       </div>
@@ -71,8 +74,8 @@ function Navbar() {
       )}
 
       {user && showMenu && (
-        <div className={`sm:hidden absolute top-14 right-0 p-4 px-2 shadow-lg ${theme[theme.darkMode].primary} `}>
-          {popUpLinks.map((link) => (
+        <div className={`sm:hidden absolute top-10 right-0 px-2 shadow-lg ${theme[theme.darkMode].primary} `}>
+          {popUpLinks.map((link) => ( 
             <div key={link.text} className="mb-2">
               <Link to={link.href} className={`text-white text-xl duration-200 ${theme.isDarkMode ? 'hover:text-blue-300' : 'hover:text-blue-950'} `}>
                 {link.text}

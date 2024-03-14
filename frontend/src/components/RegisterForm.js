@@ -33,8 +33,8 @@ const RegisterForm = ({ handleToggleMode }) => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50">
-      <div className="bg-white p-8 rounded shadow-md w-full sm:w-96">
+    <div className="min-h-screen flex items-center justify-center">
+      <div className= "p-8 rounded shadow-md w-full sm:w-96 bg-zinc-400">
         <h2 className="text-2xl font-bold mb-4">Register</h2>
         {error && (
           <div className="bg-red-100 border-l-4 border-red-500 text-red-700 p-2 mb-4">
@@ -51,6 +51,7 @@ const RegisterForm = ({ handleToggleMode }) => {
               id="userName"
               name="userName"
               value={userName}
+              placeholder='Enter your private UserName'
               onChange={(e) => setUserName(e.target.value)}
               className="mt-1 p-2 w-full border rounded-md"
               required
@@ -64,6 +65,7 @@ const RegisterForm = ({ handleToggleMode }) => {
               type="password"
               id="password"
               name="password"
+              placeholder='Enter your private PassWord'
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className="mt-1 p-2 w-full border rounded-md"
@@ -78,6 +80,7 @@ const RegisterForm = ({ handleToggleMode }) => {
               type="text"
               id="displayName"
               name="displayName"
+              placeholder='Enter your Checf Nickname'
               value={displayName}
               onChange={(e) => setDisplayName(e.target.value)}
               className="mt-1 p-2 w-full border rounded-md"
@@ -88,7 +91,7 @@ const RegisterForm = ({ handleToggleMode }) => {
             type="submit"
             className={`bg-green-500 text-white p-2 rounded-md hover:bg-green-600 focus:outline-none focus:ring focus:border-green-300`}
           >
-            Register
+            Register & Login
           </button>
         </form>
         <div className="mt-4 text-sm text-gray-600">
