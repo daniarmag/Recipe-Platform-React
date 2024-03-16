@@ -21,9 +21,6 @@ function RecipeList() {
     fetchRecipes();
   }, [fetchRecipes]);
 
-  // const indexOfLastRecipe = currentPage * recipesPerPage;
-  // const indexOfFirstRecipe = indexOfLastRecipe - recipesPerPage;
-  // const currentRecipes = recipes.slice(indexOfFirstRecipe, indexOfLastRecipe);
 
   const paginate = (pageNumber) => {
     // Update the page in the context

@@ -27,7 +27,6 @@ export const ThemeProvider = ({ children }) => {
 
   const toggleDarkMode = () => {
     const toggledDarkMode = theme.darkMode === 'dark' ? 'light' : 'dark';
-    console.log(toggledDarkMode);
 
     setTheme((prevTheme) => ({
       ...prevTheme,

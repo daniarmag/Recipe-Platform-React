@@ -49,7 +49,6 @@ class UsersApi {
     }
   }
 
-  // Add more authentication-related methods as needed
 
 }
 

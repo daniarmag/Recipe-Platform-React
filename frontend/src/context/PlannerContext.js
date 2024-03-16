@@ -7,17 +7,18 @@ const initialState = {
     lunch: {},
     dinner: {},
   },
+  shoppingList: {}
 };
 
-// Define the actions (add more as needed)
 const actionTypes = {
   ADD_RECIPE: 'ADD_RECIPE',
   REMOVE_RECIPE: 'REMOVE_RECIPE',
+  UPDATE_SHOPPING_LIST: 'UPDATE_SHOPPING_LIST'
 };
 
 // Define the reducer function
 const plannerReducer = (state, action) => {
-  const { mealCategory, recipe, recipeId } = action.payload;
+  const { mealCategory, recipe, recipeId, ingredientName } = action.payload;
 
   switch (action.type) {
     case actionTypes.ADD_RECIPE:
@@ -37,6 +38,15 @@ const plannerReducer = (state, action) => {
       return {
         ...state,
         meals: updatedMeals,
+      };
+    }
+    case actionTypes.UPDATE_SHOPPING_LIST: {
+      return {
+        ...state,
+        shoppingList: {
+          ...state.shoppingList,
+          [ingredientName]: action.payload.amount,
+        },
       };
     }
     default:
@@ -63,18 +73,50 @@ export const PlannerProvider = ({ children }) => {
     dispatch({ type: actionTypes.REMOVE_RECIPE, payload: { mealCategory, recipeId } });
   };
 
+  const updateShoppingList = (ingredientName, amount) => {
+    dispatch({ type: actionTypes.UPDATE_SHOPPING_LIST, payload: { ingredientName, amount } });
+  };
   const getMeals = () => {
     return state.meals;
   };
 
+
+
+  // 
+
+
+  const getShoppingList = (selectedRecipes) => {
+    let shoppingList = {};
+  
+    if (selectedRecipes) {
+      Object.keys(selectedRecipes).forEach((mealType) => {
+        Object.values(selectedRecipes[mealType]).forEach((recipe) => {
+          recipe.ingredients.forEach((ingredient) => {
+            if (!shoppingList[ingredient]) {
+              shoppingList[ingredient] = 1;
+            } else {
+              shoppingList[ingredient] += 1;
+            }
+          });
+        });
+      });
+    }
+  
+    return shoppingList;
+  };
+  //
+  
+  
+
   // Log the state after it has been updated
   useEffect(() => {
-    console.log(state);
+    // console.log(state);
   }, [state]);
 
   // Provide the state and functions to the children components
   return (
-    <PlannerContext.Provider value={{ state, getMeals, addRecipe, removeRecipe }}>
+    // <PlannerContext.Provider value={{ state, getMeals, addRecipe, removeRecipe  }}>
+    <PlannerContext.Provider value={{ state, getMeals, addRecipe, removeRecipe, getShoppingList, updateShoppingList  }}>
       {children}
     </PlannerContext.Provider>
   );

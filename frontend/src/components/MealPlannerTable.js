@@ -1,16 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { usePlanner } from '../context/PlannerContext.js'; 
-
-import { useTheme } from '../context/ThemeContext';
-
 import ShoppingList from './ShoppingList.js';
 
 function MealPlanner() {
   const { getMeals, removeRecipe } = usePlanner();
 
-
-
-  // -
   const [ShoppingListOpen, setShoppingListOpen] = useState(false);
   const [selectedRecipes, setSelectedRecipes] = useState(null);
 
@@ -18,39 +12,9 @@ function MealPlanner() {
 
   const toggleShoppingList = () => {
     setShoppingListOpen(!ShoppingListOpen);
+    setSelectedRecipes(meals);
   };
   
-  useEffect(() => {
-    // Function to fetch and format selected recipes
-    const fetchSelectedRecipes = async () => {
-      try {
-        const formattedRecipes = {};
-    
-        Object.keys(meals).forEach((mealCategory) => {
-          if (Array.isArray(meals[mealCategory])) {
-            formattedRecipes[mealCategory] = meals[mealCategory].map((recipe) => ({
-              name: recipe.id,
-              ingredients: recipe.ingredients,
-            }));
-          } else {
-            console.error('Error: meals[mealCategory] is not an array');
-          }
-        });
-    
-        setSelectedRecipes(formattedRecipes);
-      } catch (error) {
-        console.error('Error fetching selected recipes:', error);
-      }
-    };
-
-    fetchSelectedRecipes();
-  }, []);
-
-
-
-
-  //  -
-
   const calculateTotals = () => {
     const totals = {
       calories: 0,
