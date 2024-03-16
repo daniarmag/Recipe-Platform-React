@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useReducer, useEffect } from 'react';
+import React, { createContext, useContext, useReducer, useEffect } from "react";
 
 // Define the initial state
 const initialState = {
@@ -7,13 +7,13 @@ const initialState = {
     lunch: {},
     dinner: {},
   },
-  shoppingList: {}
+  shoppingList: {},
 };
 
 const actionTypes = {
-  ADD_RECIPE: 'ADD_RECIPE',
-  REMOVE_RECIPE: 'REMOVE_RECIPE',
-  UPDATE_SHOPPING_LIST: 'UPDATE_SHOPPING_LIST'
+  ADD_RECIPE: "ADD_RECIPE",
+  REMOVE_RECIPE: "REMOVE_RECIPE",
+  UPDATE_SHOPPING_LIST: "UPDATE_SHOPPING_LIST",
 };
 
 // Define the reducer function
@@ -62,7 +62,7 @@ export const PlannerProvider = ({ children }) => {
   const [state, dispatch] = useReducer(plannerReducer, initialState);
 
   // Define functions to dispatch actions
-  const addRecipe = (mealCategory, recipe) => {
+  const addRecipeToPlanner = (mealCategory, recipe) => {
     dispatch({
       type: actionTypes.ADD_RECIPE,
       payload: { mealCategory, recipe },
@@ -70,24 +70,27 @@ export const PlannerProvider = ({ children }) => {
   };
 
   const removeRecipe = (mealCategory, recipeId) => {
-    dispatch({ type: actionTypes.REMOVE_RECIPE, payload: { mealCategory, recipeId } });
+    dispatch({
+      type: actionTypes.REMOVE_RECIPE,
+      payload: { mealCategory, recipeId },
+    });
   };
 
   const updateShoppingList = (ingredientName, amount) => {
-    dispatch({ type: actionTypes.UPDATE_SHOPPING_LIST, payload: { ingredientName, amount } });
+    dispatch({
+      type: actionTypes.UPDATE_SHOPPING_LIST,
+      payload: { ingredientName, amount },
+    });
   };
   const getMeals = () => {
     return state.meals;
   };
 
-
-
-  // 
-
+  //
 
   const getShoppingList = (selectedRecipes) => {
     let shoppingList = {};
-  
+
     if (selectedRecipes) {
       Object.keys(selectedRecipes).forEach((mealType) => {
         Object.values(selectedRecipes[mealType]).forEach((recipe) => {
@@ -101,12 +104,10 @@ export const PlannerProvider = ({ children }) => {
         });
       });
     }
-  
+
     return shoppingList;
   };
   //
-  
-  
 
   // Log the state after it has been updated
   useEffect(() => {
@@ -116,7 +117,16 @@ export const PlannerProvider = ({ children }) => {
   // Provide the state and functions to the children components
   return (
     // <PlannerContext.Provider value={{ state, getMeals, addRecipe, removeRecipe  }}>
-    <PlannerContext.Provider value={{ state, getMeals, addRecipe, removeRecipe, getShoppingList, updateShoppingList  }}>
+    <PlannerContext.Provider
+      value={{
+        state,
+        getMeals,
+        addRecipeToPlanner,
+        removeRecipe,
+        getShoppingList,
+        updateShoppingList,
+      }}
+    >
       {children}
     </PlannerContext.Provider>
   );
@@ -126,7 +136,7 @@ export const PlannerProvider = ({ children }) => {
 export const usePlanner = () => {
   const context = useContext(PlannerContext);
   if (!context) {
-    throw new Error('usePlanner must be used within a PlannerProvider');
+    throw new Error("usePlanner must be used within a PlannerProvider");
   }
   return context;
 };

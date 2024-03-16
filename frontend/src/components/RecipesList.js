@@ -1,38 +1,39 @@
-import React, { useState, useEffect } from 'react';
-import RecipeCard from './RecipeCard';
-import Modal from './Modal.js';
-import RecipePopup from './RecipePopup.js'
-import { useRecipes } from '../context/RecipesContext'; // Update the import
-import { usePlanner } from '../context/PlannerContext';
-import { useTheme } from '../context/ThemeContext';
-
+import React, { useState, useEffect } from "react";
+import RecipeCard from "./RecipeCard";
+import Modal from "./Modal.js";
+import RecipePopup from "./RecipePopup.js";
+import { useRecipes } from "../context/RecipesContext"; // Update the import
+import { usePlanner } from "../context/PlannerContext";
+import { useTheme } from "../context/ThemeContext";
+import { useNavigate } from "react-router-dom";
 
 function RecipeList() {
+  const navigate = useNavigate(); // Initialize useNavigate
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedRecipeForPopup, setSelectedRecipeForPopup] = useState(null);
-  
+
   const [selectedRecipe, setSelectedRecipe] = useState(null);
 
-  const { state, addRecipe } = usePlanner();
-  const { recipes, page, totalPages, loading, error, fetchRecipes, updatePage } = useRecipes();
+  const { addRecipeToPlanner } = usePlanner();
+  const {
+    recipes,
+    page,
+    totalPages,
+    loading,
+    error,
+    fetchRecipes,
+    updatePage,
+    deleteRecipe,
+  } = useRecipes();
 
   useEffect(() => {
     // Fetch recipes from the context
     fetchRecipes();
   }, [fetchRecipes]);
 
-
   const paginate = (pageNumber) => {
     // Update the page in the context
     updatePage(pageNumber);
-  };
-
-  const openModal = () => {
-    setModalOpen(true);
-  };
-
-  const closeModal = () => {
-    setModalOpen(false);
   };
 
   const openPopup = (recipe) => {
@@ -50,16 +51,27 @@ function RecipeList() {
 
   const addToPlanner = (meal, recipe) => {
     window.alert(`Recipe ${recipe.name} added to ${meal}`);
-    addRecipe(meal, recipe);
+    addRecipeToPlanner(meal, recipe);
+  };
+
+  const handleEditRecipe = (recipe) => {
+    // Navigate to the edit page with the recipeId as a URL parameter
+    navigate(`/edit/${recipe.id || recipe.name}`);
+  };
+
+
+  const handleDeleteRecipe = (recipeId) => {
+    deleteRecipe(recipeId);
   };
 
   const { theme } = useTheme();
   const { darkMode } = theme;
 
   const nextPrevStyles = {
-    backgroundColor:darkMode === 'dark' ?'#1A202C' : '#48BB78',
+    backgroundColor: darkMode === "dark" ? "#1A202C" : "#48BB78",
   };
- 
+
+  
   return (
     <div>
       <div className="grid grid-cols-1 p-6 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 gap-4 sm:grid-cols-2">
@@ -74,6 +86,8 @@ function RecipeList() {
             preparation={recipe.preparation}
             onAddToPlanner={() => handleAddToPlanner(recipe)}
             onOpenPopup={() => openPopup(recipe)}
+            onEdit={() => handleEditRecipe(recipe)}
+            onDelete={() => handleDeleteRecipe(recipe.id)}
           />
         ))}
       </div>
@@ -96,7 +110,6 @@ function RecipeList() {
             Next
           </button>
         )}
-      
       </div>
 
       {modalOpen && (

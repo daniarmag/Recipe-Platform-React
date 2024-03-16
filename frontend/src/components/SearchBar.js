@@ -3,7 +3,7 @@ import { useRecipes } from '../context/RecipesContext.js';
 import {useTheme} from '../context/ThemeContext';
 
 function SearchBar() {
-  const { searchQuery, updateSearchQuery, searchRecipes  } = useRecipes();
+  const { searchQuery, updateSearchQuery  } = useRecipes();
   const [inputValue, setInputValue] = useState(searchQuery);
 
 

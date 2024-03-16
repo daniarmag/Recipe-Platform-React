@@ -10,6 +10,7 @@ import AuthPage from './pages/Auth';
 import Footer from './components/Footer';
 import { useAuth } from './context/AuthContext';
 import LoadingSpinner from './components/LoadingSpinner';
+import EditRecipePage from './pages/EditRecipe';
 
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/meal-planner" element={<MealPlannerPage />} />
             <Route path="/new-recipe" element={<AddRecipePage />} />
+            <Route path="/edit/:recipeId" element={<EditRecipePage />} />
           </>
         ) : (
           <Route path="/" element={<AuthPage />} />

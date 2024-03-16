@@ -1,6 +1,12 @@
-import React, { createContext, useContext, useState, useCallback, useMemo } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import RecipesApi from '../api/RecipesApi';
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useCallback,
+  useMemo,
+} from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import RecipesApi from "../api/RecipesApi";
 
 const RecipesContext = createContext();
 
@@ -8,10 +14,22 @@ export const RecipesProvider = ({ children }) => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const searchParams = new URLSearchParams(location.search);
-  const initialQuery = searchParams.get('searchQuery') || '';
-  const initialPage = parseInt(searchParams.get('page')) || 1;
-  const initialPageSize = parseInt(searchParams.get('pageSize')) || 8;
+  const searchParams = useMemo(
+    () => new URLSearchParams(location.search),
+    [location.search]
+  );
+  const initialQuery = useMemo(
+    () => searchParams.get("searchQuery") || "",
+    [searchParams]
+  );
+  const initialPage = useMemo(
+    () => parseInt(searchParams.get("page")) || 1,
+    [searchParams]
+  );
+  const initialPageSize = useMemo(
+    () => parseInt(searchParams.get("pageSize")) || 8,
+    [searchParams]
+  );
 
   const [recipes, setRecipes] = useState([]);
   const [searchQuery, setSearchQuery] = useState(initialQuery);
@@ -27,11 +45,15 @@ export const RecipesProvider = ({ children }) => {
       setError(null);
 
       // Fetch recipes using searchQuery, page, and pageSize
-      const response = await RecipesApi.getRecipes({ searchQuery, page, pageSize });
+      const response = await RecipesApi.getRecipes({
+        searchQuery,
+        page,
+        pageSize,
+      });
       setRecipes(response.data);
       setTotalPages(Math.ceil(response.total / pageSize));
     } catch (error) {
-      setError(error.message || 'Error loading recipes');
+      setError(error.message || "Error loading recipes");
     } finally {
       setLoading(false);
     }
@@ -39,41 +61,117 @@ export const RecipesProvider = ({ children }) => {
 
   const memoizedFetchRecipes = useMemo(() => fetchRecipes, [fetchRecipes]);
 
-  const updateSearchQuery = (newQuery) => {
-    // Update URL with the new search query and reset page to 1
-    const newSearchParams = new URLSearchParams(location.search);
-    newSearchParams.set('searchQuery', newQuery);
-    newSearchParams.set('page', '1'); // Reset page to 1
-    navigate(`?${newSearchParams.toString()}`);
+  const updateSearchQuery = useCallback(
+    (newQuery) => {
+      // Update URL with the new search query and reset page to 1
+      const newSearchParams = new URLSearchParams(location.search);
+      newSearchParams.set("searchQuery", newQuery);
+      newSearchParams.set("page", "1"); // Reset page to 1
+      navigate(`?${newSearchParams.toString()}`);
 
-    // Update state
-    setSearchQuery(newQuery);
-    setPage(1);
-  };
+      // Update state
+      setSearchQuery(newQuery);
+      setPage(1);
+    },
+    [location.search, navigate]
+  );
 
-  const updatePage = (newPage) => {
-    // Update URL with the new page
-    const newSearchParams = new URLSearchParams(location.search);
-    newSearchParams.set('page', String(newPage));
-    navigate(`?${newSearchParams.toString()}`);
+  const updatePage = useCallback(
+    (newPage) => {
+      // Update URL with the new page
+      const newSearchParams = new URLSearchParams(location.search);
+      newSearchParams.set("page", String(newPage));
+      navigate(`?${newSearchParams.toString()}`);
 
-    // Update state
-    setPage(newPage);
-  };
+      // Update state
+      setPage(newPage);
+    },
+    [location.search, navigate]
+  );
 
-  const updatePageSize = (newPageSize) => {
-    // Update URL with the new page size
-    const newSearchParams = new URLSearchParams(location.search);
-    newSearchParams.set('pageSize', String(newPageSize));
-    navigate(`?${newSearchParams.toString()}`);
+  const updatePageSize = useCallback(
+    (newPageSize) => {
+      // Update URL with the new page size
+      const newSearchParams = new URLSearchParams(location.search);
+      newSearchParams.set("pageSize", String(newPageSize));
+      navigate(`?${newSearchParams.toString()}`);
 
-    // Update state
-    setPageSize(newPageSize);
-  };
+      // Update state
+      setPageSize(newPageSize);
+    },
+    [location.search, navigate]
+  );
 
+  const editRecipe = useCallback(
+    async (recipeId, updatedRecipe) => {
+      try {
+        setLoading(true);
+        setError(null);
+
+        // Update recipe using API
+        await RecipesApi.editRecipe(recipeId, updatedRecipe);
+
+        // Refetch recipes to update the list
+        fetchRecipes();
+      } catch (error) {
+        setError(error.message || "Error editing recipe");
+      } finally {
+        setLoading(false);
+      }
+    },
+    [fetchRecipes]
+  );
+
+  const deleteRecipe = useCallback(
+    async (recipeId) => {
+      try {
+        setLoading(true);
+        setError(null);
+
+        // Delete recipe using API
+        await RecipesApi.deleteRecipe(recipeId);
+
+        // Refetch recipes to update the list
+        fetchRecipes();
+      } catch (error) {
+        setError(error.message || "Error deleting recipe");
+      } finally {
+        setLoading(false);
+      }
+    },
+    [fetchRecipes]
+  );
   const contextValue = useMemo(
-    () => ({ recipes, searchQuery, page, pageSize, totalPages, loading, error, updateSearchQuery, updatePage, updatePageSize, fetchRecipes: memoizedFetchRecipes }),
-    [recipes, searchQuery, page, pageSize, totalPages, loading, error, updateSearchQuery, updatePage, updatePageSize, memoizedFetchRecipes]
+    () => ({
+      recipes,
+      searchQuery,
+      page,
+      pageSize,
+      totalPages,
+      loading,
+      error,
+      updateSearchQuery,
+      updatePage,
+      updatePageSize,
+      editRecipe,
+      deleteRecipe,
+      fetchRecipes: memoizedFetchRecipes,
+    }),
+    [
+      recipes,
+      searchQuery,
+      page,
+      pageSize,
+      totalPages,
+      loading,
+      error,
+      updateSearchQuery,
+      updatePage,
+      updatePageSize,
+      editRecipe,
+      deleteRecipe,
+      memoizedFetchRecipes,
+    ]
   );
 
   return (
@@ -86,7 +184,7 @@ export const RecipesProvider = ({ children }) => {
 export const useRecipes = () => {
   const context = useContext(RecipesContext);
   if (!context) {
-    throw new Error('useRecipes must be used within a RecipesProvider');
+    throw new Error("useRecipes must be used within a RecipesProvider");
   }
   return context;
 };

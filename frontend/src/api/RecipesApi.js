@@ -24,12 +24,16 @@ class RecipesApi {
     
     const entries = Array.from(formData.entries());
     const asyncTasks = entries.map(async ([key, value]) => {
-      if (value instanceof File) {
-        data[key] = await fileToBase64(value); // Convert file to base64
+      
+      if (key === 'image') {
+        if (value instanceof File) {
+          data[key] = await fileToBase64(value); // Convert image file to base64
+        } else {
+          data[key] = value; // Regular form values
+        }
       } else {
         data[key] = value; // Regular form values
       }
-      // data[key] = value;
     });
 
     await Promise.all(asyncTasks);  
@@ -58,7 +62,7 @@ class RecipesApi {
     }
   }
   
-  async getRecipe(id) {
+  async getRecipeById(id) {
     try {
       const response = await this.api.get(`/recipes/${id}`);
       return response.data;
@@ -68,8 +72,23 @@ class RecipesApi {
     }
   }
 
-  async updateRecipe(id, data) {
+  async updateRecipe(id, formData) {
+    let data={};   
     try {
+      const entries = Array.from(formData.entries());
+      const asyncTasks = entries.map(async ([key, value]) => {
+        if (key === 'image') {
+          if (value instanceof File) {
+            data[key] = await fileToBase64(value); // Convert image file to base64
+          } else {
+            data[key] =value; // Regular form values
+          }
+        } else {
+          data[key] = value; // Regular form values
+        }
+      });
+
+      await Promise.all(asyncTasks);
       const response = await this.api.put(`/recipes/${id}`, data);
       return response.data;
     } catch (error) {

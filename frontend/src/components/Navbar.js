@@ -6,8 +6,7 @@ import LogoutButton from './LogoutButton';
 
 function Navbar() {
   const { theme, toggleDarkMode } = useTheme();
-  const { user, logout } = useAuth();
-  const navigate = useNavigate();
+  const { user } = useAuth();
   
   const navItems = [
     { text: 'Home', href: '/', id: 'home-page' },

@@ -8,7 +8,6 @@ import { BrowserRouter } from 'react-router-dom';
 import { ThemeProvider } from './context/ThemeContext';
 import { AuthProvider } from './context/AuthContext';
 
-
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
@@ -16,8 +15,8 @@ root.render(
       <AuthProvider>
         <RecipesProvider>
           <PlannerProvider>
-          <ThemeProvider> 
-            <App />
+          <ThemeProvider>
+              <App />
           </ThemeProvider>
           </PlannerProvider>
         </RecipesProvider>

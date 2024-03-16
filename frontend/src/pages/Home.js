@@ -1,4 +1,3 @@
-import { useEffect } from 'react'
 import RecipeList from '../components/RecipesList';
 import Banner from '../components/Banner';
 import SearchBar from '../components/SearchBar';

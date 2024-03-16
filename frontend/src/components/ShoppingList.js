@@ -46,8 +46,11 @@ function ShoppingList({ selectedRecipes, onClose }) {
   };
 
   return (
-    <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-6 rounded-md shadow-lg z-50 text-left max-w-md w-full max-h-[90vh] overflow-auto">
-      <button onClick={onClose} className="absolute top-0 right-0 mr-1 text-gray-800 text-2xl font-bold bg-transparent cursor-pointer">
+    <div
+
+    className={`fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-6 rounded-md shadow-lg z-50 text-left max-w-md w-full max-h-[90vh] overflow-auto `}
+  >
+     <button onClick={onClose} className="absolute top-0 right-0 mr-1 text-gray-800 text-2xl font-bold bg-transparent cursor-pointer">
         &times;
       </button>
       {Object.entries(shoppingList).map(([ingredient, amount]) => (
