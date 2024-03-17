@@ -6,13 +6,17 @@ import { useRecipes } from "../context/RecipesContext"; // Update the import
 import { usePlanner } from "../context/PlannerContext";
 import { useTheme } from "../context/ThemeContext";
 import { useNavigate } from "react-router-dom";
+import usePopupMessage from "../hooks/usePopupMessage.js";
+import PopupMessage from "./PopupMessage.js";
 
 function RecipeList() {
   const navigate = useNavigate(); // Initialize useNavigate
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedRecipeForPopup, setSelectedRecipeForPopup] = useState(null);
-
   const [selectedRecipe, setSelectedRecipe] = useState(null);
+
+
+  const { isVisible: isPopupVisible, message, showPopup } = usePopupMessage(); // Use the custom hook for popup message
 
   const { addRecipeToPlanner } = usePlanner();
   const {
@@ -50,7 +54,8 @@ function RecipeList() {
   };
 
   const addToPlanner = (meal, recipe) => {
-    window.alert(`Recipe ${recipe.name} added to ${meal}`);
+    // window.alert(`Recipe ${recipe.name} added to ${meal}`);
+    showPopup(`Recipe ${recipe.name} added to ${meal}`);
     addRecipeToPlanner(meal, recipe);
   };
 
@@ -74,6 +79,7 @@ function RecipeList() {
   
   return (
     <div>
+      <PopupMessage isVisible={isPopupVisible} message={message} onClose={showPopup} duration={3000} />
       <div className="grid grid-cols-1 p-6 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 gap-4 sm:grid-cols-2">
         {recipes?.map((recipe) => (
           <RecipeCard
@@ -133,6 +139,8 @@ function RecipeList() {
           onClose={closePopup}
         />
       )}
+
+      
     </div>
   );
 }

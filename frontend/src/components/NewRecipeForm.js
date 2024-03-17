@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import RecipesApi from '../api/RecipesApi';
 import { useTheme } from '../context/ThemeContext';
 import { useAuth } from '../context/AuthContext';
+import usePopupMessage from "../hooks/usePopupMessage.js";
+import PopupMessage from "./PopupMessage.js";
 
 const CreateNewRecipe = () => {
     const { user } = useAuth();
@@ -14,11 +16,15 @@ const CreateNewRecipe = () => {
       nutritionalValues: {
         calories: '',
         fat: '',
-        protein: ''
+        proteins: ''
       },
       image: null,
     });
   
+
+    const { isVisible: isPopupVisible, message, showPopup } = usePopupMessage(); // Use the custom hook for popup message
+
+
     const handleInputChange = (e) => {
       const { id, value } = e.target;
       if (id.includes('nutritionalValues.')) {
@@ -62,7 +68,22 @@ const CreateNewRecipe = () => {
         // Call the createRecipe method from RecipesApi and pass the recipeData
         const response = await RecipesApi.createRecipe(formData);
         console.log('Recipe successfully added:', response);
-        alert('Recipe added successfully');
+        showPopup(`Recipe added successfully`);
+        // alert('Recipe added successfully');
+
+        setRecipeData({
+          author: user?.email || '',
+          name: '',
+          description: '',
+          ingredients: '',
+          preparation: '',
+          nutritionalValues: {
+            calories: '',
+            fat: '',
+            proteins: ''
+          },
+          image: null,
+        });
 
         // Optionally, clear the form or navigate the user to a different page
       } catch (error) {
@@ -80,6 +101,7 @@ const CreateNewRecipe = () => {
 
   return (
     <div className="container mx-auto" >
+        <PopupMessage isVisible={isPopupVisible} message={message} onClose={showPopup} duration={3000} />
         <div className="text-3xl text-gray-600 font-bold text-center py-3 bigTitle sm:text-3xl">
           Add your Recipe here.
         </div>
@@ -93,6 +115,7 @@ const CreateNewRecipe = () => {
             id="name"
             className="border rounded p-2 text-sm text-left w-full"
             placeholder="Enter Recipe Name"
+            value={recipeData.name}
             onChange={handleInputChange}
           />
         </div>
@@ -106,6 +129,7 @@ const CreateNewRecipe = () => {
           id="description"
           className="border rounded p-2 text-sm text-left w-full"
           placeholder="Enter Description"
+          value={recipeData.description}
           onChange={handleInputChange}
         />
       </div>
@@ -118,6 +142,7 @@ const CreateNewRecipe = () => {
           id="ingredients"
           className="border rounded p-2 text-sm text-left w-full"
           placeholder="Enter Ingredients. Each ingredient on a separate line."
+          value={recipeData.ingredients}
           onChange={handleInputChange}
         />
       </div>
@@ -130,6 +155,7 @@ const CreateNewRecipe = () => {
           id="preparation"
           className="border rounded p-2 text-sm text-left w-full"
           placeholder="Enter Preparation. Each step on a separate line."
+          value={recipeData.preparation}
           onChange={handleInputChange}
         />
       </div>
@@ -143,6 +169,7 @@ const CreateNewRecipe = () => {
             id="nutritionalValues.calories"
             className="border rounded p-2 text-sm text-left w-full"
             placeholder="Enter Calories"
+            value={recipeData.nutritionalValues.calories}
             onChange={handleInputChange}
           />
         </div>
@@ -155,6 +182,7 @@ const CreateNewRecipe = () => {
             id="nutritionalValues.fat"
             className="border rounded p-2 text-sm text-left w-full"
             placeholder="Enter Fat (g)"
+            value={recipeData.nutritionalValues.fat}
             onChange={handleInputChange}
           />
         </div>
@@ -167,6 +195,7 @@ const CreateNewRecipe = () => {
             id="nutritionalValues.proteins"
             className="border rounded p-2 text-sm text-left w-full"
             placeholder="Enter Proteins (g)"
+            value={recipeData.nutritionalValues.proteins}
             onChange={handleInputChange}
           />
         </div>
