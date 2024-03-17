@@ -6,7 +6,6 @@ const usePopupMessage = (initialVisibility = false, duration = 3000) => {
 
   useEffect(() => {
     let timer;
-    console.log(isVisible)
     if (isVisible) {
       timer = setTimeout(() => {
         setIsVisible(false);

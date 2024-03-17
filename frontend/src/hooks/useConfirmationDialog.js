@@ -5,25 +5,28 @@ const useConfirmationDialog = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [onConfirmCallback, setOnConfirmCallback] = useState(null);
   const [onCancelCallback, setOnCancelCallback] = useState(null);
+  
   const showConfirmationDialog = (onConfirm, onCancel) => {
     setIsVisible(true);
-
-    setOnConfirmCallback(async () => {
-      await onConfirm();
-    //   setIsVisible(false);
+    setOnConfirmCallback(() => {
+      return async () => {
+        await onConfirm();
+        setIsVisible(false);
+      };
     });
     setOnCancelCallback(() => {
-       onCancel();
-    //   setIsVisible(false);
+      return () => {
+        onCancel();
+        setIsVisible(false);
+      };
     });
   };
-
   const handleConfirm = () => {
-    onConfirmCallback();
+    onConfirmCallback && onConfirmCallback();
   };
 
   const handleCancel = () => {
-    onCancelCallback();
+    onCancelCallback && onCancelCallback();
   };
 
   return {

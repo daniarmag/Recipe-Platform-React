@@ -2,12 +2,14 @@ import React, { useState, useEffect } from "react";
 import RecipeCard from "./RecipeCard";
 import Modal from "./Modal.js";
 import RecipePopup from "./RecipePopup.js";
-import { useRecipes } from "../context/RecipesContext"; // Update the import
+import { useRecipes } from "../context/RecipesContext"; 
 import { usePlanner } from "../context/PlannerContext";
 import { useTheme } from "../context/ThemeContext";
 import { useNavigate } from "react-router-dom";
 import usePopupMessage from "../hooks/usePopupMessage.js";
 import PopupMessage from "./PopupMessage.js";
+import useConfirmationDialog from '../hooks/useConfirmationDialog'; 
+import ConfirmationDialog from './ConfirmationDialog'; // Import the ConfirmationDialog component
 
 function RecipeList() {
   const navigate = useNavigate(); // Initialize useNavigate
@@ -17,6 +19,7 @@ function RecipeList() {
 
 
   const { isVisible: isPopupVisible, message, showPopup } = usePopupMessage(); // Use the custom hook for popup message
+  const { isVisible: isConfirmationVisible, showConfirmationDialog, handleConfirm, handleCancel } = useConfirmationDialog(); // Use the custom hook for confirmation dialog
 
   const { addRecipeToPlanner } = usePlanner();
   const {
@@ -65,9 +68,16 @@ function RecipeList() {
   };
 
 
-  const handleDeleteRecipe = (recipeId) => {
-    deleteRecipe(recipeId);
+  const handleDeleteConfirmation = (recipeId) => {
+    showConfirmationDialog(
+      async () => {
+        await deleteRecipe(recipeId);
+        showPopup('Recipe deleted successfully');
+      },
+      () => showPopup('Deletion cancelled')
+    );
   };
+
 
   const { theme } = useTheme();
   const { darkMode } = theme;
@@ -80,6 +90,7 @@ function RecipeList() {
   return (
     <div>
       <PopupMessage isVisible={isPopupVisible} message={message} onClose={showPopup} duration={3000} />
+      <ConfirmationDialog isVisible={isConfirmationVisible} onConfirm={handleConfirm} onCancel={handleCancel} />
       <div className="grid grid-cols-1 p-6 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 gap-4 sm:grid-cols-2">
         {recipes?.map((recipe) => (
           <RecipeCard
@@ -93,7 +104,7 @@ function RecipeList() {
             onAddToPlanner={() => handleAddToPlanner(recipe)}
             onOpenPopup={() => openPopup(recipe)}
             onEdit={() => handleEditRecipe(recipe)}
-            onDelete={() => handleDeleteRecipe(recipe.id)}
+            onDelete={() => handleDeleteConfirmation(recipe.id)}
           />
         ))}
       </div>
