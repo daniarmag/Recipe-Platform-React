@@ -24,7 +24,7 @@ const RegisterForm = ({ handleToggleMode }) => {
       await login({ username: userName, password });
     } catch (error) {
       if (error.response && error.response.status === 400) {
-        setError('Username already exists. Please choose a different username.');
+        setError(error.response.data);
       } else {
         setError('Registration error. Please try again later.');
         console.error('Registration error:', error);
@@ -51,7 +51,7 @@ const RegisterForm = ({ handleToggleMode }) => {
               id="userName"
               name="userName"
               value={userName}
-              placeholder='Enter your private UserName'
+              placeholder='Enter your username'
               onChange={(e) => setUserName(e.target.value)}
               className="mt-1 p-2 w-full border rounded-md"
               required
@@ -65,7 +65,7 @@ const RegisterForm = ({ handleToggleMode }) => {
               type="password"
               id="password"
               name="password"
-              placeholder='Enter your private PassWord'
+              placeholder='Enter your password'
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className="mt-1 p-2 w-full border rounded-md"

@@ -8,6 +8,7 @@ import {
 import User from '../models/User.js';
 import { doc, setDoc, getDocs, query, collection, where } from 'firebase/firestore';
 import FirestoreService from '../services/FirestoreService.js';
+import { isAdmin } from '../services/UsersService.js';
 
 class UserController {
     constructor() {
@@ -32,7 +33,7 @@ class UserController {
             const existingUserDoc = await this.firestoreService.getSingleDocByField('email', email);
             
             if (existingUserDoc) {
-                return res.status(400).send('Username is already taken');
+                return res.status(400).send('Username already exists. Please choose a different username.');
             }
         
 
@@ -42,15 +43,21 @@ class UserController {
             const { user } = await createUserWithEmailAndPassword(auth, email, password);
         
              // Store additional user details in Firestore
-            await this.firestoreService.setDocWithId(user.uid, { email: email, displayName });
-
-        
-            const userModel = new User(user.uid, email, displayName);
+            await this.firestoreService.setDocWithId(user.uid, { email: email, displayName, isAdmin: isAdmin(user) });
+           
+            const userModel = new User(user.uid, email, displayName, isAdmin(user));
         
             res.status(200).json(userModel);
         } catch (error) {
-            console.error(error.message);
-            res.status(400).send(error.message);
+          let errorMessage = error.message;
+
+          if (error) {
+            if (error.code === 'auth/weak-password') {
+              errorMessage = "Password should be at least 6 characters"
+            }
+            console.error(errorMessage);
+            res.status(400).send(errorMessage);
+          }
         }
       }
       
@@ -71,7 +78,7 @@ class UserController {
                  // Retrieve additional user details from Firestore
                 const userDoc = await this.firestoreService.getSingleDocByField('email', user.email);
 
-                const userModel = new User(user.uid, user.email, userDoc ? userDoc.displayName : null);
+                const userModel = new User(user.uid, user.email, userDoc ? userDoc.displayName : null, userDoc ? userDoc.isAdmin : isAdmin(user));
         
                 res.status(200).json(userModel);
             } else {
@@ -124,7 +131,7 @@ class UserController {
         const userDoc = await this.firestoreService.getSingleDocByField('email', user.email);
 
         // Create a User model instance
-        const userModel = new User(user.uid, user.email, userDoc ? userDoc.displayName : null);
+        const userModel = new User(user.uid, user.email, userDoc ? userDoc.displayName : null, userDoc?.isAdmin);
 
         res.status(200).json(userModel);
       } else {

@@ -95,6 +95,7 @@ function RecipeList() {
         {recipes?.map((recipe) => (
           <RecipeCard
             key={recipe.id}
+            author={recipe.author}
             title={recipe.name}
             imageSrc={recipe.image}
             description={recipe.description}
