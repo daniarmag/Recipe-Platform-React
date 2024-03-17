@@ -18,6 +18,8 @@ process.on('uncaughtException', (error) => {
 const app = express();
 app.use(bodyParser.json({ limit: '50mb' }));
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
+// Serve frontend files
+app.use(express.static(path.join(__dirname, '../frontend/build')));
 
 app.use(cors());
 // Routes
