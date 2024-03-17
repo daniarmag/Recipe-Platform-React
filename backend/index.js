@@ -24,6 +24,10 @@ app.use(cors());
 app.use('/api', recipeRoutes);
 app.use('/api/users', usersRoutes);
 
+// Serve frontend for any other routes
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/build', 'index.html'));
+});
 
 app.listen(config.port, () =>
   console.log(`Server is live @ ${config.hostUrl} on port ${config.port}`),
