@@ -1,7 +1,7 @@
-const isProduction = process.env.NODE_ENV === 'production';
+const API_BASE_URL = process.env.BACKEND_URL || "http://localhost:5000";
 
 const config = {
-  apiBaseUrl: isProduction ? '/api' : 'http://localhost:5000/api',
+  apiBaseUrl: API_BASE_URL + "/api",
 };
 
 export default config;
