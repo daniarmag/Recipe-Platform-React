@@ -10,17 +10,19 @@ import { AuthProvider } from './context/AuthContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <BrowserRouter>
-    <AuthProvider>
-      <RecipesProvider>
-        <PlannerProvider>
-        <ThemeProvider>
-            <App />
-        </ThemeProvider>
-        </PlannerProvider>
-      </RecipesProvider>
-    </AuthProvider>
-  </BrowserRouter>
+  <React.StrictMode>
+    <BrowserRouter>
+      <AuthProvider>
+        <RecipesProvider>
+          <PlannerProvider>
+          <ThemeProvider>
+              <App />
+          </ThemeProvider>
+          </PlannerProvider>
+        </RecipesProvider>
+      </AuthProvider>
+    </BrowserRouter>
+  </React.StrictMode>
 );
 
 

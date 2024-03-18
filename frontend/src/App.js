@@ -22,7 +22,7 @@ function App() {
 
   return (
     <>
-      <Navbar/>
+      {/* <Navbar/> */}
       
       <Routes>
         {user ? (

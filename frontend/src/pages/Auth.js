@@ -10,7 +10,7 @@ const AuthPage = () => {
   };
 
   return  (
-    <div className='text-center bg-green-400'>
+    <div className='text-center'>
       <label className='text-3xl font-bold text-white'>
         Recipe Sharing and Meal Planner
       </label>

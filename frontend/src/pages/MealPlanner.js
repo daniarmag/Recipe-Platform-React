@@ -1,5 +1,6 @@
 // Import the MealPlanner component
 import MealPlanner from '../components/MealPlannerTable';
+import Navbar from '../components/Navbar';
 import { useTheme } from '../context/ThemeContext';
 
 
@@ -13,6 +14,7 @@ function MealPlannerPage() {
 
   return (
     <div style={{ backgroundColor: pageBackgroundColor }}>
+                          <Navbar />
       {/* Include the MealPlanner component */}
       <MealPlanner />
     </div>
