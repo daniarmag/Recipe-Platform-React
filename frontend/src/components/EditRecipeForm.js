@@ -2,11 +2,16 @@ import React, { useState, useEffect } from 'react';
 import RecipesApi from '../api/RecipesApi';
 import { useTheme } from '../context/ThemeContext';
 import { useAuth } from '../context/AuthContext';
+import usePopupMessage from "../hooks/usePopupMessage.js";
+import PopupMessage from "./PopupMessage.js";
+
 
 const EditRecipeForm = ({ recipeId }) => {
     const { user } = useAuth();
     const [recipeData, setRecipeData] = useState(null);
-  
+    const { isVisible: isPopupVisible, message, showPopup } = usePopupMessage(); // Use the custom hook for popup message
+
+
     useEffect(() => {
       // Fetch the recipe data using the recipeId
       const fetchRecipe = async () => {
@@ -63,7 +68,8 @@ const EditRecipeForm = ({ recipeId }) => {
         // Call the updateRecipe method from RecipesApi and pass the recipeData
         const response = await RecipesApi.updateRecipe(recipeId, formData);
         console.log('Recipe successfully updated:', response);
-        alert('Recipe updated successfully');
+        // alert('Recipe updated successfully');
+        showPopup(`Recipe edited successfully`);
       } catch (error) {
         console.error('Failed to update the recipe:', error);
         alert('Failed to update the recipe');
@@ -77,6 +83,7 @@ const EditRecipeForm = ({ recipeId }) => {
 
     return (
         <div className="container mx-auto" >
+             <PopupMessage isVisible={isPopupVisible} message={message} onClose={showPopup} duration={3000} />
             {recipeData ? (
                 <>
                     <form className="max-w-md mx-auto pb-4" onSubmit={handleSubmit}>
@@ -184,14 +191,24 @@ const EditRecipeForm = ({ recipeId }) => {
                                 className="hidden"
                                 onChange={handleImageChange}
                             />
-                            <p className="text-gray-700 px-4 font-semibold">{recipeData.image && `Image uploaded: ${recipeData.image}`}</p>
-                            <button
-                                type="button"
-                                onClick={() => document.getElementById('recipeImage').click()}
-                                className="cursor-pointer bg-gray-200 text-gray-700 px-4 py-2 rounded-md"
-                            >
-                                Choose File
-                            </button>
+                            {/* <p className="text-gray-700 px-4 font-semibold">{recipeData.image && `Image uploaded: ${recipeData.image}`}</p> */}
+                          
+                            <div className="flex items-center">
+                                <button
+                                    type="button"
+                                    onClick={() => document.getElementById('recipeImage').click()}
+                                    className="bg-gray-200 text-gray-700 px-4 py-2 rounded-md ml-4"
+                                >
+                                    Choose File
+                                </button>
+                                <p className="text-gray-700 px-4 font-semibold">
+                                    {recipeData.image && (
+                                    <>
+                                       <img src={recipeData.image} alt="Recipe Image" />
+                                    </>
+                                    )}
+                                </p>
+                            </div>
                         </div>
 
                         {/* Submit button */}
