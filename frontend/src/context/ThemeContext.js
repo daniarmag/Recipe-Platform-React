@@ -12,7 +12,7 @@ export const ThemeProvider = ({ children }) => {
     darkMode: 'light', // light or dark
     light: {
       primary: 'bg-green-400', // Set your primary color
-      secondary: 'aliceblue', // Set your secondary color
+      secondary: 'white', // Set your secondary color
       card: 'GhostWhite'
     },
     dark: {

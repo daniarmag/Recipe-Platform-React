@@ -1,7 +1,7 @@
 import React from 'react';
 
 const Modal = ({ recipe, closeModal, addToPlanner }) => {
-  const mealOptions = ["breakfast", "lunch", "dinner"];
+  const mealOptions = ["Breakfast", "Lunch", "Dinner"];
   return (
     <div className="modal bg-white w-44 p-4 rounded-lg shadow-md fixed top-1/2 left-0">
       <button className="close-modal-btn absolute top-2 left-2 c text-black" onClick={closeModal}>

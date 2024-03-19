@@ -30,9 +30,9 @@ const Banner = () => {
     }, []);
 
     return (
-        <div id="banner" className="mt-6 text-center p-4 banner-section" style={bannerStyle}>
+        <div id="banner" className="mt-6 text-center p-4 banner-section " style={bannerStyle}>
             <div className="container mx-auto">
-                <div className="text-2xl font-bold mb-4 text-white">
+                <div className="text-2xl mb-4 text-white ScularOneFont ">
                     {randomTip}
                 </div>
             </div>

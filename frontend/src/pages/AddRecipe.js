@@ -8,7 +8,7 @@ function AddRecipePage() {
   const { theme } = useTheme();
   const { darkMode } = theme;
 
-  const pageBackgroundColor = darkMode === 'dark' ? 'DarkGray' : 'GhostWhite';
+  const pageBackgroundColor = darkMode === 'dark' ? 'DarkGray' : 'white';
 
   return (
     

@@ -102,14 +102,14 @@ const CreateNewRecipe = () => {
   return (
     <div className="container mx-auto" >
         <PopupMessage isVisible={isPopupVisible} message={message} onClose={showPopup} duration={3000} />
-        <div className="text-3xl text-gray-600 font-bold text-center py-3 bigTitle sm:text-3xl">
-          Add your Recipe here.
+        <div className="text-3xl text-gray-800 font-bold text-center py-3 bigTitle sm:text-3xl mt-3 mb-3">
+          ADD YOUR RECIPE HERE
         </div>
         <form className="max-w-md mx-auto pb-4" onSubmit={handleSubmit}>
   
         <div className="mb-4 mx-4"> {/* Added mx-4 for spacing */}
           <label htmlFor="name" className="block text-sm font-semibold text-gray-700">
-            Recipe Name:
+            RECIPE NAME
           </label>
           <textarea
             id="name"
@@ -123,7 +123,7 @@ const CreateNewRecipe = () => {
 
       <div className="mb-4 mx-4"> {/* Added mx-4 for spacing */}
         <label htmlFor="description" className="block text-sm font-semibold text-gray-700">
-          Description
+          DESCRIPTION
         </label>
         <textarea
           id="description"
@@ -136,7 +136,7 @@ const CreateNewRecipe = () => {
 
       <div className="mb-4 mx-4"> {/* Added mx-4 for spacing */}
         <label htmlFor="ingredients" className="block text-sm font-semibold text-gray-700">
-          Ingredients
+          INGREDIENTS
         </label>
         <textarea
           id="ingredients"
@@ -149,7 +149,7 @@ const CreateNewRecipe = () => {
 
       <div className="mb-4 mx-4"> {/* Added mx-4 for spacing */}
         <label htmlFor="preparation" className="block text-sm font-semibold text-gray-700">
-          Preparation
+          PREPARATION
         </label>
         <textarea
           id="preparation"
@@ -163,7 +163,7 @@ const CreateNewRecipe = () => {
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div className="mb-2 mx-4"> {/* Added mx-4 for spacing */}
           <label htmlFor="calories" className="block text-sm font-semibold text-gray-700">
-            Calories
+            CALORIES
           </label>
           <textarea
             id="nutritionalValues.calories"
@@ -176,7 +176,7 @@ const CreateNewRecipe = () => {
 
         <div className="mb-2 mx-4"> {/* Added mx-4 for spacing */}
           <label htmlFor="fat" className="block text-sm font-semibold text-gray-700">
-            Fat
+            FAT
           </label>
           <textarea
             id="nutritionalValues.fat"
@@ -189,7 +189,7 @@ const CreateNewRecipe = () => {
 
         <div className="mb-2 mx-4"> {/* Added mx-4 for spacing */}
           <label htmlFor="proteins" className="block text-sm font-semibold text-gray-700">
-            Proteins
+            PROTEINS
           </label>
           <textarea
             id="nutritionalValues.proteins"
@@ -203,7 +203,7 @@ const CreateNewRecipe = () => {
 
               {/* Image input */}
               <div className="mb-4 mx-4 ">
-                <label htmlFor="recipeImage" className="block text-sm font-semibold text-gray-700">
+                <label htmlFor="recipeImage" className="block text-sm font-semibold text-gray-700 ">
                   Upload Image
                 </label>
                 <input
@@ -214,7 +214,7 @@ const CreateNewRecipe = () => {
                   className="hidden"
                   onChange={handleImageChange}
                 />
-                <p className="text-gray-700 px-4 font-semibold">{recipeData.image && `Image uploaded: ${recipeData.image}`}</p>
+                <p className="text-gray-700 px-4 font-semibold ">{recipeData.image && `Image uploaded: ${recipeData.image}`}</p>
                 <button
                   type="button"
                   onClick={() => document.getElementById('recipeImage').click()}
@@ -228,9 +228,9 @@ const CreateNewRecipe = () => {
               <button
                 type="submit"
                 // style={submitBtnStyle}
-                className={`text-lg font-bold p-3 ${submitBtnStyle} rounded-md shadow-md  mx-auto block w-full`}
+                className={`text-lg font-bold p-3 ${submitBtnStyle} rounded-md shadow-md  mx-auto block w-full text-white`}
               >
-                Submit Recipe
+                SUBMIT RECIPE
               </button>
             </form>
     </div>

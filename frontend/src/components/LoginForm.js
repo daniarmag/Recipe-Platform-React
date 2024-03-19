@@ -52,7 +52,7 @@ const LoginForm = ({ handleToggleMode }) => {
         )}
         <form onSubmit={handleSubmit}>
         <div className="mb-4 flex items-center border-b border-green-500">
-            <AiOutlineUser className="text-2xl mr-2 text-green-500" />
+            <AiOutlineUser className="text-2xl mr-2 text-green-700" />
             <input
               type="text"
               id="userName"
@@ -65,7 +65,7 @@ const LoginForm = ({ handleToggleMode }) => {
             />
           </div>
           <div className="mb-4 flex items-center border-b border-green-500">
-            <AiOutlineLock className="text-2xl mr-2 text-green-500" />
+            <AiOutlineLock className="text-2xl mr-2 text-green-700" />
             <input
               type="password"
               id="password"

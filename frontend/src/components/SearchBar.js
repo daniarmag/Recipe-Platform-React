@@ -24,7 +24,7 @@ function SearchBar() {
   };
 
   return (
-    <div className='flex justify-center w-full mx-auto px-4'>
+    <div className='flex justify-center w-full mx-auto px-4 '>
       <input
         type="text"
         className="text-sm text-left w-full md:w-1/2 lg:w-1/3 xl:w-1/4 border rounded p-2 mx-2"
@@ -33,7 +33,7 @@ function SearchBar() {
         onChange={handleInputChange}
       />
       {/*  bg-green-500 */}
-       <button className="p-2 text-white rounded-md" style={searchBtnStyle} onClick={handleSearch}>
+       <button className="p-2 text-white rounded-md " style={searchBtnStyle} onClick={handleSearch}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"

@@ -113,10 +113,10 @@ function RecipeList() {
         {page > 1 && (
           <button
             onClick={() => paginate(page - 1)}
-            className="mr-2 px-4 py-2 text-white rounded shadow-md hover:bg-green-500"
+            className="mr-2 px-4 py-2 text-white rounded shadow-md hover:bg-green-800"
             style={nextPrevStyles}
           >
-            Prev
+            PREV
           </button>
         )}
         {page < totalPages && (
@@ -125,7 +125,7 @@ function RecipeList() {
             className="px-4 py-2 text-white rounded shadow-md hover:bg-green-500"
             style={nextPrevStyles}
           >
-            Next
+            NEXT
           </button>
         )}
       </div>

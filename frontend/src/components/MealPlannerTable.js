@@ -48,9 +48,9 @@ function MealPlanner() {
   const getCategoryColor = (category) => {
     // Define a mapping of categories to colors
     const categoryColorMap = {
-      breakfast: 'bg-green-100',
-      lunch: 'bg-gray-200',
-      dinner: 'bg-green-100',
+      Breakfast: 'bg-green-200',
+      Lunch: 'bg-green-100',
+      Dinner: 'bg-green-50',
       // Add more categories and colors as needed
     };
   
@@ -61,16 +61,16 @@ function MealPlanner() {
   const imageUrl = 'https://firebasestorage.googleapis.com/v0/b/webproject-58141.appspot.com/o/recipeImages%2Fadd-to-cart.png?alt=media&token=1b4dd764-7ad4-45d1-9f76-3d8c5c94d061';
   
   return (
-    <div className="text-xl font-bold px-2 min-h-screen">
-      <div className="text-xl font-bold px-2">
-        <div className="text-2xl font-bold text-center py-3 bigTitle sm:text-3xl">
-          Plan your meals for the day
+    <div className="px-2 min-h-screen">
+      <div className="text-xl px-2">
+        <div className="text-2xl font-bold text-center py-3 bigTitle sm:text-3xl mt-3 mb-3">
+          PLAN YOUR MEALS FOR THE DAY
         </div>
         <div className="overflow-x-auto">
           <table className="w-full border border-gray-300 rounded shadow-md">
             <thead className="sm:table-header-group">
               <tr>
-                {['Meal', 'Recipe', 'Ingredients', 'Calories', 'Proteins', 'Fats', 'Actions'].map((columnText, index) => (
+                {['MEAL', 'RECIPE', 'INGREDIENTS', 'CALORIES', 'PROTEINS', 'FATS', 'ACTIONS'].map((columnText, index) => (
                   <th key={index} className="py-2 px-4 text-left bg-gray-100">
                     {columnText}
                   </th>
@@ -82,7 +82,7 @@ function MealPlanner() {
                 Object.values(meals[mealCategory]).map((recipe, index) => (
                   <tr key={index} className={`border-t border-gray-300 ${getCategoryColor(mealCategory)}`}>
                     {index === 0 ? (
-                      <td className="py-2 px-4" rowSpan={Object.values(meals[mealCategory]).length} data-label="Meal">
+                      <td className="py-2 px-4 font-bold" rowSpan={Object.values(meals[mealCategory]).length} data-label="Meal">
                         {mealCategory}
                       </td>
                     ) : null}
@@ -102,8 +102,8 @@ function MealPlanner() {
                       {recipe.nutritionalValues.fat}
                     </td>
                     <td className="py-2 px-4" data-label="Actions">
-                      <button className="bg-green-500 text-white px-2 py-1 rounded" onClick={() => handleDelete(mealCategory, recipe)}>
-                        Delete
+                      <button className="bg-green-500 text-white px-2 py-1 rounded font-bold" onClick={() => handleDelete(mealCategory, recipe)}>
+                        DELETE
                       </button>
                     </td>
                   </tr>
@@ -111,10 +111,10 @@ function MealPlanner() {
               ))}
             </tbody>
 
-            <tfoot className="border-t-2 sm:table-footer-group">
+            <tfoot className="border-t-2 sm:table-footer-group font-bold">
               <tr>
                 <td className="py-2 px-4 text-left bg-gray-100" colSpan={3}>
-                  Totals
+                  TOTALS
                 </td>
                 <td className="py-2 px-4 text-left bg-gray-100" data-label="Calories">
                   {totals.calories}

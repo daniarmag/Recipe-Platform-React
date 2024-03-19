@@ -28,6 +28,17 @@
   color: #61dafb;
 }
 
+.delaGothicFont {
+  font-family: 'Dela Gothic One', cursive;
+}
+.ScularOneFont {
+  font-family: 'Secular One', sans-serif;
+}
+.AssistantFont {
+  font-family: 'Assistant', sans-serif;
+}
+
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
