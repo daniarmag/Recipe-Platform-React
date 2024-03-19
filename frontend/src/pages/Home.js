@@ -4,6 +4,8 @@ import SearchBar from '../components/SearchBar';
 import { useTheme } from '../context/ThemeContext';
 import Navbar from '../components/Navbar';
 import FeatureSection from '../components/FeatureSection';
+import TopChefs from '../components/TopChefs';
+
 function Home() {
   const {theme} = useTheme();
 
@@ -23,6 +25,7 @@ function Home() {
         <SearchBar/>
         <RecipeList/>
         <Banner/>
+        <TopChefs/>
         <FeatureSection/>
     </div>
     )
