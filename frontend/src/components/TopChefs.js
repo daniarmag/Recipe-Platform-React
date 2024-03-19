@@ -9,8 +9,6 @@ const TopChefsSection = () => {
   // Styles
   const sectionStyle = {
     padding: '50px 10%',
-    background: '#FFFFFF', // Set the background to white
-    color: darkMode === 'dark' ? '#FFFFFF' : '#2D3748',
     textAlign: 'center',
   };
 
@@ -43,7 +41,7 @@ const TopChefsSection = () => {
     { name: 'Shay Garbuz', recipes: 15, cuisine: 'French', imageUrl: 'https://i.ibb.co/vLh0bMF/Whats-App-Image-2024-03-19-at-16-53-31-d6a9c86b.jpg'},
     { name: 'Matan Czukermann', recipes: 10, cuisine: 'Fusion' },
     { name: 'Daniel Armaganian', recipes: 8, cuisine: 'Italian' },
-    { name: 'Tzahi', recipes: 9, cuisine: 'Middle Eastern' },
+    { name: 'Tzahi Bakal', recipes: 9, cuisine: 'Middle Eastern' },
   ];
   const starStyle = {
     color: '#FFD700', // Gold color for stars
