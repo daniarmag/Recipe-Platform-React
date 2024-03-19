@@ -10,7 +10,7 @@ const AuthPage = () => {
   };
 
   return  (
-      <div className='text-center justify-center flex bg-green-400'>
+      <div className="text-center bg-gradient-to-b from-[hsl(60,70%,80%)] to-[hsl(120,70%,80%)] ...">
         <div className=''>
           {isRegisterMode ? (
             <RegisterForm handleToggleMode={handleToggleMode} />
