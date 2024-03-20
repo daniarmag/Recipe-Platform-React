@@ -37,6 +37,27 @@
 .AssistantFont {
   font-family: 'Assistant', sans-serif;
 }
+.animate-slide-in {
+  animation: slideInFromLeft 0.5s ease-out forwards;
+}
+.link-with-underline::after {
+  content: '';
+  display: block;
+  width: 0;
+  height: 1px; /* Adjust thickness of the stroke */
+  background: white; /* Use the text color for the stroke */
+  transition: width 0.3s ease-out;
+  margin: auto; /* Center the stroke underneath the text */
+}
+
+.link-with-underline:hover::after {
+  width: 100%; /* Expand the stroke to full width on hover */
+}
+
+.link-with-underline:hover {
+  font-weight:bold;
+}
+
 
 
 @keyframes App-logo-spin {
@@ -47,3 +68,15 @@
     transform: rotate(360deg);
   }
 }
+
+@keyframes slideInFromLeft {
+  0% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+

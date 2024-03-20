@@ -1,11 +1,41 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useTheme } from '../context/ThemeContext';
 import { FaStar } from 'react-icons/fa'; // Make sure you have `react-icons` installed
 
 const TopChefsSection = () => {
   const { theme } = useTheme();
   const { darkMode } = theme;
-
+  const chefsSectionRef = useRef(null); // Ref for the chefs section
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            // Add the class to trigger the animation
+            entry.target.classList.add('animate-slide-in');
+          }
+        });
+      },
+      {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.1,
+      }
+    );
+  
+    const cards = chefsSectionRef.current.querySelectorAll('.chef-card');
+  
+    cards.forEach((card) => {
+      observer.observe(card);
+    });
+  
+    return () => {
+      cards.forEach((card) => {
+        observer.unobserve(card);
+      });
+    };
+  }, []);
+  
   // Styles
   const sectionStyle = {
     padding: '50px 10%',
@@ -33,8 +63,8 @@ const TopChefsSection = () => {
     borderRadius: '10px',
     boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
     textAlign: 'left', // Align text to the left
-
   };
+  
 
   const chefs = [
     { name: 'May Caspi', recipes: 12, cuisine: 'Mediterranean', imageUrl: 'https://i.ibb.co/gFqJtKP/Whats-App-Image-2024-03-19-at-16-52-56-66c35714.jpg'},
@@ -55,11 +85,11 @@ const TopChefsSection = () => {
 
 
   return (
-    <div id="top-chefs-section" style={sectionStyle}>
+    <div id="top-chefs-section" style={sectionStyle} ref={chefsSectionRef}>
       <h2 className="text-5xl font-bold mb-6 text-left">OUR TOP CHEFS</h2>
       <div style={gridStyle}>
       {chefs.map((chef, index) => (
-        <div key={index} style={chefCardStyle}>
+        <div key={index} style={chefCardStyle} className="chef-card">
             <img src={chef.imageUrl} alt={chef.name} style={imageStyle} />
             <h3 className="font-bold text-xl">{chef.name}</h3>
             <p>Recipes: {chef.recipes}</p>

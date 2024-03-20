@@ -50,9 +50,7 @@ function Navbar() {
       <ul className={`sm:flex space-x-8 sm:relative hidden items-center`}>
         {navItems.map((item) => (
           <li key={item.id} className="flex items-center"> {/* Ensure each nav item is also a flex container */}
-            <Link to={item.href} id={item.id} className={`text-white text-xl AssistantFont ${
-              isDarkMode ? ' hover:text-green-400 duration-300' : ' hover:text-blue-600 duration-300'
-            } duration-200`} >
+            <Link to={item.href} id={item.id} className={`text-white text-xl AssistantFont link-with-underline duration-200`} >
               {item.text}
             </Link>
           </li>
