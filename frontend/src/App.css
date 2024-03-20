@@ -57,6 +57,13 @@
 .link-with-underline:hover {
   font-weight:bold;
 }
+.button:hover{
+  background-color: #61dafb;
+  color: black;
+  font-weight: bold;
+  border: 1px solid #61dafb;
+
+}
 
 
 
@@ -78,5 +85,40 @@
     transform: translateX(0);
     opacity: 1;
   }
+  
 }
+/* Hide elements on mobile screens */
+@media (max-width: 768px) {
+  .hide-on-mobile {
+    display: none;
+  }
+
+  .mobile-total-list {
+    display: block;
+  }
+
+  .desktop-total-footer {
+    display: none;
+  }
+
+  .recipe-detail {
+    display: none;
+  }
+}
+
+/* Desktop-first: Hide details on mobile, show everything on desktop */
+@media screen and (max-width: 768px) {
+  .desktop-only {
+    display: none;
+  }
+}
+
+/* Mobile-first: you could reverse this if you prefer mobile-first design */
+@media screen and (min-width: 769px) {
+  .mobile-only {
+    display: none;
+  }
+}
+
+
 

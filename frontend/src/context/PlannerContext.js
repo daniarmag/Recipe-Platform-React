@@ -3,9 +3,9 @@ import React, { createContext, useContext, useReducer, useEffect } from "react";
 // Define the initial state
 const initialState = {
   meals: {
-    breakfast: {},
-    lunch: {},
-    dinner: {},
+    Breakfast: {},
+    Lunch: {},
+    Dinner: {},
   },
   shoppingList: {},
 };
