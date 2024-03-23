@@ -1,24 +1,24 @@
 // Import the MealPlanner component
-import MealPlanner from '../components/MealPlannerTable';
-import Navbar from '../components/Navbar';
-import { useTheme } from '../context/ThemeContext';
+import MealPlanner from "../components/MealPlannerTable";
 
+import { useTheme } from "../context/ThemeContext";
 
 // Your MealPlanner page component
 function MealPlannerPage() {
   const { theme } = useTheme();
   const { darkMode } = theme;
 
-  const pageBackgroundColor = darkMode === 'dark' ? 'DarkGray' : 'white';
-
+  const pageBackgroundColor = darkMode === "dark" ? "DarkGray" : "white";
 
   return (
-    <div style={{ backgroundColor: pageBackgroundColor }}>
-                          <Navbar />
+    <div
+      className="page-container"
+      style={{ backgroundColor: pageBackgroundColor }}
+    >
       {/* Include the MealPlanner component */}
       <MealPlanner />
     </div>
   );
-};
+}
 
 export default MealPlannerPage;

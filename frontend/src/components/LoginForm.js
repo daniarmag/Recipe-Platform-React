@@ -27,7 +27,7 @@ const LoginForm = ({ handleToggleMode }) => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-cover ">
+    <div className=" flex items-center justify-center bg-cover ">
       {/* Flex container for the image and login */}
       <div className="rounded-2xl shadow-lg w-full sm:max-w-4xl bg-zinc-100 bg-opacity-5 backdrop-filter backdrop-blur-lg border border-white flex overflow-hidden">
 

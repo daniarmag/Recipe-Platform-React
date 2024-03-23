@@ -1,17 +1,16 @@
-import logo from './logo.svg';
-import './App.css';
-import Navbar from './components/Navbar';
-import {Navigate, Route, Routes} from 'react-router-dom';
-import Home from './pages/Home';
-import MealPlannerPage from './pages/MealPlanner';
-import AddRecipePage  from './pages/AddRecipe';
-import AuthPage from './pages/Auth';
+import logo from "./logo.svg";
+import "./App.css";
+import Navbar from "./components/Navbar";
+import { Navigate, Route, Routes } from "react-router-dom";
+import Home from "./pages/Home";
+import MealPlannerPage from "./pages/MealPlanner";
+import AddRecipePage from "./pages/AddRecipe";
+import AuthPage from "./pages/Auth";
 
-import Footer from './components/Footer';
-import { useAuth } from './context/AuthContext';
-import LoadingSpinner from './components/LoadingSpinner';
-import EditRecipePage from './pages/EditRecipe';
-
+import Footer from "./components/Footer";
+import { useAuth } from "./context/AuthContext";
+import LoadingSpinner from "./components/LoadingSpinner";
+import EditRecipePage from "./pages/EditRecipe";
 
 function App() {
   const { user, loading } = useAuth();
@@ -22,8 +21,8 @@ function App() {
 
   return (
     <>
-      {/* <Navbar/> */}
-      
+      <Navbar />
+
       <Routes>
         {user ? (
           <>
@@ -37,7 +36,7 @@ function App() {
         )}
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
-      <Footer/>
+      <Footer />
     </>
   );
 }

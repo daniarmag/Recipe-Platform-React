@@ -2,12 +2,15 @@ import React, { useState } from "react";
 import { usePlanner } from "../context/PlannerContext.js";
 import ShoppingList from "./ShoppingList.js";
 
+const createPlannerIdentifier = (categoryIndex, recipeIndex, recipeId) =>
+  `${categoryIndex}:${recipeIndex}`;
+
 function MealPlanner() {
   const { getMeals, removeRecipe } = usePlanner();
 
   const [ShoppingListOpen, setShoppingListOpen] = useState(false);
   const [selectedRecipes, setSelectedRecipes] = useState(null);
-  const [expandedRecipeId, setExpandedRecipeId] = useState(null);
+  const [expandedRow, setExpandedRow] = useState(null);
 
   const meals = getMeals();
 
@@ -41,8 +44,13 @@ function MealPlanner() {
     }
   };
 
-  const toggleRecipeDetails = (recipeId) => {
-    setExpandedRecipeId(expandedRecipeId === recipeId ? null : recipeId);
+  const toggleRecipeDetails = (categoryIndex, recipeIndex, recipeId) => {
+    const identifier = createPlannerIdentifier(
+      categoryIndex,
+      recipeIndex,
+      recipeId
+    );
+    setExpandedRow(expandedRow === identifier ? null : identifier);
   };
 
   const totals = calculateTotals();
@@ -60,10 +68,13 @@ function MealPlanner() {
   console.log(meals);
 
   return (
-    <div className="px-2 min-h-screen">
-      <div className="text-xl px-2">
-        <div className="overflow-x-auto">
-          <table className="w-full border border-gray-300 rounded shadow-md">
+    <div className="min-h-screen">
+      <div className="text-xl">
+        <div className="text-2xl font-bold text-center py-3 sm:test-3xl ">
+          Plan your meals for the day
+        </div>
+        <div className="w-full flex items-center justify-center">
+          <table className=" border border-gray-300 rounded shadow-md w-full ">
             <thead className="sm:table-header-group">
               <tr>
                 <th className="py-2 px-4 text-left bg-gray-100">MEAL</th>
@@ -72,13 +83,13 @@ function MealPlanner() {
                   INGREDIENTS
                 </th>
                 <th className="py-2 px-4 text-left bg-gray-100 desktop-only">
-                  CALORIES
+                  CALORIES(kcal)
                 </th>
                 <th className="py-2 px-4 text-left bg-gray-100 desktop-only">
-                  PROTEINS
+                  PROTEINS(g)
                 </th>
                 <th className="py-2 px-4 text-left bg-gray-100 desktop-only">
-                  FATS
+                  FATS(g)
                 </th>
                 <th className="py-2 px-4 text-left bg-gray-100">ACTIONS</th>
               </tr>
@@ -95,7 +106,7 @@ function MealPlanner() {
                     >
                       {index === 0 ? (
                         <td
-                          className="py-2 px-4 font-bold"
+                          className="py-2 px-4"
                           rowSpan={
                             Object.values(meals[mealCategory]).length || 1
                           }
@@ -105,27 +116,40 @@ function MealPlanner() {
                       ) : null}
 
                       <td
-                        className="py-2 px-4"
-                        onClick={() => toggleRecipeDetails(recipe.id)}
+                        className="py-2 text-md"
+                        onClick={() =>
+                          toggleRecipeDetails(categoryIndex, index)
+                        }
                       >
                         <div>{recipe.name}</div>
-                        {expandedRecipeId === recipe.id && (
+
+                        {expandedRow ===
+                          `${createPlannerIdentifier(
+                            categoryIndex,
+                            index,
+                            recipe.id
+                          )}` && (
                           <div>
                             <div className="py-2 px-4 mobile-only">
                               <span>
-                                <u>Ingredients</u>:{" "}
-                                {recipe.ingredients.join(", ")}
+                                Ingredients:{" "}
+                                <div>
+                                  {recipe.ingredients.map(
+                                    (ingredient, index) => (
+                                      <div key={index}>{ingredient}</div>
+                                    )
+                                  )}
+                                </div>
                               </span>
                             </div>
                             <div className="py-2 px-4 mobile-only">
-                              <span>
+                              <div>
                                 Calories: {recipe.nutritionalValues.calories}
-                                kacl
-                              </span>
-                              <span>
-                                Proteins: {recipe.nutritionalValues.proteins}g
-                              </span>
-                              <span>Fats: {recipe.nutritionalValues.fat}g</span>
+                              </div>
+                              <div>
+                                Proteins: {recipe.nutritionalValues.proteins}
+                              </div>
+                              <div>Fats: {recipe.nutritionalValues.fat}</div>
                             </div>
                           </div>
                         )}
@@ -142,7 +166,7 @@ function MealPlanner() {
                       <td className="py-2 px-4 desktop-only">
                         {recipe.nutritionalValues.fat}
                       </td>
-                      <td className="py-2 px-4 lg:w-3">
+                      <td className="py-2 px-2 lg:w-3">
                         <button
                           className="bg-red-500 text-white px-2 py-1 rounded font-bold "
                           onClick={() => handleDelete(mealCategory, recipe)}
@@ -151,27 +175,12 @@ function MealPlanner() {
                         </button>
                       </td>
                     </tr>
-                    {/* {expandedRecipeId == recipe.id && (
-                      <>
-                        <tr className="py-2 px-4 mobile-only">
-                          <td colSpan="3">
-                            - <u>Ingredients</u>:{" "}
-                            {recipe.ingredients.join(", ")}
-                          </td>
-                        </tr>
-                        <tr className="py-2 px-4 mobile-only">
-                          <td>Calories: {recipe.nutritionalValues.calories}</td>
-                          <td>Proteins: {recipe.nutritionalValues.proteins}</td>
-                          <td>Fats: {recipe.nutritionalValues.fat}</td>
-                        </tr>
-                      </>
-                    )} */}
                   </React.Fragment>
                 ))
               )}
             </tbody>
             <tfoot className="desktop-only">
-              <tr>
+              <tr className="border border-gray-300">
                 <td className="py-2 px-4 text-left bg-gray-100" colSpan={3}>
                   TOTALS
                 </td>
@@ -199,11 +208,18 @@ function MealPlanner() {
         </div>
         {/* Totals for Mobile */}
         <div className="mobile-only text-center my-4">
-          <div>Total Calories: {totals.calories}</div>
-          <div>Total Proteins: {totals.proteins}</div>
-          <div>Total Fats: {totals.fats}</div>
-          <button onClick={toggleShoppingList} className="mt-2">
-            <img src={imageUrl} alt="Shopping List" />
+          <div>Total Calories: {totals.calories}kcal</div>
+          <div>Total Proteins: {totals.proteins}g</div>
+          <div>Total Fats: {totals.fats}g</div>
+          <button
+            onClick={toggleShoppingList}
+            className="mt-2 p-4 rounded-full border-2  shadow-lg bg-blue-100 hover:bg-blue-200  focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+          >
+            <img
+              src={imageUrl}
+              alt="Shopping List"
+              className="w-12  object-cover"
+            />
           </button>
         </div>
         {ShoppingListOpen && selectedRecipes && (

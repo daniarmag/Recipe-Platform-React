@@ -65,6 +65,14 @@
 
 }
 
+.page-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 88vh;
+  padding-top: 8px;
+}
 
 
 @keyframes App-logo-spin {

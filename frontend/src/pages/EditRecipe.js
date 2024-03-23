@@ -1,9 +1,8 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import EditRecipeForm from "../components/EditRecipeForm";
-import Navbar from "../components/Navbar";
-import { useTheme } from "../context/ThemeContext";
 
+import { useTheme } from "../context/ThemeContext";
 
 const EditRecipePage = () => {
   const { recipeId } = useParams();
@@ -14,11 +13,11 @@ const EditRecipePage = () => {
   const pageBackgroundColor = darkMode === "dark" ? "DarkGray" : "white";
 
   return (
-    <div 
+    <div
       style={{ backgroundColor: pageBackgroundColor }}
-      className="min-h-screen">
-      <Navbar />
-      <div className="text-3xl  text-gray-800 font-bold text-center py-3 bigTitle sm:text-3xl mt-3 mb-3 AssistantFont">
+      className="page-container"
+    >
+      <div className="text-3xl  text-gray-800 font-bold  pt-3 text-center bigTitle sm:text-3xl mb-3 AssistantFont">
         EDIT RECIPE
       </div>
       <EditRecipeForm recipeId={recipeId} />

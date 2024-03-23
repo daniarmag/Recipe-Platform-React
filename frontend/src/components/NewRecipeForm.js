@@ -110,7 +110,7 @@ const CreateNewRecipe = () => {
         onClose={showPopup}
         duration={3000}
       />
-      <div className="text-3xl  text-gray-800 font-bold text-center py-3 bigTitle sm:text-3xl mt-3 mb-3 ">
+      <div className="text-3xl  text-gray-800 font-bold text-center pt-3 bigTitle sm:text-3xl mb-3 ">
         ADD YOUR RECIPE HERE
       </div>
       <form className="max-w-md mx-auto pb-4" onSubmit={handleSubmit}>
@@ -190,8 +190,6 @@ const CreateNewRecipe = () => {
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <div className="mb-2 mx-2">
-            {" "}
-            {/* Added mx-4 for spacing */}
             <label
               htmlFor="calories"
               className="block text-lg font-semibold text-gray-700"
@@ -275,13 +273,15 @@ const CreateNewRecipe = () => {
         </div>
 
         {/* Submit button */}
-        <button
-          type="submit"
-          // style={submitBtnStyle}
-          className={`text-lg font-bold py-3 ${submitBtnStyle} rounded-lg shadow-md mx-2 w-full text-white hover:bg-emerald-500`}
-        >
-          SUBMIT RECIPE
-        </button>
+        <div className="px-2">
+          <button
+            type="submit"
+            // style={submitBtnStyle}
+            className={`text-lg font-bold py-3 ${submitBtnStyle} rounded-lg shadow-md w-full text-white hover:bg-emerald-500`}
+          >
+            SUBMIT RECIPE
+          </button>
+        </div>
       </form>
     </div>
   );
