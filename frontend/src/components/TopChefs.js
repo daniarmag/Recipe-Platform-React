@@ -79,8 +79,16 @@ const TopChefsSection = () => {
       imageUrl:
         "https://i.ibb.co/vLh0bMF/Whats-App-Image-2024-03-19-at-16-53-31-d6a9c86b.jpg",
     },
-    { name: "Matan Czukermann", recipes: 10, cuisine: "Fusion" },
-    { name: "Daniel Armaganian", recipes: 8, cuisine: "Italian" },
+    { name: "Matan Czukermann",
+     recipes: 10,
+      cuisine: "Fusion",
+      imageUrl: "https://i.ibb.co/rp5bgYc/Whats-App-Image-2024-03-25-at-20-18-17-413a9434.jpg",
+    },
+    { name: "Daniel Armaganian",
+     recipes: 8, 
+     cuisine: "Italian",
+     imageUrl: "https://i.ibb.co/C6L9pJB/image0-1.jpg",
+     },
     {
       name: "Tzahi Bakal",
       recipes: 9,
