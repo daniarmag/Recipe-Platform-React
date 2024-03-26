@@ -7,7 +7,6 @@ const createPlannerIdentifier = (categoryIndex, recipeIndex, recipeId) =>
 
 function MealPlanner() {
   const { getMeals, removeRecipe } = usePlanner();
-
   const [ShoppingListOpen, setShoppingListOpen] = useState(false);
   const [selectedRecipes, setSelectedRecipes] = useState(null);
   const [expandedRow, setExpandedRow] = useState(null);

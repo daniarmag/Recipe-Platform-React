@@ -89,7 +89,7 @@ const CreateNewRecipe = () => {
         },
         image: null,
       });
-
+      setImagePreviewUrl(null); // This line clears the image preview
       // Optionally, clear the form or navigate the user to a different page
     } catch (error) {
       console.error("Failed to add the recipe:", error);
