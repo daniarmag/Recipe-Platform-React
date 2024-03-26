@@ -106,7 +106,7 @@ function MealPlanner() {
                     >
                       {index === 0 ? (
                         <td
-                          className="py-2 px-4"
+                          className="py-2 px-4 font-bold"
                           rowSpan={
                             Object.values(meals[mealCategory]).length || 1
                           }
@@ -168,7 +168,7 @@ function MealPlanner() {
                       </td>
                       <td className="py-2 px-2 lg:w-3">
                         <button
-                          className="bg-red-500 text-white px-2 py-1 rounded font-bold "
+                          className="bg-green-500 text-white px-2 py-1 rounded font-bold "
                           onClick={() => handleDelete(mealCategory, recipe)}
                         >
                           DELETE

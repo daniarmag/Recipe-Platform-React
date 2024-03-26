@@ -90,7 +90,7 @@ const RegisterForm = ({ handleToggleMode }) => {
             type="submit"
             className="w-full bg-green-500 bg-opacity-60 text-white p-2 rounded-2xl hover:bg-green-600 focus:outline-none focus:ring focus:border-green-300 mt-4"
           >
-            LOGIN
+            REGISTER & LOGIN
           </button>
         </form>
         <div className="mt-4 text-sm text-gray-600">

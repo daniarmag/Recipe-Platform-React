@@ -6,7 +6,7 @@ import usePopupMessage from "../hooks/usePopupMessage.js";
 import PopupMessage from "./PopupMessage.js";
 
 const EditRecipeForm = ({ recipeId }) => {
-  const { user } = useAuth();
+ 
   const [recipeData, setRecipeData] = useState(null);
   const { isVisible: isPopupVisible, message, showPopup } = usePopupMessage(); // Use the custom hook for popup message
   const [imagePreviewUrl, setImagePreviewUrl] = useState(null);
