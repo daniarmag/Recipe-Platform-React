@@ -1,5 +1,8 @@
 import React from "react";
 
+/*
+ * Modal component for adding a recipe to the meal planner.
+ */
 const Modal = ({ recipe, closeModal, addToPlanner }) => {
   const mealOptions = ["Breakfast", "Lunch", "Dinner"];
   return (

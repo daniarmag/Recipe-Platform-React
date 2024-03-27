@@ -4,14 +4,21 @@ import { useTheme } from '../context/ThemeContext';
 import { useAuth } from '../context/AuthContext';
 import { AiOutlineUser, AiOutlineLock, AiOutlineLogout } from 'react-icons/ai';
 
+/**
+ * Component for rendering the logout button.
+ */
 function LogoutButton() {
   const { theme } = useTheme();
   const { logout } = useAuth();
   const navigate = useNavigate();
 
+  /**
+   * Handles the logout action.
+   */
   const handleLogout = async () => {
     await logout();
-    navigate('/'); // Redirect to the home page
+    // Redirect to the home page
+    navigate('/'); 
   };
 
   return (

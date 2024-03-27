@@ -1,11 +1,16 @@
 import React, { useState } from "react";
 import { usePlanner } from "../context/PlannerContext";
 
+/**
+ * ShoppingList component displays a list of ingredients for selected recipes.
+ * It allows users to update the amounts of ingredients and download the shopping list.
+ */
 function ShoppingList({ selectedRecipes, onClose }) {
   const { getShoppingList, updateShoppingList } = usePlanner();
   const initialShoppingList = getShoppingList(selectedRecipes);
   const [shoppingList, setShoppingList] = useState(initialShoppingList);
 
+  // Handles the change of amount for a specific ingredient.
   const handleAmountChange = (ingredient, event) => {
     const updatedShoppingList = {
       ...shoppingList,
@@ -15,7 +20,9 @@ function ShoppingList({ selectedRecipes, onClose }) {
     updateShoppingList(ingredient, +event.target.value);
   };
 
+  // Handles the toggle of checkbox for a specific ingredient.
   const handleCheckboxChange = (ingredient) => {
+    // Create a copy of the current shopping list (in case a user toggles back).
     const updatedShoppingList = {
       ...shoppingList,
       [ingredient]: shoppingList[ingredient]
@@ -30,6 +37,10 @@ function ShoppingList({ selectedRecipes, onClose }) {
     updateShoppingList(ingredient, toggledAmount);
   };
 
+  /**
+   * Handles the download action for the shopping list.
+   * It generates a text file with the list of ingredients and their amounts.
+   */
   const handleDownload = () => {
     const formattedIngredients = Object.entries(shoppingList)
       .map(([ingredient, amount]) => {

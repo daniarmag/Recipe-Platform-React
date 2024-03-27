@@ -36,12 +36,14 @@ class RecipesApi {
       
       if (key === 'image') {
         if (value instanceof File) {
-          data[key] = await fileToBase64(value); // Convert image file to base64
+          // Convert image file to base64
+          data[key] = await fileToBase64(value); 
         } else {
-          data[key] = value; // Regular form values
+          // Regular form values
+          data[key] = value; 
         }
       } else {
-        data[key] = value; // Regular form values
+        data[key] = value; 
       }
     });
 
@@ -93,16 +95,19 @@ class RecipesApi {
   async updateRecipe(id, formData) {
     let data={};   
     try {
+      // The updated data
       const entries = Array.from(formData.entries());
       const asyncTasks = entries.map(async ([key, value]) => {
         if (key === 'image') {
           if (value instanceof File) {
-            data[key] = await fileToBase64(value); // Convert image file to base64
+            // Convert image file to base64
+            data[key] = await fileToBase64(value); 
           } else {
-            data[key] =value; // Regular form values
+            // Regular form values
+            data[key] =value; 
           }
         } else {
-          data[key] = value; // Regular form values
+          data[key] = value; 
         }
       });
 

@@ -5,7 +5,11 @@ import { useAuth } from "../context/AuthContext";
 import usePopupMessage from "../hooks/usePopupMessage.js";
 import PopupMessage from "./PopupMessage.js";
 
+/**
+ * Component for creating a new recipe.
+ */
 const CreateNewRecipe = () => {
+  // Retrieve user information from AuthContext
   const { user } = useAuth();
   const [recipeData, setRecipeData] = useState({
     author: user?.email || "",
@@ -21,8 +25,10 @@ const CreateNewRecipe = () => {
     image: null,
   });
 
-  const { isVisible: isPopupVisible, message, showPopup } = usePopupMessage(); // Use the custom hook for popup message
+  // Use the custom hook for popup message
+  const { isVisible: isPopupVisible, message, showPopup } = usePopupMessage();
 
+  // Handle input change in the form fields
   const handleInputChange = (e) => {
     const { id, value } = e.target;
     if (id.includes("nutritionalValues.")) {
@@ -35,7 +41,10 @@ const CreateNewRecipe = () => {
       setRecipeData({ ...recipeData, [id]: value });
     }
   };
+  // State to manage image preview
   const [imagePreviewUrl, setImagePreviewUrl] = useState(null);
+
+  // Handle image change in the form
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -50,7 +59,7 @@ const CreateNewRecipe = () => {
       reader.readAsDataURL(file);
     }
   };
-
+  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData();
@@ -100,6 +109,7 @@ const CreateNewRecipe = () => {
   const { theme } = useTheme();
   const { darkMode } = theme;
 
+  // Determine submit button style based on theme
   const submitBtnStyle = darkMode === "dark" ? "bg-slate-600" : "bg-green-500";
 
   return (

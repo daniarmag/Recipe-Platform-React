@@ -1,6 +1,12 @@
 import React from 'react';
 import { useTheme } from '../context/ThemeContext';
 
+
+/**
+ * Component representing the feature section of the application.
+ * Renders a section with images and text describing the features.
+ * Uses theme context to determine the color scheme.
+ */
 const FeatureSection = () => {
   const { theme } = useTheme();
   const { darkMode } = theme;

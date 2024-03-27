@@ -2,10 +2,17 @@ import React, { useEffect, useRef } from "react";
 import { useTheme } from "../context/ThemeContext";
 import { FaStar } from "react-icons/fa"; // Make sure you have `react-icons` installed
 
+/**
+ * TopChefsSection component displays a section showcasing top chefs.
+ * It animates the appearance of chef cards when they become visible in the viewport.
+ */
 const TopChefsSection = () => {
   const { theme } = useTheme();
   const { darkMode } = theme;
-  const chefsSectionRef = useRef(null); // Ref for the chefs section
+  // Ref for the chefs section
+  const chefsSectionRef = useRef(null); 
+
+  // Callback function for the IntersectionObserver to handle when chef cards intersect with the viewport.
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -23,6 +30,7 @@ const TopChefsSection = () => {
       }
     );
 
+    // Select all chef cards and observe them for intersection
     const cards = chefsSectionRef.current.querySelectorAll(".chef-card");
 
     cards.forEach((card) => {

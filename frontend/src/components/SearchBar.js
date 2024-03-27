@@ -2,6 +2,10 @@ import React, { useState } from 'react';
 import { useRecipes } from '../context/RecipesContext.js';
 import {useTheme} from '../context/ThemeContext';
 
+/**
+ * SearchBar component renders a search input field and a search button.
+ * It allows users to input search queries and trigger a search action.
+ */
 function SearchBar() {
   const { searchQuery, updateSearchQuery  } = useRecipes();
   const [inputValue, setInputValue] = useState(searchQuery);
@@ -10,15 +14,17 @@ function SearchBar() {
   const { theme } = useTheme();
   const { darkMode } = theme;
 
+  // Handles changes in the search input field.
   const handleInputChange = (e) => {
     setInputValue(e.target.value);
     updateSearchQuery(e.target.value);
   };
-
+  // Handles the search action by updating to the current query.
   const handleSearch = () => {
     updateSearchQuery(inputValue);
   };
 
+  // Style for the search button based on theme.
   const searchBtnStyle = {
     backgroundColor:darkMode === 'dark' ?'#1A202C' : '#48BB78',
   };

@@ -1,5 +1,9 @@
 import React from 'react';
 import { useTheme } from '../context/ThemeContext';
+
+/**
+ * Component for rendering a loading spinner.
+ */
 function LoadingSpinner() {
   const { theme } = useTheme();
 

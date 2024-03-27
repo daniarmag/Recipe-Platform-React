@@ -3,6 +3,9 @@ import { useTheme } from '../context/ThemeContext';
 import { FaTrashAlt, FaEdit } from 'react-icons/fa'; // Importing icons from FontAwesome
 import { useAuth } from '../context/AuthContext'; // Import AuthContext to check user's admin status
 
+/*
+ * RecipeCard component displays a card with recipe information.
+ */
 const RecipeCard = ({
   title,
   author,
@@ -18,19 +21,22 @@ const RecipeCard = ({
 }) => {
   const { theme } = useTheme();
   const { darkMode } = theme;
-  const { user } = useAuth(); // Get current user from AuthContext
+  // Get current user from AuthContext
+  const { user } = useAuth(); 
 
+  // Styles for card background and buttons based on theme
   const cardStyle = {
     backgroundColor: darkMode === 'dark' ? theme.dark.card : theme.light.card,
     color: darkMode === 'dark' ? '#FFFFFF' : '#333333',
   };
 
+  // Style for add to planner button based on theme
   const addToPlannerBtnStyle = {
-    border: darkMode === 'dark' ? 'green-200' : 'gray-500', // Use green for dark mode, gray for light mode
-    text: darkMode === 'dark' ? 'white' : 'green-500', // Use white for dark mode, green for light mode
+    border: darkMode === 'dark' ? 'green-200' : 'gray-500', 
+    text: darkMode === 'dark' ? 'white' : 'green-500', 
   };
 
-  const isUserAdmin = user.isAdmin; // Check if the current user is admin
+  const isUserAdmin = user.isAdmin; 
   const isUserTheAuthor = author === user.email;
   
   return (

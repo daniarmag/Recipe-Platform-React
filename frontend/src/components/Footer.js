@@ -1,5 +1,9 @@
 import React from 'react';
 import { useTheme } from '../context/ThemeContext';
+
+/**
+ * Component for the website footer.
+ */
 const Footer = () => {
 
   const { theme } = useTheme();

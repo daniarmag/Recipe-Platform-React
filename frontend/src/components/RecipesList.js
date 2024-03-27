@@ -11,6 +11,10 @@ import PopupMessage from "./PopupMessage.js";
 import useConfirmationDialog from '../hooks/useConfirmationDialog'; 
 import ConfirmationDialog from './ConfirmationDialog'; // Import the ConfirmationDialog component
 
+/**
+ * RecipeList component displays a list of recipes fetched from the context.
+ * It allows users to view, add to planner, edit, and delete recipes.
+ */
 function RecipeList() {
   const navigate = useNavigate(); // Initialize useNavigate
   const [modalOpen, setModalOpen] = useState(false);
@@ -38,38 +42,45 @@ function RecipeList() {
     fetchRecipes();
   }, [fetchRecipes]);
 
+  // Paginates through the recipe list (The page number to navigate to).
   const paginate = (pageNumber) => {
     // Update the page in the context
     updatePage(pageNumber);
   };
 
+  // Opens a popup displaying the details of a recipe.
   const openPopup = (recipe) => {
     setSelectedRecipeForPopup(recipe);
   };
 
+  // Closes the recipe popup.
   const closePopup = () => {
     setSelectedRecipeForPopup(null);
   };
 
+  // Handles adding a recipe to the planner.
   const handleAddToPlanner = (recipe) => {
     setModalOpen(true);
     setSelectedRecipe(recipe);
   };
 
+  // Adds a recipe to the planner.
   const addToPlanner = (meal, recipe) => {
     // window.alert(`Recipe ${recipe.name} added to ${meal}`);
     showPopup(`Recipe ${recipe.name} added to ${meal}`);
     addRecipeToPlanner(meal, recipe);
   };
 
+  // Handles editing a recipe.
   const handleEditRecipe = (recipe) => {
     // Navigate to the edit page with the recipeId as a URL parameter
     navigate(`/edit/${recipe.id || recipe.name}`);
   };
 
-
+  // Handles the confirmation dialog for deleting a recipe.
   const handleDeleteConfirmation = (recipeId) => {
     showConfirmationDialog(
+      // Function to execute when the user confirms deletion
       async () => {
         await deleteRecipe(recipeId);
         showPopup('Recipe deleted successfully');

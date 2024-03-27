@@ -3,6 +3,9 @@ import UsersApi from "../api/UsersApi";
 import { useAuth } from "../context/AuthContext";
 import { AiOutlineUser, AiOutlineLock, AiOutlineLogin } from "react-icons/ai";
 
+/*
+ * RegisterForm component renders a form for user registration.
+ */
 const RegisterForm = ({ handleToggleMode }) => {
   const { login } = useAuth();
   const [userName, setUserName] = useState("");
@@ -10,6 +13,7 @@ const RegisterForm = ({ handleToggleMode }) => {
   const [displayName, setDisplayName] = useState("");
   const [error, setError] = useState(null); // New state for error message
 
+  // Handles the form submission for user registration.
   const handleSubmit = async (e) => {
     e.preventDefault();
 

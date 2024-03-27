@@ -27,17 +27,18 @@ const EditRecipeForm = ({ recipeId }) => {
         }
       } catch (error) {
         console.error("Failed to fetch recipe:", error);
-        // Handle error
       }
     };
 
     fetchRecipe();
   }, [recipeId]);
 
+  // Handles input change events for updating recipe data.
   const handleInputChange = (e) => {
     const { id, value } = e.target;
     if (id.includes("nutritionalValues.")) {
       const key = id.split(".")[1];
+      // Update nutritionalValues object in recipeData with the new value
       setRecipeData({
         ...recipeData,
         nutritionalValues: { ...recipeData.nutritionalValues, [key]: value },
@@ -47,6 +48,7 @@ const EditRecipeForm = ({ recipeId }) => {
     }
   };
 
+  // Handles image change events for updating recipe image data and preview.
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -74,12 +76,9 @@ const EditRecipeForm = ({ recipeId }) => {
     formData.append("calories", recipeData.nutritionalValues.calories);
     formData.append("fat", recipeData.nutritionalValues.fat);
     formData.append("proteins", recipeData.nutritionalValues.proteins);
-
-    // Assuming `recipeData.image` is a File object from an <input type="file" />
     if (recipeData.image) {
       formData.append("image", recipeData.image);
     }
-
     try {
       // Call the updateRecipe method from RecipesApi and pass the recipeData
       const response = await RecipesApi.updateRecipe(recipeId, formData);

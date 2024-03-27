@@ -2,9 +2,11 @@ import React, { useState } from "react";
 import { usePlanner } from "../context/PlannerContext.js";
 import ShoppingList from "./ShoppingList.js";
 
+// Generates a unique identifier for a recipe in the meal planner.
 const createPlannerIdentifier = (categoryIndex, recipeIndex, recipeId) =>
   `${categoryIndex}:${recipeIndex}`;
 
+// Component for displaying and managing meal planning.
 function MealPlanner() {
   const { getMeals, removeRecipe } = usePlanner();
   const [ShoppingListOpen, setShoppingListOpen] = useState(false);
@@ -13,20 +15,22 @@ function MealPlanner() {
 
   const meals = getMeals();
 
+  // Toggles the visibility of the shopping list.
   const toggleShoppingList = () => {
     setShoppingListOpen(!ShoppingListOpen);
     setSelectedRecipes(meals);
   };
-
+  // Calculates the total nutritional values for all recipes in the meal planner.
   const calculateTotals = () => {
     const totals = {
       calories: 0,
       proteins: 0,
       fats: 0,
     };
-
+    // Loop through each meal category in the 'meals' object
     Object.keys(meals).forEach((mealCategory) => {
       Object.values(meals[mealCategory]).forEach((recipe) => {
+        // Add the calories, proteins, and fats of each recipe to the totals object
         totals.calories += +recipe.nutritionalValues.calories || 0;
         totals.proteins += +recipe.nutritionalValues.proteins || 0;
         totals.fats += +recipe.nutritionalValues.fat || 0;
@@ -35,6 +39,7 @@ function MealPlanner() {
     return totals;
   };
 
+  // Handles the deletion of a recipe from the meal planner.
   const handleDelete = async (mealCategory, recipe) => {
     try {
       await removeRecipe(mealCategory, recipe.id);
@@ -43,6 +48,8 @@ function MealPlanner() {
     }
   };
 
+  // Toggles the visibility of recipe details in the meal planner.
+  // Made especially for smaller formats.
   const toggleRecipeDetails = (categoryIndex, recipeIndex, recipeId) => {
     const identifier = createPlannerIdentifier(
       categoryIndex,
@@ -53,7 +60,7 @@ function MealPlanner() {
   };
 
   const totals = calculateTotals();
-
+  // Gets the background color class for a meal category.
   const getCategoryColor = (category) => {
     const categoryColorMap = {
       Breakfast: "bg-green-200",

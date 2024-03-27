@@ -3,18 +3,23 @@ import { Link, useNavigate } from "react-router-dom";
 import { useTheme } from "../context/ThemeContext";
 import { useAuth } from "../context/AuthContext";
 import LogoutButton from "./LogoutButton";
-import { FiSun, FiMoon } from "react-icons/fi"; // Import sun and moon icons
+import { FiSun, FiMoon } from "react-icons/fi"; 
 
+/**
+ * Navbar component for navigating through different pages and toggling dark mode.
+ */
 function Navbar() {
   const { theme, toggleDarkMode } = useTheme();
   const { user } = useAuth();
 
+  // Define navigation links
   const navItems = [
     { text: "HOME", href: "/", id: "home-page" },
     { text: "ADD NEW RECIPE", href: "/new-recipe", id: "newRecipe-page" },
     { text: "MEAL PLANNER", href: "/meal-planner", id: "mealPlanner-page" },
   ];
 
+  // Define links for the mobile popup menu
   const popUpLinks = [
     { text: "Home", href: "/" },
     { text: "New Recipe", href: "/new-recipe" },
@@ -24,6 +29,7 @@ function Navbar() {
   const [showMenu, setShowMenu] = useState(false);
   const { isDarkMode } = theme;
 
+  // Function to toggle mobile popup menu
   const toggleMenu = () => {
     setShowMenu(!showMenu);
   };

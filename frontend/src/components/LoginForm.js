@@ -3,12 +3,18 @@ import { useAuth } from '../context/AuthContext';
 import { AiOutlineUser, AiOutlineLock } from 'react-icons/ai';
 import { FaUserCircle } from 'react-icons/fa';
 
+/*
+ * Component for rendering the login form.
+ */ 
 const LoginForm = ({ handleToggleMode }) => {
-  const { login } = useAuth(); // Use the login function from AuthContext
+  // Use the login function from AuthContext
+  const { login } = useAuth(); 
   const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState(null); // New state for error message
+  // New state for error message
+  const [error, setError] = useState(null); 
 
+  // Handles form submission.
   const handleSubmit = async (e) => {
     e.preventDefault();
 

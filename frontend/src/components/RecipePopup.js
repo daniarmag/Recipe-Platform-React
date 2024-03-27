@@ -1,8 +1,11 @@
 import React from 'react';
 
+/**
+ * RecipePopup component displays a popup with detailed information about a recipe.
+ */
 const RecipePopup = ({ title, imageSrc, description, ingredients, nutritionalValues, preparation, onClose }) => {
 
-    
+  // Map of units for nutritional values
   const unitMap = {
     fat: 'g',
     proteins: 'g',
