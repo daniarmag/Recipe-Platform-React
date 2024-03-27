@@ -11,14 +11,16 @@ import {
   setDoc,
   updateDoc,
 } from "firebase/firestore";
+
+// Function to parse ingredients
 const parseIngredients = (ingredientsData) => {
   let ingredientsArray = [];
+  // Validating the the data is indeed a string
   if (typeof ingredientsData !== 'string') {
     console.error( new Error('Invalid ingredients data. Expected a string.ingredientsData: '));
     console.error(ingredientsData)
     return null;
   }
-
   if (ingredientsData.includes(',')) {
     // Split by comma
     ingredientsArray = ingredientsData.split(',').map(ingredient => ingredient.trim());
@@ -35,11 +37,12 @@ const parseIngredients = (ingredientsData) => {
   return ingredientsArray;
 };
 
-
+// Function to upload image to Firebase Storage
 const uploadImage = async (imageData, name) => {
   try {
     let imageUrl = "";
     if (imageData.startsWith('data:image')) {
+      // Extracting MIME type and base64 data from the image data
       const matches = imageData.match(/^data:(.+);base64,(.*)$/);
       if (!matches || matches.length !== 3) {
         throw new Error("Invalid base64 image data");
@@ -47,6 +50,7 @@ const uploadImage = async (imageData, name) => {
       const mimeType = matches[1];
       const base64Data = matches[2];
       const buffer = Buffer.from(base64Data, "base64");
+      // Generate a unique filename using the provided name and current timestamp
       const filename = `${name}-${Date.now()}`;
       const storageRef = ref(storage, `recipeImages/${filename}`);
       const snapshot = await uploadBytes(storageRef, buffer, {
@@ -64,6 +68,9 @@ const uploadImage = async (imageData, name) => {
   }
 };
 
+/**
+ * Controller class for managing recipe-related operations.
+ */
 class RecipeController {
   constructor() {
     this.createRecipe = this.createRecipe.bind(this);
@@ -73,10 +80,7 @@ class RecipeController {
     this.updateRecipe = this.updateRecipe.bind(this);
   }
 
- 
-// Function to parse ingredients
-
-
+  // Function to create a new recipe
   async createRecipe(req, res) {
     try {
       const {
@@ -119,16 +123,19 @@ class RecipeController {
     }
   }
 
+  // Function to retrieve paginated recipes with optional search query
   async getRecipes(req, res) {
     try {
       const { page = 1, pageSize = 8, searchQuery } = req.query;
       const recipesSnapshot = await getDocs(collection(db, "recipe"));
       let recipeArray = [];
       let recipe;
+      // Check if the collection is empty
       if (recipesSnapshot.empty) {
         console.error("No Recipes found");
         res.status(400).send("No Recipes found");
       } else {
+        // Iterate through each document in the collection
         recipesSnapshot.forEach((doc) => {
           recipe = new Recipe(
             doc.id,
@@ -142,7 +149,7 @@ class RecipeController {
           );
           recipeArray.push(recipe);
         });
-
+        // If searchQuery is provided, filter recipes based on the query
         if (searchQuery) {
           recipeArray = recipeArray.filter((recipe) =>
             recipe.name.toLowerCase().includes(searchQuery.toLowerCase())
@@ -165,15 +172,18 @@ class RecipeController {
       res.status(400).send(error.message);
     }
   }
-
+  
+  // Function to retrieve a single recipe by ID
   async getRecipe(req, res) {
     try {
       const { id } = req.params;
+      // Retrieve the document corresponding to the recipe ID
       const recipeDoc = await getDoc(doc(db, "recipe", id));
 
       if (!recipeDoc.exists()) {
         res.status(404).send("Recipe not found");
       } else {
+        // If the recipe document exists, construct a recipe object
         const recipe = {
           id: recipeDoc.id,
           ...recipeDoc.data(),
@@ -186,7 +196,8 @@ class RecipeController {
       res.status(500).send("Internal Server Error");
     }
   }
-
+  
+  // Function to update an existing recipe
   async updateRecipe(req, res) {
     try {
       const { id } = req.params;
@@ -223,6 +234,7 @@ class RecipeController {
         ...rest,
       };
 
+      // Get a reference to the recipe document in Firestore
       const recipeRef = doc(db, "recipe", id);
       await updateDoc(recipeRef, updatedData);
 
@@ -232,11 +244,13 @@ class RecipeController {
     }
   }
 
+  // Function to delete a recipe by ID
   async deleteRecipe(req, res) {
     try {
       const { id } = req.params;
-
+      // Extract recipe ID from request parameters
       const recipeRef = doc(db, "recipe", id);
+      // Delete the recipe document
       await deleteDoc(recipeRef);
 
       res.status(200).send({ id, message: "Recipe deleted successfully" });

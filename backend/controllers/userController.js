@@ -10,6 +10,9 @@ import { doc, setDoc, getDocs, query, collection, where } from 'firebase/firesto
 import FirestoreService from '../services/FirestoreService.js';
 import { isAdmin } from '../services/UsersService.js';
 
+/**
+ * Controller class for managing user-related operations.
+ */
 class UserController {
     constructor() {
         // Explicitly bind the getUserByUsername function to the class instance
@@ -22,6 +25,7 @@ class UserController {
         this.firestoreService = new FirestoreService();
         this.auth = getAuth();
     }
+    // Function to register a new user
     async registerUser(req, res) {
         try {
             const { username, password, displayName } = req.body;
@@ -61,7 +65,7 @@ class UserController {
         }
       }
       
-
+      // Function to log in a user
       async loginUser(req, res) {
         const { username, password } = req.body;
         try {
@@ -78,6 +82,7 @@ class UserController {
                  // Retrieve additional user details from Firestore
                 const userDoc = await this.firestoreService.getSingleDocByField('email', user.email);
 
+                // Construct a user model with retrieved details
                 const userModel = new User(user.uid, user.email, userDoc ? userDoc.displayName : null, userDoc ? userDoc.isAdmin : isAdmin(user));
         
                 res.status(200).json(userModel);
@@ -98,6 +103,7 @@ class UserController {
         }
       }
 
+      // Function to retrieve user data by username
       async getUserByUsername(username) {
         try {
             // Determine if the provided username is an email address
@@ -111,6 +117,7 @@ class UserController {
         }
       }
 
+  // Function to log out a user     
   async logoutUser(req, res) {
     try {
       await signOut(this.auth);
@@ -122,6 +129,7 @@ class UserController {
     }
   }
 
+  // Function to retrieve current user data
   async getCurrentUser(req, res) {
     try {
       const user = this.auth.currentUser;
@@ -142,12 +150,13 @@ class UserController {
       res.status(500).send('Internal Server Error');
     }
   }
-
+  // Helper function to check if a string is in email format
   isEmail(username) {
     // Simple check to determine if the provided string is an email address
     return /\S+@\S+\.\S+/.test(username);
   }
 
+  // Helper function to convert a string to an email address format
   toEmailAddress(username) {
     const lowerUsername = username.toLowerCase();
     const isEmailFormat = /\S+@\S+\.\S+/.test(lowerUsername);
@@ -155,7 +164,6 @@ class UserController {
     
   }
 
-  // ... (other methods remain unchanged)
 }
 
 export default new UserController();
