@@ -2,6 +2,9 @@ import axios from 'axios';
 import config from '../config.js'; 
 const {apiBaseUrl } = config;
 
+/**
+ * Converts a file to base64 format.
+ */
 async function fileToBase64(file) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -11,6 +14,9 @@ async function fileToBase64(file) {
   });
 }
 
+/**
+ * A class to handle API requests related to recipes.
+ */
 class RecipesApi {
   constructor() {
     this.api = axios.create({
@@ -18,10 +24,13 @@ class RecipesApi {
     });
   }
   
-
+  /**
+   * Creates a new recipe.
+   */
   async createRecipe(formData) {
     let data={};    
     
+    // Process each form data entry asynchronously
     const entries = Array.from(formData.entries());
     const asyncTasks = entries.map(async ([key, value]) => {
       
@@ -36,10 +45,13 @@ class RecipesApi {
       }
     });
 
+    // Wait for all async tasks to complete
     await Promise.all(asyncTasks);  
     console.log(data);
     try {
+      // Send a POST request to create the recipe
       const response = await this.api.post('/recipes', data);
+      // Return the created recipe data
       return response.data;
     } catch (error) {
       console.error('Error creating recipe:', error);
@@ -47,14 +59,14 @@ class RecipesApi {
     }
   }
 
+  /**
+   * Retrieves a list of recipes.
+   */
   async getRecipes({page, pageSize, searchQuery}) {
     try {
       const response = await this.api.get('/recipes', {
         params: { page, pageSize, searchQuery },
       });
-    //   const url = `/recipes?page=${page}&pageSize=${pageSize}&searchQuery=${searchQuery}`;
-    // const response = await this.api.get(url);
-
       return response.data;
     } catch (error) {
       console.error('Error getting recipes:', error);
@@ -62,6 +74,9 @@ class RecipesApi {
     }
   }
   
+  /**
+   * Retrieves a recipe by its ID.
+   */
   async getRecipeById(id) {
     try {
       const response = await this.api.get(`/recipes/${id}`);
@@ -72,6 +87,9 @@ class RecipesApi {
     }
   }
 
+  /**
+   * Updates a recipe.
+   */
   async updateRecipe(id, formData) {
     let data={};   
     try {
@@ -97,6 +115,9 @@ class RecipesApi {
     }
   }
 
+  /**
+   * Deletes a recipe by its ID.
+   */
   async deleteRecipe(id) {
     try {
       const response = await this.api.delete(`/recipes/${id}`);

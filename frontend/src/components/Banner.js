@@ -1,11 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { useTheme } from "../context/ThemeContext";
 
+/**
+ * Banner component displays a random tip related to health, fitness, and wellness.
+ * It changes its background color based on the selected theme (light or dark).
+ */
 const Banner = () => {
   const [randomTip, setRandomTip] = useState("");
   const { theme } = useTheme();
   const { darkMode } = theme;
 
+  // Inline style for the banner background
   const bannerStyle = {
     background:
       darkMode === "dark"

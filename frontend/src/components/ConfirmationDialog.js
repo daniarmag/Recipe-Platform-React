@@ -1,3 +1,7 @@
+/**
+ * ConfirmationDialog component displays a confirmation dialog box
+ * with options to confirm or cancel an action.
+ */
 const ConfirmationDialog = ({ isVisible, onConfirm, onCancel }) => {
   return (
     isVisible && (

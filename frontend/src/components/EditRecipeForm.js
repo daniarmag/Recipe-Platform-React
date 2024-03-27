@@ -5,10 +5,14 @@ import { useAuth } from "../context/AuthContext";
 import usePopupMessage from "../hooks/usePopupMessage.js";
 import PopupMessage from "./PopupMessage.js";
 
+/**
+ * EditRecipeForm component allows users to edit a recipe.
+ */
 const EditRecipeForm = ({ recipeId }) => {
  
   const [recipeData, setRecipeData] = useState(null);
-  const { isVisible: isPopupVisible, message, showPopup } = usePopupMessage(); // Use the custom hook for popup message
+  // Custom hook for managing popup message
+  const { isVisible: isPopupVisible, message, showPopup } = usePopupMessage();
   const [imagePreviewUrl, setImagePreviewUrl] = useState(null);
 
   useEffect(() => {
@@ -58,6 +62,7 @@ const EditRecipeForm = ({ recipeId }) => {
     }
   };
 
+  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData();
