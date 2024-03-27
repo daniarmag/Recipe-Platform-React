@@ -93,7 +93,7 @@ const TopChefsSection = () => {
       name: "Tzahi Bakal",
       recipes: 9,
       cuisine: "Middle Eastern",
-      imageUrl: "",
+      imageUrl: "https://firebasestorage.googleapis.com/v0/b/webproject-58141.appspot.com/o/recipeImages%2FWhatsApp%20Image%202024-03-27%20at%2017.58.42_6091025e.jpg?alt=media&token=dab4fefa-c832-4012-9112-bb7aac19ef53",
     },
   ];
   const starStyle = {
