@@ -12,9 +12,12 @@ import { useAuth } from "./context/AuthContext";
 import LoadingSpinner from "./components/LoadingSpinner";
 import EditRecipePage from "./pages/EditRecipe";
 
+// The root component of the React application
 function App() {
+  // Get user authentication status and loading state from useAuth hook 
   const { user, loading } = useAuth();
 
+  // If the application is still loading, show a loading spinner
   if (loading) {
     return <LoadingSpinner />;
   }

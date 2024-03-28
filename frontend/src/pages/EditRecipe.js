@@ -4,12 +4,16 @@ import EditRecipeForm from "../components/EditRecipeForm";
 
 import { useTheme } from "../context/ThemeContext";
 
+// Component for the "Edit Recipe" page
 const EditRecipePage = () => {
+  // Retrieve the recipeId from the route parameters
   const { recipeId } = useParams();
   console.log(recipeId);
+  // Access the theme from the theme context
   const { theme } = useTheme();
   const { darkMode } = theme;
 
+  // Determine the background color based on the current theme
   const pageBackgroundColor = darkMode === "dark" ? "DarkGray" : "white";
 
   return (

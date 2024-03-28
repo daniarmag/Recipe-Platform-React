@@ -2,10 +2,14 @@ import React, { useState } from "react";
 import LoginForm from "../components/LoginForm";
 import RegisterForm from "../components/RegisterForm";
 
+// Component for the authentication page
 const AuthPage = () => {
+  // State to track whether to show the register form or the login form
   const [isRegisterMode, setRegisterMode] = useState(false);
 
+  // Function to toggle between register and login modes
   const handleToggleMode = () => {
+    // Update the register mode state to its opposite value
     setRegisterMode((prevMode) => !prevMode);
   };
 

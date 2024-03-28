@@ -8,29 +8,35 @@ import React, {
 import { useLocation, useNavigate } from "react-router-dom";
 import RecipesApi from "../api/RecipesApi";
 
+// Create a context for recipes management
 const RecipesContext = createContext();
 
+// Hooks for managing location and navigation
 export const RecipesProvider = ({ children }) => {
   const location = useLocation();
   const navigate = useNavigate();
-
+  // Memoized search parameters based on location.search
   const searchParams = useMemo(
     () => new URLSearchParams(location.search),
     [location.search]
   );
+  // Initial query from URL search parameters
   const initialQuery = useMemo(
     () => searchParams.get("searchQuery") || "",
     [searchParams]
   );
+  // Initial page from URL search parameters
   const initialPage = useMemo(
     () => parseInt(searchParams.get("page")) || 1,
     [searchParams]
   );
+  // Initial page size from URL search parameters
   const initialPageSize = useMemo(
     () => parseInt(searchParams.get("pageSize")) || 8,
     [searchParams]
   );
 
+  // State variables for managing recipes and pagination
   const [recipes, setRecipes] = useState([]);
   const [searchQuery, setSearchQuery] = useState(initialQuery);
   const [page, setPage] = useState(initialPage);
@@ -39,6 +45,7 @@ export const RecipesProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
+  // Function to fetch recipes from the API
   const fetchRecipes = useCallback(async () => {
     try {
       setLoading(true);
@@ -59,8 +66,10 @@ export const RecipesProvider = ({ children }) => {
     }
   }, [searchQuery, page, pageSize]);
 
+  // Memoize fetchRecipes function
   const memoizedFetchRecipes = useMemo(() => fetchRecipes, [fetchRecipes]);
 
+  // Function to update search query and navigate
   const updateSearchQuery = useCallback(
     (newQuery) => {
       // Update URL with the new search query and reset page to 1
@@ -76,6 +85,7 @@ export const RecipesProvider = ({ children }) => {
     [location.search, navigate]
   );
 
+  // Function to update page and navigate
   const updatePage = useCallback(
     (newPage) => {
       // Update URL with the new page
@@ -89,6 +99,7 @@ export const RecipesProvider = ({ children }) => {
     [location.search, navigate]
   );
 
+  // Function to update page size and navigate
   const updatePageSize = useCallback(
     (newPageSize) => {
       // Update URL with the new page size
@@ -102,6 +113,7 @@ export const RecipesProvider = ({ children }) => {
     [location.search, navigate]
   );
 
+  // Function to edit a recipe
   const editRecipe = useCallback(
     async (recipeId, updatedRecipe) => {
       try {
@@ -122,6 +134,7 @@ export const RecipesProvider = ({ children }) => {
     [fetchRecipes]
   );
 
+  // Function to delete a recipe
   const deleteRecipe = useCallback(
     async (recipeId) => {
       try {
@@ -141,6 +154,8 @@ export const RecipesProvider = ({ children }) => {
     },
     [fetchRecipes]
   );
+
+  // Memoize context value to prevent unnecessary renders
   const contextValue = useMemo(
     () => ({
       recipes,
@@ -174,6 +189,7 @@ export const RecipesProvider = ({ children }) => {
     ]
   );
 
+  // Provide the context value to the children components
   return (
     <RecipesContext.Provider value={contextValue}>
       {children}
@@ -181,6 +197,7 @@ export const RecipesProvider = ({ children }) => {
   );
 };
 
+// Custom hook to use the recipes context
 export const useRecipes = () => {
   const context = useContext(RecipesContext);
   if (!context) {

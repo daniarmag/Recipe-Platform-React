@@ -9,15 +9,16 @@ export const useTheme = () => useContext(ThemeContext);
 // ThemeProvider component
 export const ThemeProvider = ({ children }) => {
   const [theme, setTheme] = useState({
-    darkMode: "light", // light or dark
+    // light or dark
+    darkMode: "light", 
     light: {
-      primary: "bg-green-400", // Set your primary color
-      secondary: "white", // Set your secondary color
+      primary: "bg-green-400", 
+      secondary: "white",
       card: "GhostWhite",
     },
     dark: {
-      primary: "bg-gray-900", // Set your primary color
-      secondary: "gray", // Set your secondary color
+      primary: "bg-gray-900", 
+      secondary: "gray",
       card: "DarkGray",
     },
   });
@@ -25,9 +26,11 @@ export const ThemeProvider = ({ children }) => {
   // Dynamic classes based on theme
   const themeClasses = theme.darkMode === "dark" ? "dark" : "light";
 
+  // Function to toggle dark mode
   const toggleDarkMode = () => {
     const toggledDarkMode = theme.darkMode === "dark" ? "light" : "dark";
 
+    // Update theme state
     setTheme((prevTheme) => ({
       ...prevTheme,
       isDarkMode: toggledDarkMode === "dark", // Set isDarkMode based on toggledDarkMode
@@ -35,6 +38,7 @@ export const ThemeProvider = ({ children }) => {
     }));
   };
 
+  // Provide theme and toggleDarkMode function to children components
   return (
     <ThemeContext.Provider value={{ theme, toggleDarkMode }}>
       <div className={themeClasses}>{children}</div>

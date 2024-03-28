@@ -6,7 +6,9 @@ import { useTheme } from "../context/ThemeContext";
 import FeatureSection from "../components/FeatureSection";
 import TopChefs from "../components/TopChefs";
 
+// Component for the home page
 function Home() {
+  // Access the theme from the theme context 
   const { theme } = useTheme();
 
   return (

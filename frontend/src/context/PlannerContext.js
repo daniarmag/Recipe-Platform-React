@@ -10,6 +10,7 @@ const initialState = {
   shoppingList: {},
 };
 
+// Define action types
 const actionTypes = {
   ADD_RECIPE: "ADD_RECIPE",
   REMOVE_RECIPE: "REMOVE_RECIPE",
@@ -19,9 +20,10 @@ const actionTypes = {
 // Define the reducer function
 const plannerReducer = (state, action) => {
   const { mealCategory, recipe, recipeId, ingredientName } = action.payload;
-
+  // Switch statement to handle different action types
   switch (action.type) {
     case actionTypes.ADD_RECIPE:
+      // Return a new state object with the added recipe under the specified meal category
       return {
         ...state,
         meals: {
@@ -32,14 +34,17 @@ const plannerReducer = (state, action) => {
           },
         },
       };
+    // Case for removing a recipe from a meal category
     case actionTypes.REMOVE_RECIPE: {
       const updatedMeals = { ...state.meals };
+      // Remove the specified recipe from the meal category
       delete updatedMeals[mealCategory][recipeId];
       return {
         ...state,
         meals: updatedMeals,
       };
     }
+    // Case for updating the shopping list
     case actionTypes.UPDATE_SHOPPING_LIST: {
       return {
         ...state,
@@ -49,6 +54,7 @@ const plannerReducer = (state, action) => {
         },
       };
     }
+    // Default case returns the current state if action type is not recognized
     default:
       return state;
   }
@@ -82,12 +88,12 @@ export const PlannerProvider = ({ children }) => {
       payload: { ingredientName, amount },
     });
   };
+  // Function to get meals
   const getMeals = () => {
     return state.meals;
   };
 
-  //
-
+  // Function to get shopping list
   const getShoppingList = (selectedRecipes) => {
     let shoppingList = {};
 
@@ -107,12 +113,9 @@ export const PlannerProvider = ({ children }) => {
 
     return shoppingList;
   };
-  //
 
   // Log the state after it has been updated
-  useEffect(() => {
-    // console.log(state);
-  }, [state]);
+  useEffect(() => {  }, [state]);
 
   // Provide the state and functions to the children components
   return (
@@ -132,7 +135,7 @@ export const PlannerProvider = ({ children }) => {
   );
 };
 
-// Create a custom hook to use the context
+// Custom hook to use the planner context
 export const usePlanner = () => {
   const context = useContext(PlannerContext);
   if (!context) {
