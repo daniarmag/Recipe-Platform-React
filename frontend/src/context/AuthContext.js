@@ -11,8 +11,8 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const fetchCurrentUser = async () => {
       try {
-        const currentUser = await UsersApi.getCurrentUser();
-        setUser(currentUser);
+        // const currentUser = await UsersApi.getCurrentUser();
+        // setUser(currentUser);
       } catch (error) {
         console.error('Error fetching current user:', error);
       } finally {
@@ -48,7 +48,7 @@ export const AuthProvider = ({ children }) => {
       {children}
     </AuthContext.Provider>
   );
-};
+};  
 
 export const useAuth = () => {
   return useContext(AuthContext);

@@ -59,7 +59,7 @@ class UsersApi {
       const response = await this.api.get('/users/current-user');
       return response.data;
     } catch (error) {
-      console.error('Error getting current user:', error);
+      console.log('There is no user currently logged in.');
       return null;
     }
   }
