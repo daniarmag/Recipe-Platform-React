@@ -20,6 +20,15 @@ app.use('/api', recipeRoutes);
 app.use('/api/users', usersRoutes);
 
 // Starting the server.
-app.listen(config.port, () =>
-  console.log(`Server is live @ ${config.hostUrl} on port ${config.port}`),
-);
+const server = app.listen(config.port, () => {
+  console.log(`Server is live @ ${config.hostUrl} on port ${config.port}`);
+});
+
+server.on('error', (error) => {
+  if (error.code === 'EADDRINUSE') {
+    console.log(`Port ${config.port} is already in use. Trying another port...`);
+    // Attempt to handle the error, for example, by trying a different port.
+  } else {
+    console.error('An error occurred while starting the server:', error);
+  }
+});
