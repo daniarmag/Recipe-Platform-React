@@ -3,18 +3,20 @@ import Banner from "../components/Banner";
 import SearchBar from "../components/SearchBar";
 import { useTheme } from "../context/ThemeContext";
 
+
 import FeatureSection from "../components/FeatureSection";
 import TopChefs from "../components/TopChefs";
 
 // Component for the home page
 function Home() {
   // Access the theme from the theme context 
-  const { theme } = useTheme();
-
+  const { theme, getTheme } = useTheme();
+  const currentTheme = getTheme();
+ 
   return (
     <div
-      style={{ backgroundColor: theme[theme.darkMode].secondary }}
-      className="page-container"
+
+      className={`page-container ${currentTheme.secondary}`}
     >
       <div className="flex flex-col items-center mx-auto pt-8">
         <h1 className="text-4xl font-bold mb-2 text-center text-gray-700 ScularOneFont">

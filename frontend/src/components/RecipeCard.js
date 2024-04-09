@@ -19,28 +19,30 @@ const RecipeCard = ({
   onDelete,
   onEdit,
 }) => {
-  const { theme } = useTheme();
-  const { darkMode } = theme;
+  const { theme, getTheme } = useTheme();
+  const { isDarkMode } = theme;
+  const currentTheme = getTheme();
+
   // Get current user from AuthContext
   const { user } = useAuth(); 
 
   // Styles for card background and buttons based on theme
-  const cardStyle = {
-    backgroundColor: darkMode === 'dark' ? theme.dark.card : theme.light.card,
-    color: darkMode === 'dark' ? '#FFFFFF' : '#333333',
-  };
+  // const cardStyle = {
+  //   backgroundColor: theme[darkMode].secondary,
+  //   color: darkMode === 'dark' ? '#FFFFFF' : '#333333',
+  // };
 
   // Style for add to planner button based on theme
   const addToPlannerBtnStyle = {
-    border: darkMode === 'dark' ? 'green-200' : 'gray-500', 
-    text: darkMode === 'dark' ? 'white' : 'green-500', 
+    border: isDarkMode ? 'green-200' : 'gray-500', 
+    text: isDarkMode ? 'white' : 'green-500', 
   };
 
   const isUserAdmin = user.isAdmin; 
   const isUserTheAuthor = author === user.email;
   
   return (
-    <div className="bg-white rounded-lg shadow-md border-2 my-2 hover:scale-105 transition duration-200 recipe-card" style={cardStyle}>
+    <div className={`${currentTheme.card} rounded-lg shadow-md border-2 my-2 hover:scale-105 transition duration-200 recipe-card `}>
       <div className="p-4 flex flex-col h-full"> {/* Set height to full for the flex container */}
         <img
           src={imageSrc}

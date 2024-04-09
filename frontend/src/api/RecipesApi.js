@@ -64,10 +64,10 @@ class RecipesApi {
   /**
    * Retrieves a list of recipes.
    */
-  async getRecipes({page, pageSize, searchQuery}) {
+  async getRecipes({page, pageSize, searchQuery, filterOwnedRecipes}) {
     try {
       const response = await this.api.get('/recipes', {
-        params: { page, pageSize, searchQuery },
+        params: { page, pageSize, searchQuery, filterOwnedRecipes },
       });
       return response.data;
     } catch (error) {

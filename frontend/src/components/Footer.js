@@ -7,10 +7,10 @@ import { useTheme } from '../context/ThemeContext';
 const Footer = () => {
 
   const { theme } = useTheme();
-  const { darkMode } = theme;
+  const { isDarkMode } = theme;
 
   const footerStyle = {
-    background: darkMode === 'dark'  ? 'linear-gradient(to bottom right, #1A202C, #2D3748)' : 'linear-gradient(to bottom right, #48BB78, #38A169)',
+    background: isDarkMode  ? 'linear-gradient(to bottom right, #1A202C, #2D3748)' : 'linear-gradient(to bottom right, #48BB78, #38A169)',
     color: '#FFFFFF', // Text color for both dark and light modes
     padding: '1rem', // Padding
   };

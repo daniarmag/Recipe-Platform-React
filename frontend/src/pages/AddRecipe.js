@@ -5,16 +5,12 @@ import { useTheme } from "../context/ThemeContext";
 // Component for the "Add Recipe" page
 function AddRecipePage() {
   // Access the theme from the theme context
-  const { theme } = useTheme();
-  const { darkMode } = theme;
-
-  // Determine the background color based on the current theme
-  const pageBackgroundColor = darkMode === "dark" ? "DarkGray" : "white";
+  const { getTheme } = useTheme();
+  const currentTheme = getTheme();
 
   return (
     <div
-      style={{ backgroundColor: pageBackgroundColor }}
-      className="page-container"
+      className={`page-container ${currentTheme.secondary}`}
     >
       <CreateNewRecipe />
     </div>

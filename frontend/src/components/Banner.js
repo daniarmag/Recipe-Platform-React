@@ -8,12 +8,12 @@ import { useTheme } from "../context/ThemeContext";
 const Banner = () => {
   const [randomTip, setRandomTip] = useState("");
   const { theme } = useTheme();
-  const { darkMode } = theme;
+  const { isDarkMode } = theme;
 
   // Inline style for the banner background
   const bannerStyle = {
     background:
-      darkMode === "dark"
+    isDarkMode
         ? "linear-gradient(to bottom right, #1A202C, #2D3748)"
         : "linear-gradient(to bottom right, #48BB78, #38A169)",
   };

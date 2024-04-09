@@ -9,7 +9,10 @@ import { FiSun, FiMoon } from "react-icons/fi";
  * Navbar component for navigating through different pages and toggling dark mode.
  */
 function Navbar() {
-  const { theme, toggleDarkMode } = useTheme();
+  const { theme, getTheme, toggleDarkMode } = useTheme();
+  const {isDarkMode} = theme;
+  const currentTheme = getTheme();
+
   const { user } = useAuth();
 
   // Define navigation links
@@ -27,7 +30,7 @@ function Navbar() {
   ];
 
   const [showMenu, setShowMenu] = useState(false);
-  const { isDarkMode } = theme;
+  
 
   // Function to toggle mobile popup menu
   const toggleMenu = () => {
@@ -37,7 +40,7 @@ function Navbar() {
   return (
     <div
       className={`w-full flex flex-row justify-between items-center p-4 h-12  ${
-        theme[theme.darkMode].primary
+        currentTheme.primary
       }`}
     >
       <div className="flex items-center w-full flex-1">
@@ -80,16 +83,16 @@ function Navbar() {
       <button
         onClick={toggleDarkMode}
         className={`text-white text-2xl duration-200 mx-2 px-1 focus:outline-none desktop-only ${
-          theme.isDarkMode ? "hover:text-blue-300" : "hover:text-blue-950"
+          isDarkMode ? "hover:text-blue-300" : "hover:text-blue-950"
         }`}
       >
-        {theme.isDarkMode ? <FiSun /> : <FiMoon />}
+        {isDarkMode ? <FiSun /> : <FiMoon />}
       </button>
 
       {user && showMenu && (
         <div
           className={`sm:hidden absolute top-10 right-0 px-2 shadow-lg ${
-            theme[theme.darkMode].primary
+            currentTheme.primary
           } `}
         >
           {popUpLinks.map((link) => (
@@ -97,7 +100,7 @@ function Navbar() {
               <Link
                 to={link.href}
                 className={`text-white text-xl duration-200 ${
-                  theme.isDarkMode
+                  isDarkMode
                     ? "hover:text-blue-300"
                     : "hover:text-blue-950"
                 } `}
@@ -113,13 +116,13 @@ function Navbar() {
                 <button
                   onClick={toggleDarkMode}
                   className={`text-white text-xl duration-200  focus:outline-none ${
-                    theme.isDarkMode
+                    isDarkMode
                       ? "hover:text-blue-300"
                       : "hover:text-blue-950"
                   }
                   }`}
                 >
-                  {theme.isDarkMode ? "LightMode" : "DarkMode"}
+                  {isDarkMode ? "LightMode" : "DarkMode"}
                 </button>
               </div>
               <div className="mb-2">

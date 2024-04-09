@@ -92,9 +92,9 @@ const EditRecipeForm = ({ recipeId }) => {
   };
 
   const { theme } = useTheme();
-  const { darkMode } = theme;
+  const { isDarkMode } = theme;
 
-  const submitBtnStyle = darkMode === "dark" ? "bg-slate-600" : "bg-green-500";
+  const submitBtnStyle = isDarkMode ? "bg-slate-600" : "bg-green-500";
 
   return (
     <div className="container mx-auto AssistantFont">

@@ -91,10 +91,10 @@ function RecipeList() {
 
 
   const { theme } = useTheme();
-  const { darkMode } = theme;
+  const { isDarkMode } = theme;
 
   const nextPrevStyles = {
-    backgroundColor: darkMode === "dark" ? "#1A202C" : "#48BB78",
+    backgroundColor: isDarkMode ? "#1A202C" : "#48BB78",
   };
 
   

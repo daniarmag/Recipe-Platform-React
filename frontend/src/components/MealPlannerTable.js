@@ -74,7 +74,7 @@ function MealPlanner() {
   console.log(meals);
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen mx-auto max-w-lg">
       <div className="text-xl">
         <div className="text-2xl font-bold text-center py-3 sm:test-3xl ">
           Plan your meals for the day

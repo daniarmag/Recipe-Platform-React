@@ -11,6 +11,7 @@ import {
   setDoc,
   updateDoc,
 } from "firebase/firestore";
+import { getAuth } from "firebase/auth";
 
 // Function to parse ingredients
 const parseIngredients = (ingredientsData) => {
@@ -78,6 +79,8 @@ class RecipeController {
     this.getRecipe = this.getRecipe.bind(this);
     this.getRecipes = this.getRecipes.bind(this);
     this.updateRecipe = this.updateRecipe.bind(this);
+
+    this.auth = getAuth();
   }
 
   // Function to create a new recipe
@@ -126,10 +129,12 @@ class RecipeController {
   // Function to retrieve paginated recipes with optional search query
   async getRecipes(req, res) {
     try {
-      const { page = 1, pageSize = 8, searchQuery } = req.query;
+      const { page = 1, pageSize = 8, searchQuery, filterOwnedRecipes } = req.query;
       const recipesSnapshot = await getDocs(collection(db, "recipe"));
       let recipeArray = [];
       let recipe;
+      const user = this.auth.currentUser;
+
       // Check if the collection is empty
       if (recipesSnapshot.empty) {
         console.error("No Recipes found");
@@ -149,6 +154,13 @@ class RecipeController {
           );
           recipeArray.push(recipe);
         });
+
+        if (filterOwnedRecipes == "true") {
+          recipeArray = recipeArray.filter((recipe) =>
+            recipe.author == user.email
+          );
+        }
+
         // If searchQuery is provided, filter recipes based on the query
         if (searchQuery) {
           recipeArray = recipeArray.filter((recipe) =>

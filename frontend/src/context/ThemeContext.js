@@ -11,36 +11,42 @@ export const ThemeProvider = ({ children }) => {
   const [theme, setTheme] = useState({
     // light or dark
     darkMode: "light", 
+    isDarkMode: false,
     light: {
       primary: "bg-green-400", 
-      secondary: "white",
-      card: "GhostWhite",
+      secondary: "bg-slate-50",
+      card: "bg-slate-100",
     },
     dark: {
       primary: "bg-gray-900", 
-      secondary: "gray",
-      card: "DarkGray",
+      secondary: "bg-gray-300",
+      card: "bg-gray-400",
     },
   });
 
   // Dynamic classes based on theme
-  const themeClasses = theme.darkMode === "dark" ? "dark" : "light";
+  const themeClasses = theme.isDarkMode ? "dark" : "light";
 
+ 
   // Function to toggle dark mode
   const toggleDarkMode = () => {
-    const toggledDarkMode = theme.darkMode === "dark" ? "light" : "dark";
+    const toggledDarkMode = theme.isDarkMode ? "light" : "dark";
 
     // Update theme state
     setTheme((prevTheme) => ({
       ...prevTheme,
-      isDarkMode: toggledDarkMode === "dark", // Set isDarkMode based on toggledDarkMode
+      isDarkMode: !prevTheme.isDarkMode, // Set isDarkMode based on toggledDarkMode
       darkMode: toggledDarkMode,
     }));
   };
-
+ 
+  // Function to get current theme
+ const getTheme = () => {
+  return theme[theme.darkMode];
+};
   // Provide theme and toggleDarkMode function to children components
   return (
-    <ThemeContext.Provider value={{ theme, toggleDarkMode }}>
+    <ThemeContext.Provider value={{ theme, toggleDarkMode, getTheme }}>
       <div className={themeClasses}>{children}</div>
     </ThemeContext.Provider>
   );

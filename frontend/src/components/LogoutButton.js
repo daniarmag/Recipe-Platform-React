@@ -9,6 +9,7 @@ import { AiOutlineUser, AiOutlineLock, AiOutlineLogout } from 'react-icons/ai';
  */
 function LogoutButton() {
   const { theme } = useTheme();
+  const {isDarkMode} = theme;
   const { logout } = useAuth();
   const navigate = useNavigate();
 
@@ -32,7 +33,7 @@ function LogoutButton() {
     // </button>
 <button
   onClick={handleLogout}
-  className={`text-white flex items-center justify-center text-2xl duration-200 focus:outline-none ${theme.isDarkMode ? 'hover:text-blue-300' : 'hover:text-blue-950'}`}
+  className={`text-white flex items-center justify-center text-2xl duration-200 focus:outline-none ${isDarkMode ? 'hover:text-blue-300' : 'hover:text-blue-950'}`}
   style={{
     transition: 'filter 0.3s ease', // Adding transition for smooth hover effect
   }}

@@ -1,32 +1,39 @@
 import React, { useState } from 'react';
 import { useRecipes } from '../context/RecipesContext.js';
-import {useTheme} from '../context/ThemeContext';
+import { useTheme } from '../context/ThemeContext';
 
 /**
- * SearchBar component renders a search input field and a search button.
- * It allows users to input search queries and trigger a search action.
+ * SearchBar component renders a search input field, a search button,
+ * and a checkbox for filtering recipes.
+ * It allows users to input search queries, trigger a search action,
+ * and filter recipes based on ownership.
  */
 function SearchBar() {
-  const { searchQuery, updateSearchQuery  } = useRecipes();
+  const { searchQuery, updateSearchQuery, filterOwnedRecipes, toggleFilterOwnedRecipes } = useRecipes();
   const [inputValue, setInputValue] = useState(searchQuery);
 
-
   const { theme } = useTheme();
-  const { darkMode } = theme;
+  const { isDarkMode } = theme;
 
   // Handles changes in the search input field.
   const handleInputChange = (e) => {
     setInputValue(e.target.value);
     updateSearchQuery(e.target.value);
   };
+
   // Handles the search action by updating to the current query.
   const handleSearch = () => {
     updateSearchQuery(inputValue);
   };
 
+  // Handles checkbox change for filtering owned recipes.
+  const toggleFilter = () => {
+    toggleFilterOwnedRecipes(!filterOwnedRecipes);
+  };
+
   // Style for the search button based on theme.
   const searchBtnStyle = {
-    backgroundColor:darkMode === 'dark' ?'#1A202C' : '#48BB78',
+    backgroundColor: isDarkMode ? '#1A202C' : '#48BB78',
   };
 
   return (
@@ -38,8 +45,31 @@ function SearchBar() {
         value={inputValue}
         onChange={handleInputChange}
       />
-      {/*  bg-green-500 */}
-       <button className="p-2 text-white rounded-md " style={searchBtnStyle} onClick={handleSearch}>
+       {/* Toggle switch for filtering "My Recipes" or "All Recipes" */}
+      <label className="flex items-center cursor-pointer mx-2">
+        <div className="relative">
+          <input
+            type="checkbox"
+            id="toggleFilter"
+            className="sr-only"
+            checked={filterOwnedRecipes}
+            onChange={toggleFilter}
+          />
+          <div className="w-10 h-4 bg-gray-400 rounded-full shadow-inner"></div>
+          <div
+            className={`absolute w-6 h-6 bg-white rounded-full shadow-md transform transition-transform duration-200 ease-in-out ${
+              filterOwnedRecipes ? 'translate-x-6' : '-translate-x-1'
+            } -top-1.5`}
+          ></div>
+        </div>
+        <div className="ml-3 w-20 text-sm">
+          <label htmlFor="toggleFilter" className="cursor-pointer">
+            {filterOwnedRecipes ? 'My Recipes' : 'All Recipes'}
+          </label>
+        </div>
+      </label>
+      {/* Search button */}
+      <button className="p-2 text-white rounded-md " style={searchBtnStyle} onClick={handleSearch}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"

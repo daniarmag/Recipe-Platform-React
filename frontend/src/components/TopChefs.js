@@ -8,7 +8,7 @@ import { FaStar } from "react-icons/fa"; // Make sure you have `react-icons` ins
  */
 const TopChefsSection = () => {
   const { theme } = useTheme();
-  const { darkMode } = theme;
+  const { isDarkMode } = theme;
   // Ref for the chefs section
   const chefsSectionRef = useRef(null); 
 
@@ -66,7 +66,7 @@ const TopChefsSection = () => {
 
   const chefCardStyle = {
     padding: "20px",
-    background: darkMode === "dark" ? "#2D3748" : "#fff",
+    background: isDarkMode ? "#2D3748" : "#fff",
     borderRadius: "10px",
     boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
     textAlign: "left", // Align text to the left
