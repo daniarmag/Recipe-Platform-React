@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { AiOutlineUser, AiOutlineLock } from 'react-icons/ai';
 import { FaUserCircle } from 'react-icons/fa';
+import { useTheme } from '../context/ThemeContext';
 
 /*
  * Component for rendering the login form.
@@ -9,6 +10,8 @@ import { FaUserCircle } from 'react-icons/fa';
 const LoginForm = ({ handleToggleMode }) => {
   // Use the login function from AuthContext
   const { login } = useAuth(); 
+  const { theme } = useTheme();
+  const { isDarkMode } = theme;
   const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
   // New state for error message
@@ -25,6 +28,11 @@ const LoginForm = ({ handleToggleMode }) => {
       // Authentication logic using AuthContext login function
       await login({ username: userName, password });
       console.log('Login successful');
+      // Redirect or update UI after successful login
+      // For example, using react-router to navigate to the home page:
+      // history.push('/home');
+      // Or simply refresh the page to reflect the new state:
+      window.location.reload();
     } catch (error) {
       // Set the error state with the error message
       setError('Invalid username or password');
@@ -33,9 +41,11 @@ const LoginForm = ({ handleToggleMode }) => {
   };
 
   return (
-    <div className=" flex items-center justify-center bg-cover ">
+    <div className="flex items-center justify-center bg-cover">
       {/* Flex container for the image and login */}
-      <div className="rounded-2xl shadow-lg w-full sm:max-w-4xl bg-zinc-100 bg-opacity-5 backdrop-filter backdrop-blur-lg border border-white flex overflow-hidden">
+      <div className={`rounded-2xl shadow-lg w-full sm:max-w-4xl ${
+        isDarkMode ? "bg-gray-800 border-gray-700 text-white" : "bg-zinc-100 border-white text-black"
+      } bg-opacity-5 backdrop-filter backdrop-blur-lg border flex overflow-hidden`}>
 
         {/* Image container */}
         <div className="hidden sm:block w-1/2 h-auto">
@@ -46,7 +56,7 @@ const LoginForm = ({ handleToggleMode }) => {
           />
         </div>
         {/* Login container */}
-        <div className="p-8 w-full sm:w-1/2 bg-zinc-100 bg-opacity-10 backdrop-filter backdrop-blur-lg border">
+        <div className={`p-8 w-full sm:w-1/2 ${isDarkMode ? "bg-gray-800" : "bg-zinc-100"} bg-opacity-10 backdrop-filter backdrop-blur-lg border`}>
           {/* User Icon */}
           <div className="flex justify-center">
             <FaUserCircle size={120} style={{ color: 'green', opacity: '0.5' }} className="mb-4" />
@@ -90,7 +100,7 @@ const LoginForm = ({ handleToggleMode }) => {
             LOGIN
           </button>
         </form>
-        <div className="mt-4 text-sm text-gray-600">
+        <div className={`mt-4 text-sm ${isDarkMode ? "text-gray-300" : "text-gray-600"}`}>
           <p>
             Don't have an account?{' '}
             <button

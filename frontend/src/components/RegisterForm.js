@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import UsersApi from "../api/UsersApi";
 import { useAuth } from "../context/AuthContext";
 import { AiOutlineUser, AiOutlineLock, AiOutlineLogin } from "react-icons/ai";
-
+import { useTheme } from "../context/ThemeContext";
 /*
  * RegisterForm component renders a form for user registration.
  */
@@ -12,6 +12,8 @@ const RegisterForm = ({ handleToggleMode }) => {
   const [password, setPassword] = useState("");
   const [displayName, setDisplayName] = useState("");
   const [error, setError] = useState(null); // New state for error message
+  const { theme } = useTheme();
+  const { isDarkMode } = theme;
 
   // Handles the form submission for user registration.
   const handleSubmit = async (e) => {
@@ -43,7 +45,13 @@ const RegisterForm = ({ handleToggleMode }) => {
 
   return (
     <div className="flex items-center justify-center">
-      <div className="p-8 rounded-2xl shadow-md w-full sm:w-96 bg-zinc-200 bg-opacity-20 backdrop-filter backdrop-blur-md border border-white">
+      <div
+        className={`p-8 rounded-2xl shadow-md w-full sm:w-96 ${
+          isDarkMode
+            ? "bg-gray-800 text-white border-gray-700"
+            : "bg-zinc-200 text-black border-white"
+        } bg-opacity-20 backdrop-filter backdrop-blur-md border`}
+      >
         <h2 className="text-2xl font-bold mb-4 text-green-600">REGISTER</h2>
         {error && (
           <div className="bg-red-100 border-l-4 border-red-500 text-red-700 p-2 mb-4">
@@ -97,12 +105,12 @@ const RegisterForm = ({ handleToggleMode }) => {
             REGISTER & LOGIN
           </button>
         </form>
-        <div className="mt-4 text-sm text-gray-600">
+        <div className="mt-4 text-sm">
           <p>
             Already have an account?{" "}
             <button
               type="button"
-              className={`text-green-500 underline`}
+              className="text-green-500 underline"
               onClick={handleToggleMode}
             >
               Login
